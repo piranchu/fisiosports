@@ -3,7 +3,7 @@ package com.fisiosports.negocio;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import com.fisiosports.modelo.entidades.Cliente;
+import com.fisiosports.modelo.entidades.Paciente;
 
 public class Clientes implements IClientes{
 
@@ -21,12 +21,12 @@ public class Clientes implements IClientes{
 	}
 	
 	@Override
-	public void crearCliente(Cliente cliente) {
+	public void crearCliente(Paciente paciente) {
 		// TODO Auto-generated method stub
 		System.out.println("[Clientes.crearCliente] empieza transaccion");
 		em.getTransaction().begin();
-		System.out.println("[Clientes.crearCliente] persist:"+cliente.getId());
-		em.persist(cliente);
+		System.out.println("[Clientes.crearCliente] persist:"+paciente.getId());
+		em.persist(paciente);
 		System.out.println("[Clientes.crearCliente] commit transaccion");
 		em.getTransaction().commit();
 		System.out.println("[Clientes.crearCliente] FIN");

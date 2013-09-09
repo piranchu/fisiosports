@@ -1,9 +1,9 @@
 package com.fisiosports.negocio;
 
-import com.fisiosports.modelo.entidades.Cliente;
+import com.fisiosports.modelo.entidades.Paciente;
 
 public interface IClientes {
 
-	public void crearCliente(Cliente cliente);
+	public void crearCliente(Paciente paciente);
 	
 }
