@@ -13,20 +13,12 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Quinesiologia extends SesionRehabilitacion implements Serializable {
 
-	   
-	@Id
-	private Long id;
+
 	private static final long serialVersionUID = 1L;
 
 	public Quinesiologia() {
 		super();
 	}   
-	public Long getId() {
-		return this.id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
    
 }

@@ -11,7 +11,7 @@
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
 			<property name="openjpa.ConnectionUserName" value=""/>
 			<property name="openjpa.ConnectionPassword" value=""/>
-			<property name="openjpa.ConnectionURL" value="jdbc:derby:/home/pablo/fisiosports/Derby/MyDB;create=true;upgrade=true"/>
+			<property name="openjpa.ConnectionURL" value="jdbc:derby:/home/pablo/fisiosports/Derby/MyDB;delete=true;create=true;upgrade=true"/>
 			<property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
 			<property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=80"/>			
 		</properties>

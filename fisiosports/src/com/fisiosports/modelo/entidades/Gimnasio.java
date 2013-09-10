@@ -19,9 +19,6 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Gimnasio extends SesionRehabilitacion implements Serializable {
 
-	   
-	@Id
-	private Long id;
 	private static final long serialVersionUID = 1L;
 	@Enumerated(EnumType.STRING)
 	private Set<TipoGimnasio> tipos = new HashSet<TipoGimnasio>();
@@ -29,13 +26,6 @@ public class Gimnasio extends SesionRehabilitacion implements Serializable {
 	public Gimnasio() {
 		super();
 	}   
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public Set<TipoGimnasio> getTipos() {
 		return tipos;
 	}

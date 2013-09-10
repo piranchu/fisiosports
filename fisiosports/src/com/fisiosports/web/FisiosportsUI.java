@@ -5,6 +5,8 @@ import java.util.GregorianCalendar;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.fisiosports.modelo.entidades.Consulta;
+import com.fisiosports.negocio.FabricaControladores;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.client.ui.calendar.schedule.CalendarEvent;
@@ -50,6 +52,18 @@ public class FisiosportsUI extends UI {
 		button.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				layout.addComponent(new Label("Thank you for clicking"));
+				
+				Consulta consulta = new Consulta();
+				consulta.setId(new Long(1));
+				GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
+		        Date start = cal.getTime();
+		        cal.add(GregorianCalendar.HOUR, 5);
+		        Date end = cal.getTime();
+				consulta.setStart(start);
+				consulta.setEnd(end);
+				
+				FabricaControladores.getIAgenda().agregarConsulta(consulta);
+				
 				agregar(layout);
 			}
 		});

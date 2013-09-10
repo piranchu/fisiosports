@@ -2,8 +2,8 @@ package com.fisiosports.negocio;
 
 import com.fisiosports.modelo.entidades.Paciente;
 
-public interface IClientes {
+public interface IPacientes {
 
-	public void crearCliente(Paciente paciente);
+	public void crearPaciente(Paciente paciente);
 	
 }
