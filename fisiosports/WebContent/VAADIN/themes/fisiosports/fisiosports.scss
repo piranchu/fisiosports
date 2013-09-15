@@ -7,6 +7,7 @@
 @mixin fisiosports {
   /* Include all the styles from the reindeer theme */
   @include reindeer;
-
-  /* Insert your theme rules here */
+.v-calendar .v-calendar-event-mycolor {
+		backround-color: red;
+	}	
 }
