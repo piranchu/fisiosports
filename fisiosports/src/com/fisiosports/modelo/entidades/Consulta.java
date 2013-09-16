@@ -32,7 +32,7 @@ public class Consulta implements Serializable{
 	@OneToOne
 	private TerapiaFisica terapiaFisica;
 	@OneToOne
-	private Gimnasio gimansio;
+	private Gimnasio gimnasio;
 	@OneToOne
 	private Quinesiologia quinesiologia;
     private String caption;
@@ -68,11 +68,11 @@ public class Consulta implements Serializable{
 	public void setTerapiaFisica(TerapiaFisica terapiaFisica) {
 		this.terapiaFisica = terapiaFisica;
 	}
-	public Gimnasio getGimansio() {
-		return gimansio;
+	public Gimnasio getGimnasio() {
+		return gimnasio;
 	}
-	public void setGimansio(Gimnasio gimansio) {
-		this.gimansio = gimansio;
+	public void setGimnasio(Gimnasio gimnasio) {
+		this.gimnasio = gimnasio;
 	}
 	public Quinesiologia getQuinesiologia() {
 		return quinesiologia;

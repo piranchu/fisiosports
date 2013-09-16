@@ -3,6 +3,9 @@ package com.fisiosports.web.ui.componentes;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.modelo.entidades.Consulta;
+import com.fisiosports.modelo.entidades.Gimnasio;
+import com.fisiosports.modelo.entidades.Quinesiologia;
+import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -99,7 +102,7 @@ public class VentanaConsulta extends Window {
 	
 	public void cargarDatosConsulta(Consulta consulta){
 		this.nombrePaciente.setValue(consulta.getPaciente());
-		this.gimnasio.setValue(consulta.getGimansio()!=null);
+		this.gimnasio.setValue(consulta.getGimnasio()!=null);
 		this.quinesiologia.setValue(consulta.getQuinesiologia()!=null);
 		this.terapiaFisica.setValue(consulta.getTerapiaFisica()!=null);
 		this.start.setValue(consulta.getStart());
@@ -134,6 +137,9 @@ public class VentanaConsulta extends Window {
 			gc.add(GregorianCalendar.HOUR, 1);
 			consulta.setEnd(gc.getTime());
 			consulta.setPaciente(this.nombrePaciente.getValue());
+			if (quinesiologia.getValue()) consulta.setQuinesiologia(new Quinesiologia());
+			if (gimnasio.getValue()) consulta.setGimnasio(new Gimnasio());
+			if (terapiaFisica.getValue()) consulta.setTerapiaFisica(new TerapiaFisica());
 			agenda.agregarConsulta(consulta);
 		} catch (Exception e) {
 			Notification.show("Error al intentar agendar la consulta",
