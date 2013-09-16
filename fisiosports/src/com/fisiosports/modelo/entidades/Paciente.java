@@ -14,7 +14,7 @@ public class Paciente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String nombre;
 	private String apellido;

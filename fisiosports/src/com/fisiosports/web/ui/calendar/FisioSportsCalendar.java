@@ -18,24 +18,32 @@ import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 
 public class FisioSportsCalendar extends Calendar{
 
+	private static final long serialVersionUID = 1L;
+
 	public FisioSportsCalendar() {
 
 		this.setFirstVisibleHourOfDay(8);
 		this.setFirstVisibleDayOfWeek(1);
-		this.setLastVisibleDayOfWeek(6);
+		this.setLastVisibleDayOfWeek(7);
 		this.setSizeFull();
+		this.setEventProvider(new FisioSportsCalendarProvider());
 
 		this.setHandler(new BasicEventMoveHandler() {
+			private static final long serialVersionUID = 1L;
 			public void eventMove(MoveEvent event) {
+				/*
 				System.out.println("[event] event.getCalendarEvent().getClass().getCanonicalName():"
 								+ event.getCalendarEvent().getClass().getCanonicalName());
+				 */
 				super.eventMove(event);
 			}
 			protected void setDates(EditableCalendarEvent event, Date start,
 					Date end) {
+				/*
 				System.out.println("[event] set dates");
 				System.out.println("[event] 	start:" + start);
 				System.out.println("[event] 	end" + end);
+				*/
 				super.setDates((EditableCalendarEvent) event, start, end);
 			}
 		});
@@ -58,7 +66,7 @@ public class FisioSportsCalendar extends Calendar{
 		cal.setTime(new Date());
 		cal.set(cal.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 		this.setStartDate(cal.getTime());
-		cal.add(cal.DAY_OF_WEEK, 6);
+		cal.add(cal.DAY_OF_WEEK, 7);
 		this.setEndDate(cal.getTime());
 
 		this.setHandler(new BasicDateClickHandler() {
@@ -83,7 +91,6 @@ public class FisioSportsCalendar extends Calendar{
 				}
 			}
 		});
-
 	}
 
 }
