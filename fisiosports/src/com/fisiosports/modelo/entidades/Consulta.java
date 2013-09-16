@@ -29,11 +29,11 @@ public class Consulta implements Serializable{
 	private Long id;
 	//@ManyToOne 	private Paciente paciente;
 	private String paciente;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TerapiaFisica terapiaFisica;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Gimnasio gimnasio;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Quinesiologia quinesiologia;
     private String caption;
     private String description;

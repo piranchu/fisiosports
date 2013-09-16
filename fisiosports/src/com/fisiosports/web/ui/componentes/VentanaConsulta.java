@@ -142,8 +142,10 @@ public class VentanaConsulta extends Window {
 			if (terapiaFisica.getValue()) consulta.setTerapiaFisica(new TerapiaFisica());
 			agenda.agregarConsulta(consulta);
 		} catch (Exception e) {
-			Notification.show("Error al intentar agendar la consulta",
+			e.printStackTrace();
+			Notification.show("Error al intentar agendar la consulta", e.getMessage(),
 					Notification.Type.ERROR_MESSAGE);
+			return;
 		}
 		calendar.markAsDirty();
 		Notification.show("Se agendó la consulta");
@@ -154,7 +156,8 @@ public class VentanaConsulta extends Window {
 		try {
 			agenda.borrarConsulta(consulta);
 		} catch (Exception e) {
-			Notification.show("Error al intentar borrar la consulta de la agenda",
+			e.printStackTrace();
+			Notification.show("Error al intentar borrar la consulta de la agenda", e.getMessage(),
 					Notification.Type.ERROR_MESSAGE);
 			return;
 		}
