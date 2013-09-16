@@ -21,12 +21,13 @@ public class ComponenteAgenda extends VerticalLayout{
 		this.setSpacing(true);
 		menuBar = new MenuBar();
 		menuBar.setSizeFull();
+		menuBar.setWidth("100%");
 		com.vaadin.ui.MenuBar.MenuItem itemAgendar = menuBar.addItem("Agendar paciente", new Command(){
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void menuSelected(com.vaadin.ui.MenuBar.MenuItem selectedItem) {
 				//Notification.show("Agregar cliente", Notification.Type.WARNING_MESSAGE);
-				Window window = new VentanaNuevaConsulta(calendar);
+				Window window = new VentanaConsulta(calendar);
 				window.setModal(true);
 				ui.addWindow(window);
 			}			
@@ -35,7 +36,7 @@ public class ComponenteAgenda extends VerticalLayout{
 		itemAgendar.setIcon(resource);
 		this.addComponent(menuBar);
 
-		calendar = new FisioSportsCalendar();
+		calendar = new FisioSportsCalendar(ui);
 		this.addComponent(calendar);
 		
 	}

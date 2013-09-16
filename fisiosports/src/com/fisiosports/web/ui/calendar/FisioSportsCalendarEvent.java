@@ -8,12 +8,13 @@ import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
+import com.vaadin.ui.components.calendar.event.CalendarEvent;
 import com.vaadin.ui.components.calendar.event.EditableCalendarEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeListener;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier;
 
-public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventChangeNotifier {
+public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventChangeNotifier, CalendarEvent {
 
 	private static final long serialVersionUID = 1L;
 	

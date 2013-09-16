@@ -10,5 +10,6 @@ public interface IAgenda {
 	public void agregarConsulta(Consulta consulta);
 	public List<Consulta> obtenerConsultas(Date start, Date end);
 	public void modificarConsulta(Consulta consulta);	
+	public void borrarConsulta(Consulta consulta);
 
 }

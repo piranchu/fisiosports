@@ -48,6 +48,13 @@ public class ControladorAgenda implements IAgenda, Serializable{
 		em.getTransaction().commit();
 	}
 
+	@Override
+	public void borrarConsulta(Consulta consulta) {
+		em.getTransaction().begin();
+		em.remove(consulta);
+		em.getTransaction().commit();
+	}
+
 	
 	
 	
