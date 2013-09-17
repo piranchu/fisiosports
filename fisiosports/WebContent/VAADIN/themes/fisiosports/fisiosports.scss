@@ -8,21 +8,18 @@
   /* Include all the styles from the reindeer theme */
   @include reindeer;
   
-	.style-titulo {
-		backround-color: red;
-		width: 100%;
-		font-family:"Verdana", verdana, fantasy;
-		border: 2px solid black;
-		-moz-border-radius: 20px;		
-	}
+.style-titulo {
+	backround-color: red;
+	width: 100%;
+	font-family:"Verdana", verdana, fantasy;
+	border: 2px solid black;
+	-moz-border-radius: 20px;		
+}
 
-	.style-menu {
-		backround-color: grey;
-		heigth: 100%;
-		font-family:"Verdana", verdana, fantasy;
-		border-rigth: 2px solid black;
-		-moz-border-radius: 20px;		
-	}
+.menu-principal {
+	background: white;
+	border: 1px solid black;
+}
 	
 		
 }

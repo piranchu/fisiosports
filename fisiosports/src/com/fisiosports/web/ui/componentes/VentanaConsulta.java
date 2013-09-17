@@ -8,7 +8,9 @@ import com.fisiosports.modelo.entidades.Quinesiologia;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CheckBox;
@@ -31,13 +33,13 @@ public class VentanaConsulta extends Window {
 	private CheckBox quinesiologia;
 	private CheckBox terapiaFisica;
 	private CheckBox gimnasio;
-	//private Button botonAgendar;
 	private Calendar calendar;
 
 	public VentanaConsulta(Calendar calendar) {
 		this.calendar = calendar;
 		this.initComponents();
 		content.addComponent(obtenerBotonAgendar());
+		this.setResizable(false);
 	}
 
 	public VentanaConsulta(Calendar calendar, Consulta consulta) {
@@ -45,7 +47,13 @@ public class VentanaConsulta extends Window {
 		this.consulta = consulta;
 		this.initComponents();
 		cargarDatosConsulta(consulta);
-		content.addComponent(obtenerBotonAnular());
+		Button botonModificar = obtenerBotonModificar();
+		content.addComponent(botonModificar);
+		content.setComponentAlignment(botonModificar, Alignment.MIDDLE_CENTER);
+		Button botonAnular = obtenerBotonAnular();
+		content.addComponent(botonAnular);
+		content.setComponentAlignment(botonAnular, Alignment.MIDDLE_CENTER);
+		this.setResizable(false);
 	}
 	
 	
@@ -62,6 +70,8 @@ public class VentanaConsulta extends Window {
 	
 	public Button obtenerBotonAnular(){
 		Button botonAnular= new Button("Anular consulta");
+		ThemeResource resource = new ThemeResource("img/16/cancel.png");
+		botonAnular.setIcon(resource);
 		botonAnular.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -71,6 +81,31 @@ public class VentanaConsulta extends Window {
 		return botonAnular;		
 	}
 
+	public Button obtenerBotonModificar(){
+		Button botonAnular= new Button("Modificar datos");
+		botonAnular.addClickListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				modificarDatos();
+			}
+		});
+		return botonAnular;		
+	}
+
+	private void modificarDatos() {
+		try {
+			cargarConsulta(consulta);
+			agenda.modificarConsulta(consulta);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Notification.show("Error al intentar modificar los datos de la consulta", e.getMessage(),
+					Notification.Type.ERROR_MESSAGE);
+			return;
+		}
+		calendar.markAsDirty();
+		Notification.show("Se modificaron los datos");
+		close();
+	}
 	
 	private void initComponents(){
 		this.center();
@@ -128,18 +163,9 @@ public class VentanaConsulta extends Window {
 						Notification.Type.WARNING_MESSAGE);
 				return;
 			}
-			Consulta consulta = new Consulta();
-			consulta.setCaption(this.nombrePaciente.getValue());
-			consulta.setStart(start.getValue());
-			GregorianCalendar gc = (GregorianCalendar) GregorianCalendar
-					.getInstance();
-			gc.setTime(start.getValue());
-			gc.add(GregorianCalendar.HOUR, 1);
-			consulta.setEnd(gc.getTime());
-			consulta.setPaciente(this.nombrePaciente.getValue());
-			if (quinesiologia.getValue()) consulta.setQuinesiologia(new Quinesiologia());
-			if (gimnasio.getValue()) consulta.setGimnasio(new Gimnasio());
-			if (terapiaFisica.getValue()) consulta.setTerapiaFisica(new TerapiaFisica());
+			cargarConsulta(consulta);
+			Notification.show("Se agrego la consulta "+consulta.getCaption(), 
+					Notification.Type.HUMANIZED_MESSAGE);
 			agenda.agregarConsulta(consulta);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,6 +177,35 @@ public class VentanaConsulta extends Window {
 		Notification.show("Se agendó la consulta");
 		close();
 	}
+	private void cargarConsulta(Consulta consulta){
+		if (consulta==null){
+			consulta = new Consulta();
+		}
+		consulta.setCaption(this.nombrePaciente.getValue());
+		consulta.setStart(start.getValue());
+		GregorianCalendar gc = (GregorianCalendar) GregorianCalendar
+				.getInstance();
+		gc.setTime(start.getValue());
+		gc.add(GregorianCalendar.HOUR, 1);
+		consulta.setEnd(gc.getTime());
+		consulta.setPaciente(this.nombrePaciente.getValue());
+		if (quinesiologia.getValue()){
+			consulta.setQuinesiologia(new Quinesiologia());
+		}else{
+			consulta.setQuinesiologia(null);
+		}
+		if (gimnasio.getValue()){
+			consulta.setGimnasio(new Gimnasio());
+		}else{
+			consulta.setGimnasio(null);
+		}
+		if (terapiaFisica.getValue()){
+			consulta.setTerapiaFisica(new TerapiaFisica());
+		}else{
+			consulta.setTerapiaFisica(null);
+		}
+	}
+	
 	
 	private void borrarConsulta() {
 		try {

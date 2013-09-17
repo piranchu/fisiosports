@@ -55,7 +55,4 @@ public class ControladorAgenda implements IAgenda, Serializable{
 		em.getTransaction().commit();
 	}
 
-	
-	
-	
 }

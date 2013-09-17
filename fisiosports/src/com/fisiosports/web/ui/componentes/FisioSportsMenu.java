@@ -20,7 +20,8 @@ public class FisioSportsMenu extends VerticalLayout{
 	    this.ui = ui;
 		this.setSpacing(true);
 	    this.setMargin(true);
-	    this.setStyleName("style-menu");
+	    //this.setHeight("200px");
+	    this.setStyleName("menu-principal");
 	    this.addComponent(botonAgenda());
 	    this.addComponent(botonPacientes());
 	    this.addComponent(botonMovimientosCaja());

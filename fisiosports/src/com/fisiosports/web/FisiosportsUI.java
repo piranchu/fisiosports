@@ -3,6 +3,7 @@ package com.fisiosports.web;
 import javax.servlet.annotation.WebServlet;
 
 import com.fisiosports.web.ui.componentes.FisioSportsMenu;
+import com.fisiosports.web.ui.componentes.FisioSportsTitulo;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -36,15 +37,13 @@ public class FisiosportsUI extends UI {
 	}
 
 	private void agregarTitulo() {
-		HorizontalLayout hl = new HorizontalLayout();
+		//HorizontalLayout hl = new HorizontalLayout();
 		//hl.setMargin(true);
-		hl.setSizeUndefined();
-		Label titulo = new Label("<h3>Fisio Sports</h3>");
-		titulo.setContentMode(ContentMode.HTML);
-		hl.addComponent(titulo);
-		hl.setComponentAlignment(titulo, Alignment.MIDDLE_RIGHT);
-		hl.setStyleName("style-titulo");
-		content.addComponent(hl);
+		//hl.setSizeUndefined();
+		//Label titulo = new Label("<h3>Fisio Sports</h3>");
+		//titulo.setContentMode(ContentMode.HTML);
+		FisioSportsTitulo titulo = new FisioSportsTitulo(); 
+		content.addComponent(titulo);
 	}
 
 	private void agregarCuerpo() {
