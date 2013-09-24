@@ -94,7 +94,7 @@ public class VentanaConsulta extends Window {
 
 	private void modificarDatos() {
 		try {
-			cargarConsulta(consulta);
+			cargarConsulta();
 			agenda.modificarConsulta(consulta);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -163,10 +163,10 @@ public class VentanaConsulta extends Window {
 						Notification.Type.WARNING_MESSAGE);
 				return;
 			}
-			cargarConsulta(consulta);
+			cargarConsulta();
 			Notification.show("Se agrego la consulta "+consulta.getCaption(), 
 					Notification.Type.HUMANIZED_MESSAGE);
-			agenda.agregarConsulta(consulta);
+			agenda.agregarConsulta(this.consulta);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Notification.show("Error al intentar agendar la consulta", e.getMessage(),
@@ -177,7 +177,7 @@ public class VentanaConsulta extends Window {
 		Notification.show("Se agendó la consulta");
 		close();
 	}
-	private void cargarConsulta(Consulta consulta){
+	private void cargarConsulta(){
 		if (consulta==null){
 			consulta = new Consulta();
 		}

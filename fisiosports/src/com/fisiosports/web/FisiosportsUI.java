@@ -37,11 +37,6 @@ public class FisiosportsUI extends UI {
 	}
 
 	private void agregarTitulo() {
-		//HorizontalLayout hl = new HorizontalLayout();
-		//hl.setMargin(true);
-		//hl.setSizeUndefined();
-		//Label titulo = new Label("<h3>Fisio Sports</h3>");
-		//titulo.setContentMode(ContentMode.HTML);
 		FisioSportsTitulo titulo = new FisioSportsTitulo(); 
 		content.addComponent(titulo);
 	}

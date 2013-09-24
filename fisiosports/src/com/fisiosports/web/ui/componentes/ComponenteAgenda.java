@@ -8,6 +8,7 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.themes.BaseTheme;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -45,7 +46,9 @@ public class ComponenteAgenda extends VerticalLayout{
 		itemAgendar.setIcon(resource);
 		this.addComponent(menuBar);
 */
-		this.addComponent(botonAgendarConsulta());
+		Button botonAgendar = botonAgendarConsulta(); 
+		this.addComponent(botonAgendar);
+		this.setComponentAlignment(botonAgendar, Alignment.MIDDLE_CENTER);
 		
 		calendar = new FisioSportsCalendar(ui);
 		this.addComponent(calendar);

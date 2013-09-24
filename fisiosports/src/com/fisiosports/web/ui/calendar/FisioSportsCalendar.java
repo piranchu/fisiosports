@@ -45,8 +45,8 @@ public class FisioSportsCalendar extends Calendar{
 		this.setStartDate(cal.getTime());
 		cal.add(cal.DAY_OF_WEEK, 6);
 		this.setEndDate(cal.getTime());
-		System.out.println("[FisioSportsCalendar] start:"+this.getStartDate());
-		System.out.println("[FisioSportsCalendar] end:"+this.getEndDate());
+//		System.out.println("[FisioSportsCalendar] start:"+this.getStartDate());
+//		System.out.println("[FisioSportsCalendar] end:"+this.getEndDate());
 
 
 		this.setHandler(new BasicEventMoveHandler() {
@@ -86,7 +86,7 @@ public class FisioSportsCalendar extends Calendar{
 			@Override
 			public void eventClick(EventClick event) {
 				FisioSportsCalendarEvent fisioSportsEvent = (FisioSportsCalendarEvent) event.getCalendarEvent();
-				System.out.println("[FisioSportsCalendar.EventClickHandler] fisioSportsEvent:"+fisioSportsEvent.getCaption());
+//				System.out.println("[FisioSportsCalendar.EventClickHandler] fisioSportsEvent:"+fisioSportsEvent.getCaption());
 				Window window = new VentanaConsulta(calendar, fisioSportsEvent.getConsulta());
 				ui.addWindow(window);
 				//Notification.show(consulta.getCaption());
