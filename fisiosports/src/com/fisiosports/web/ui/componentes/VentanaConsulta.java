@@ -14,8 +14,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -30,10 +32,14 @@ public class VentanaConsulta extends Window {
 	private IAgenda agenda;
 	private TextField nombrePaciente;
 	private PopupDateField start;
-	private CheckBox quinesiologia;
+	private CheckBox masajes;
 	private CheckBox terapiaFisica;
 	private CheckBox gimnasio;
+	private CheckBox deportologo;
+	private CheckBox nutricionista;
+	private CheckBox fisiatra;
 	private Calendar calendar;
+	private TextArea observaciones;
 
 	public VentanaConsulta(Calendar calendar) {
 		this.calendar = calendar;
@@ -119,15 +125,37 @@ public class VentanaConsulta extends Window {
 		this.nombrePaciente = new TextField();
 		this.nombrePaciente.setCaption("Nombre del paciente");
 		content.addComponent(nombrePaciente);
-		this.quinesiologia = new CheckBox();
-		this.quinesiologia.setCaption("Indicar si utiliza quinesiología");
-		content.addComponent(quinesiologia);
+		
+		HorizontalLayout hl = new HorizontalLayout();
+		VerticalLayout vl1 = new VerticalLayout();
+		VerticalLayout vl2 = new VerticalLayout();
+		
+		this.masajes = new CheckBox();
+		this.masajes.setCaption("masajes");
+		vl1.addComponent(masajes);
 		this.terapiaFisica = new CheckBox();
-		this.terapiaFisica.setCaption("Indicar si utiliza terapia física");
-		content.addComponent(terapiaFisica);
+		this.terapiaFisica.setCaption("terapia física");
+		vl1.addComponent(terapiaFisica);
 		this.gimnasio = new CheckBox();
-		this.gimnasio.setCaption("Indicar si utiliza gimnasio");
-		content.addComponent(gimnasio);
+		this.gimnasio.setCaption("gimnasio");
+		vl1.addComponent(gimnasio);
+		this.deportologo = new CheckBox();
+		this.deportologo.setCaption("deportologo");
+		vl2.addComponent(deportologo);
+		this.nutricionista = new CheckBox();
+		this.nutricionista.setCaption("nutricionista");
+		vl2.addComponent(nutricionista);
+		this.fisiatra = new CheckBox();
+		this.fisiatra.setCaption("fisiatra");
+		vl2.addComponent(fisiatra);
+		
+		hl.addComponent(vl1);
+		hl.addComponent(vl2);
+		
+		content.addComponent(hl);
+		
+		this.observaciones = new TextArea("Observaciones");
+		content.addComponent(observaciones);
 		this.start = new PopupDateField();
 		this.start.setCaption("Indicar fecha/hora para agendar");
 		this.start.setResolution(Resolution.MINUTE);
@@ -138,9 +166,14 @@ public class VentanaConsulta extends Window {
 	public void cargarDatosConsulta(Consulta consulta){
 		this.nombrePaciente.setValue(consulta.getPaciente());
 		this.gimnasio.setValue(consulta.getGimnasio()!=null);
-		this.quinesiologia.setValue(consulta.getQuinesiologia()!=null);
+		this.masajes.setValue(consulta.getQuinesiologia()!=null);
 		this.terapiaFisica.setValue(consulta.getTerapiaFisica()!=null);
 		this.start.setValue(consulta.getStart());
+		this.deportologo.setValue(consulta.getDeportologo());
+		this.fisiatra.setValue(consulta.getFisiatra());
+		this.nutricionista.setValue(consulta.getNutricionista());
+		this.observaciones.setValue(consulta.getObservaciones());
+		
 	}
 
 	private void agregarConsulta() {
@@ -152,7 +185,7 @@ public class VentanaConsulta extends Window {
 				return;
 			}
 			if (!this.gimnasio.getValue() && !this.terapiaFisica.getValue()
-					&& !this.quinesiologia.getValue()) {
+					&& !this.masajes.getValue()) {
 				Notification.show(
 						"Debe seleccionar por lo menos un tipo de terapia",
 						Notification.Type.WARNING_MESSAGE);
@@ -189,7 +222,7 @@ public class VentanaConsulta extends Window {
 		gc.add(GregorianCalendar.HOUR, 1);
 		consulta.setEnd(gc.getTime());
 		consulta.setPaciente(this.nombrePaciente.getValue());
-		if (quinesiologia.getValue()){
+		if (masajes.getValue()){
 			consulta.setQuinesiologia(new Quinesiologia());
 		}else{
 			consulta.setQuinesiologia(null);
@@ -204,6 +237,10 @@ public class VentanaConsulta extends Window {
 		}else{
 			consulta.setTerapiaFisica(null);
 		}
+		consulta.setDeportologo(this.deportologo.getValue());
+		consulta.setFisiatra(this.fisiatra.getValue());
+		consulta.setNutricionista(this.nutricionista.getValue());
+		consulta.setObservaciones(this.observaciones.getValue());
 	}
 	
 	

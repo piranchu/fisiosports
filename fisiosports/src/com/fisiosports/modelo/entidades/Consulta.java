@@ -40,6 +40,10 @@ public class Consulta implements Serializable{
     private Date end;
     private Date start;
     private String styleName;
+    private Boolean nutricionista;
+    private Boolean deportologo;
+    private Boolean fisiatra;
+    private String observaciones;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -128,7 +132,37 @@ public class Consulta implements Serializable{
 	public void setStyleName(String styleName) {
 		this.styleName = styleName;
 	}
-	
-	
+
+	public Boolean getNutricionista() {
+		return nutricionista;
+	}
+
+	public void setNutricionista(Boolean nutricionista) {
+		this.nutricionista = nutricionista;
+	}
+
+	public Boolean getDeportologo() {
+		return deportologo;
+	}
+
+	public void setDeportologo(Boolean deportologo) {
+		this.deportologo = deportologo;
+	}
+
+	public Boolean getFisiatra() {
+		return fisiatra;
+	}
+
+	public void setFisiatra(Boolean fisiatra) {
+		this.fisiatra = fisiatra;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}	
 	
 }
