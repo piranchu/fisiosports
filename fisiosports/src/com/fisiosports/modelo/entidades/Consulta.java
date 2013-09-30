@@ -42,7 +42,7 @@ public class Consulta implements Serializable{
     private String styleName;
     private Boolean nutricionista;
     private Boolean deportologo;
-    private Boolean fisiatra;
+    private Boolean traumatologo;
     private String observaciones;
 	
 	private static final long serialVersionUID = 1L;
@@ -149,12 +149,12 @@ public class Consulta implements Serializable{
 		this.deportologo = deportologo;
 	}
 
-	public Boolean getFisiatra() {
-		return fisiatra;
+	public Boolean getTraumatologo() {
+		return traumatologo;
 	}
 
-	public void setFisiatra(Boolean fisiatra) {
-		this.fisiatra = fisiatra;
+	public void setTraumatologo(Boolean traumatologo) {
+		this.traumatologo = traumatologo;
 	}
 
 	public String getObservaciones() {

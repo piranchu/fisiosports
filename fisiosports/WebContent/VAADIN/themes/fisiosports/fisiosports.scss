@@ -8,18 +8,33 @@
   /* Include all the styles from the reindeer theme */
   @include reindeer;
   
-.style-titulo {
-	backround-color: red;
-	width: 100%;
-	font-family:"Verdana", verdana, fantasy;
-	border: 2px solid black;
-	-moz-border-radius: 20px;		
+.menuview {
+	background: black;
+	}
+
+.menu-calendario {
+	backround: grey !important;
+	color: white;
 }
 
-.menu-principal {
-	background: white;
-	border: 1px solid black;
-}
+
+.menu-button {
+
+	/*border: 1px solid #36aac8 !important;*/
+	border: none !important;
+	/*background: url("img/CashRegister-t-64.png") #2687b1 top left repeat-x;*/
+	background: transparent;
+	color: #68abed !important;
+	font: 400 24px/1.5 "Open Sans","Helvetica Neue",sans-serif !important;
+	cursor: pointer !important;
+/*	-moz-border-radius: 9px !important;
+	-webkit-border-radius: 9px !important;
+	border-radius: 9px !important; 
 	
+	-moz-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+	-webkit-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+*/	
+}
 		
 }

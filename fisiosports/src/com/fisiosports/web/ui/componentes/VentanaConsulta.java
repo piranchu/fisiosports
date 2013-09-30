@@ -1,5 +1,6 @@
 package com.fisiosports.web.ui.componentes;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.modelo.entidades.Consulta;
@@ -37,13 +38,21 @@ public class VentanaConsulta extends Window {
 	private CheckBox gimnasio;
 	private CheckBox deportologo;
 	private CheckBox nutricionista;
-	private CheckBox fisiatra;
+	private CheckBox traumatologo;
 	private Calendar calendar;
 	private TextArea observaciones;
 
 	public VentanaConsulta(Calendar calendar) {
 		this.calendar = calendar;
 		this.initComponents();
+		content.addComponent(obtenerBotonAgendar());
+		this.setResizable(false);
+	}
+
+	public VentanaConsulta(Calendar calendar, Date startDate) {
+		this.calendar = calendar;
+		this.initComponents();
+		this.start.setValue(startDate);
 		content.addComponent(obtenerBotonAgendar());
 		this.setResizable(false);
 	}
@@ -145,9 +154,9 @@ public class VentanaConsulta extends Window {
 		this.nutricionista = new CheckBox();
 		this.nutricionista.setCaption("nutricionista");
 		vl2.addComponent(nutricionista);
-		this.fisiatra = new CheckBox();
-		this.fisiatra.setCaption("fisiatra");
-		vl2.addComponent(fisiatra);
+		this.traumatologo = new CheckBox();
+		this.traumatologo.setCaption("traumatólogo");
+		vl2.addComponent(traumatologo);
 		
 		hl.addComponent(vl1);
 		hl.addComponent(vl2);
@@ -170,7 +179,7 @@ public class VentanaConsulta extends Window {
 		this.terapiaFisica.setValue(consulta.getTerapiaFisica()!=null);
 		this.start.setValue(consulta.getStart());
 		this.deportologo.setValue(consulta.getDeportologo());
-		this.fisiatra.setValue(consulta.getFisiatra());
+		this.traumatologo.setValue(consulta.getTraumatologo());
 		this.nutricionista.setValue(consulta.getNutricionista());
 		this.observaciones.setValue(consulta.getObservaciones());
 		
@@ -238,7 +247,7 @@ public class VentanaConsulta extends Window {
 			consulta.setTerapiaFisica(null);
 		}
 		consulta.setDeportologo(this.deportologo.getValue());
-		consulta.setFisiatra(this.fisiatra.getValue());
+		consulta.setTraumatologo(this.traumatologo.getValue());
 		consulta.setNutricionista(this.nutricionista.getValue());
 		consulta.setObservaciones(this.observaciones.getValue());
 	}
