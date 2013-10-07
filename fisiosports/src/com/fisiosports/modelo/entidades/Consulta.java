@@ -25,8 +25,16 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier
 
 public class Consulta implements Serializable{
 
+    // Atributos propios de clase Calendar
+	private String caption;
+    private String description;
+    private Date end;
+    private Date start;
+    private String styleName;
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
+	
+	// Atributos propios de Consulta 
 	//@ManyToOne 	private Paciente paciente;
 	private String paciente;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -35,11 +43,6 @@ public class Consulta implements Serializable{
 	private Gimnasio gimnasio;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Quinesiologia quinesiologia;
-    private String caption;
-    private String description;
-    private Date end;
-    private Date start;
-    private String styleName;
     private Boolean nutricionista;
     private Boolean deportologo;
     private Boolean traumatologo;

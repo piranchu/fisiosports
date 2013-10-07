@@ -25,7 +25,7 @@ public class ControladorPacientes implements IPacientes{
 		// TODO Auto-generated method stub
 		System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
 		em.getTransaction().begin();
-		System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getId());
+		System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
 		em.persist(paciente);
 		System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
 		em.getTransaction().commit();

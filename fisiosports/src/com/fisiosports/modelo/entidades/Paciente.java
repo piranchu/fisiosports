@@ -2,6 +2,8 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -15,24 +17,19 @@ public class Paciente implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
-	private Long id;
+	private Long documento;
 	private String nombre;
 	private String apellido;
-	private String documento;
 	private String telefono;
 	private String correoElectronico;
-	
+	@OneToOne
+	private Tratamiento tratamiento;
+	@OneToMany
+	private List<Tratamiento> tratamientosAnteriores;
 	
 	public Paciente() {
 		super();
 	}   
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -45,10 +42,10 @@ public class Paciente implements Serializable{
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public String getDocumento() {
+	public Long getDocumento() {
 		return documento;
 	}
-	public void setDocumento(String documento) {
+	public void setDocumento(Long documento) {
 		this.documento = documento;
 	}
 	public String getTelefono() {
@@ -63,7 +60,17 @@ public class Paciente implements Serializable{
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
+	public Tratamiento getTratamiento() {
+		return tratamiento;
+	}
+	public void setTratamiento(Tratamiento tratamiento) {
+		this.tratamiento = tratamiento;
+	}
+	public List<Tratamiento> getTratamientosAnteriores() {
+		return tratamientosAnteriores;
+	}
+	public void setTratamientosAnteriores(List<Tratamiento> tratamientosAnteriores) {
+		this.tratamientosAnteriores = tratamientosAnteriores;
+	}
 	
-	
-   
 }

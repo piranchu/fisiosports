@@ -1,10 +1,11 @@
-package com.fisiosports.web.ui.componentes;
+package com.fisiosports.web.ui.componentes.agenda;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.web.ui.calendar.FisioSportsCalendar;
+import com.fisiosports.web.ui.componentes.VentanaConsulta;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.vaadin.data.Item;
 import com.vaadin.server.ThemeResource;
@@ -85,7 +86,7 @@ public class ComponenteAgenda extends VerticalLayout{
 		Button pictureButton = new Button("Agendar consulta");
 		ThemeResource resource = new ThemeResource("img/24/calendar-24.png");
 	    pictureButton.setIcon(resource);
-	    pictureButton.setStyleName(BaseTheme.BUTTON_LINK);
+	    //pictureButton.setStyleName(BaseTheme.BUTTON_LINK);
 	    pictureButton.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

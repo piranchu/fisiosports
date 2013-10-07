@@ -47,6 +47,7 @@ public class VentanaConsulta extends Window {
 		this.initComponents();
 		content.addComponent(obtenerBotonAgendar());
 		this.setResizable(false);
+		this.setModal(true);
 	}
 
 	public VentanaConsulta(Calendar calendar, Date startDate) {
@@ -55,6 +56,7 @@ public class VentanaConsulta extends Window {
 		this.start.setValue(startDate);
 		content.addComponent(obtenerBotonAgendar());
 		this.setResizable(false);
+		this.setModal(true);
 	}
 
 	public VentanaConsulta(Calendar calendar, Consulta consulta) {
@@ -69,6 +71,7 @@ public class VentanaConsulta extends Window {
 		content.addComponent(botonAnular);
 		content.setComponentAlignment(botonAnular, Alignment.MIDDLE_CENTER);
 		this.setResizable(false);
+		this.setModal(true);
 	}
 	
 	

@@ -18,9 +18,9 @@ import javax.persistence.*;
 public class Tratamiento implements Serializable {
 
 	   
-	@Id
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
-	private String descripcion;
+	private String diagnostico;
 	private Paciente paciente;
 	@OneToMany
 	private List<Consulta> consultas; 
@@ -37,12 +37,12 @@ public class Tratamiento implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}   
-	public String getDescripcion() {
-		return this.descripcion;
+	public String getDiagnostico() {
+		return this.diagnostico;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setDiagnostico(String diagnostico) {
+		this.diagnostico = diagnostico;
 	}   
 	public Paciente getPaciente() {
 		return this.paciente;
