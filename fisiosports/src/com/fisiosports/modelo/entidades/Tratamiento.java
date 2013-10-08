@@ -5,6 +5,7 @@ import com.fisiosports.modelo.entidades.Paciente;
 import java.io.Serializable;
 import java.lang.Long;
 import java.lang.String;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -24,9 +25,9 @@ public class Tratamiento implements Serializable {
 	@OneToOne
 	private Paciente paciente;
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Consulta> consultasAgendadas; 
+	private List<Consulta> consultasAgendadas = new LinkedList<Consulta>(); 
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Consulta> consultasRealizadas;
+	private List<Consulta> consultasRealizadas = new LinkedList<Consulta>();
 	
 	private static final long serialVersionUID = 1L;
 

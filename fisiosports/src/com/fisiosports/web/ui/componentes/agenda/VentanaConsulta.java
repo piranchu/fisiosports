@@ -250,6 +250,7 @@ public class VentanaConsulta extends Window {
 			cargarConsulta();
 			Notification.show("Se agrego la consulta "+consulta.getCaption(), 
 					Notification.Type.HUMANIZED_MESSAGE);
+			paciente.getTratamiento().getConsultasAgendadas().add(consulta);
 			agenda.agregarConsulta(this.consulta);
 		} catch (Exception e) {
 			e.printStackTrace();
