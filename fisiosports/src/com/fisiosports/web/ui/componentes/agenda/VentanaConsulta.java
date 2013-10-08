@@ -1,14 +1,16 @@
-package com.fisiosports.web.ui.componentes;
+package com.fisiosports.web.ui.componentes.agenda;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.modelo.entidades.Gimnasio;
+import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.modelo.entidades.Quinesiologia;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
+import com.fisiosports.web.ui.componentes.pacientes.VentanaSeleccionPaciente;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -20,6 +22,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -28,9 +31,11 @@ public class VentanaConsulta extends Window {
 
 	private static final long serialVersionUID = 1L;
 
+	private UI ui;
 	private VerticalLayout content = new VerticalLayout();
 	private Consulta consulta;
 	private IAgenda agenda;
+	private Button botonSeleccionPaciente;
 	private TextField nombrePaciente;
 	private PopupDateField start;
 	private CheckBox masajes;
@@ -42,26 +47,27 @@ public class VentanaConsulta extends Window {
 	private Calendar calendar;
 	private TextArea observaciones;
 
-	public VentanaConsulta(Calendar calendar) {
+	private Paciente paciente;
+
+	public VentanaConsulta(UI ui, Calendar calendar) {
 		this.calendar = calendar;
+		this.ui = ui;
 		this.initComponents();
 		content.addComponent(obtenerBotonAgendar());
-		this.setResizable(false);
-		this.setModal(true);
 	}
 
-	public VentanaConsulta(Calendar calendar, Date startDate) {
+	public VentanaConsulta(UI ui, Calendar calendar, Date startDate) {
 		this.calendar = calendar;
+		this.ui = ui;
 		this.initComponents();
 		this.start.setValue(startDate);
 		content.addComponent(obtenerBotonAgendar());
-		this.setResizable(false);
-		this.setModal(true);
 	}
 
-	public VentanaConsulta(Calendar calendar, Consulta consulta) {
+	public VentanaConsulta(UI ui, Calendar calendar, Consulta consulta) {
 		this.calendar = calendar;
 		this.consulta = consulta;
+		this.ui = ui;
 		this.initComponents();
 		cargarDatosConsulta(consulta);
 		Button botonModificar = obtenerBotonModificar();
@@ -70,8 +76,6 @@ public class VentanaConsulta extends Window {
 		Button botonAnular = obtenerBotonAnular();
 		content.addComponent(botonAnular);
 		content.setComponentAlignment(botonAnular, Alignment.MIDDLE_CENTER);
-		this.setResizable(false);
-		this.setModal(true);
 	}
 	
 	
@@ -85,6 +89,31 @@ public class VentanaConsulta extends Window {
 		});
 		return botonAgendar;
 	}
+	
+	public Button obtenerBotonSeleccionPaciente(){
+		Button boton = new Button("Seleccionar paciente");
+		boton.addClickListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				seleccionarPaciente();
+			}
+		});
+		return boton;		
+	}
+	
+	private void seleccionarPaciente(){
+		VentanaSeleccionPaciente window = new VentanaSeleccionPaciente (this); 
+		this.ui.addWindow(window);
+	}
+	
+	public void setPaciente(Paciente paciente){
+		if (paciente == null) return;
+		this.nombrePaciente.setReadOnly(false);
+		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido());
+		this.nombrePaciente.setReadOnly(true);
+		this.paciente = paciente;
+	}
+	
 	
 	public Button obtenerBotonAnular(){
 		Button botonAnular= new Button("Anular consulta");
@@ -130,12 +159,16 @@ public class VentanaConsulta extends Window {
 		this.setSizeUndefined();
 		this.setCaption("Agendar horarios");
 		this.setContent(content);
+		this.setResizable(false);
+		this.setModal(true);
+
 		content.setMargin(true);
 		content.setSpacing(true);
 		this.agenda = FabricaControladores.getIAgenda();
 
 		this.nombrePaciente = new TextField();
-		this.nombrePaciente.setCaption("Nombre del paciente");
+		this.nombrePaciente.setCaption("Paciente");
+		this.nombrePaciente.setReadOnly(true);
 		content.addComponent(nombrePaciente);
 		
 		HorizontalLayout hl = new HorizontalLayout();

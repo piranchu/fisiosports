@@ -27,9 +27,9 @@ public class Paciente implements Serializable{
 	private String apellido;
 	private String telefono;
 	private String correoElectronico;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Tratamiento tratamiento;
-	@OneToMany
+	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Tratamiento> tratamientosAnteriores;
 	
 	public Paciente() {

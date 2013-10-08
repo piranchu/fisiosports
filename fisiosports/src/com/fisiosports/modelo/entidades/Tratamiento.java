@@ -23,9 +23,9 @@ public class Tratamiento implements Serializable {
 	private String diagnostico;
 	@OneToOne
 	private Paciente paciente;
-	@OneToMany
+	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Consulta> consultasAgendadas; 
-	@OneToMany
+	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Consulta> consultasRealizadas;
 	
 	private static final long serialVersionUID = 1L;

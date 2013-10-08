@@ -37,6 +37,7 @@ public class Consulta implements Serializable{
 	// Atributos propios de Consulta 
 	//@ManyToOne 	private Paciente paciente;
 	private String paciente;
+	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TerapiaFisica terapiaFisica;
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

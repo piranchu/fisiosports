@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.EventListener;
 import java.util.GregorianCalendar;
 
-import com.fisiosports.web.ui.componentes.VentanaConsulta;
+import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -80,7 +80,7 @@ public class FisioSportsCalendar extends Calendar{
 			public void eventClick(EventClick event) {
 				FisioSportsCalendarEvent fisioSportsEvent = (FisioSportsCalendarEvent) event.getCalendarEvent();
 //				System.out.println("[FisioSportsCalendar.EventClickHandler] fisioSportsEvent:"+fisioSportsEvent.getCaption());
-				Window window = new VentanaConsulta(calendar, fisioSportsEvent.getConsulta());
+				Window window = new VentanaConsulta(ui, calendar, fisioSportsEvent.getConsulta());
 				window.setModal(true);
 				ui.addWindow(window);
 				
@@ -125,7 +125,7 @@ public class FisioSportsCalendar extends Calendar{
 			    calendarEvent.setEnd(event.getEnd());
 			    System.out.println("[inicio:"+event.getStart()+"]");
 			    System.out.println("[fin:"+event.getEnd()+"]");
-				Window window = new VentanaConsulta(calendar, event.getStart());
+				Window window = new VentanaConsulta(ui, calendar, event.getStart());
 				ui.addWindow(window);
 			}
 		});

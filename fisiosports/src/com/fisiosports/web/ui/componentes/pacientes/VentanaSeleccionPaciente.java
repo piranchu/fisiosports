@@ -5,37 +5,21 @@ import java.util.List;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
+import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
 import com.vaadin.data.Container.Filter;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.event.FieldEvents.BlurEvent;
-import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.ui.Button;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Window;
 
-public class ComponentePacientes extends Panel{
+public class VentanaSeleccionPaciente extends Window{
 	
-	private UI ui;
-	private VerticalLayout layout = new VerticalLayout();
-	private Table tablaPacientes = new Table();
-	private HorizontalLayout layoutMenuPaciente = new HorizontalLayout();
-	
-	private List<Paciente> listaPacientes;
-	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
-	private Button botonAltaPaciente = new Button("Alta de paciente");
-	private ComponentePacientes componentePacientes;
-	private ContenedorPacientes contenedor;
-	
+	private VentanaConsulta ventanaConsulta;
 	private TextField documento = new TextField();
 	private TextField nombre = new TextField();
 	private TextField apellido = new TextField();
@@ -43,32 +27,30 @@ public class ComponentePacientes extends Panel{
 	private Filter filterDocumento = new SimpleStringFilter("documento", "", true, false);
 	private Filter filterNombre = new SimpleStringFilter("nombre", "", true, false);
 	private Filter filterApellido = new SimpleStringFilter("apellido", "", true, false);
+
+	private Table tablaPacientes = new Table();
+	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
+	private ContenedorPacientes contenedor;
 	
-	public ComponentePacientes(final UI ui){
+	private VerticalLayout layout = new VerticalLayout();
 		
-		this.ui = ui;
-		this.componentePacientes = this;
-		layout.setSpacing(true);
-		layout.setMargin(true);
-		
-		layoutMenuPaciente.addComponent(botonAltaPaciente);
-		botonAltaPaciente.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Window window = new ComponenteAltaPaciente(componentePacientes);
-				ui.addWindow(window);
-			}
-		});
-		this.layout.addComponent(layoutMenuPaciente);
+	public VentanaSeleccionPaciente(VentanaConsulta ventanaConsulta){
 
 		contenedor = new ContenedorPacientes(Paciente.class);
 		tablaPacientes.setContainerDataSource(contenedor);
-		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisibles());
-		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnas());
+		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisiblesReducidas());
+		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnasReducidas());
+		tablaPacientes.setSelectable(true);
+		tablaPacientes.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            public void itemClick(ItemClickEvent event) {
+               //implement your logic here
+            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
+            }
+        });
 		contenedor.addContainerFilter(filterDocumento);
 		contenedor.addContainerFilter(filterNombre);
 		contenedor.addContainerFilter(filterApellido);
-		
 		HorizontalLayout hl = new HorizontalLayout();
 		
 		documento.setInputPrompt("documento");
@@ -127,21 +109,23 @@ public class ComponentePacientes extends Panel{
 		this.layout.addComponent(tablaPacientes);
 		
 		this.setContent(layout);
+		
 	}
 	
 	public void consultarPacientes(){
-		this.listaPacientes = this.iPacientes.obtenerPacientes();
 		contenedor.removeAllItems();
-		contenedor.addAll(listaPacientes);
+		contenedor.addAll(this.iPacientes.obtenerPacientes());
 		
-		if (listaPacientes.size() == 0)
+		if (tablaPacientes.size() == 0)
 			tablaPacientes.setVisible(false);
-		if (listaPacientes.size() > 15){
+		if (tablaPacientes.size() > 15){
 			tablaPacientes.setPageLength(15);
 		}else{
-			tablaPacientes.setPageLength(listaPacientes.size());
+			tablaPacientes.setPageLength(tablaPacientes.size());
 		}
 		
 	}
 
+	
+	
 }

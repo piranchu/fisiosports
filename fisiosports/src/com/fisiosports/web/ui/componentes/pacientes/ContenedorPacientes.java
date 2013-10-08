@@ -11,11 +11,19 @@ public class ContenedorPacientes extends BeanItemContainer<Paciente>{
 		return new Object[]{"documento","nombre", "apellido", "telefono", "correoElectronico"};
 	}
 	
+	static public Object[] columnasVisiblesReducidas(){
+		return new Object[]{"documento","nombre", "apellido"};
+	}
+
 	static public String[] nombresColumnas(){
 		return new String[]{"documento","nombre", "apellido", "teléfono", "correo electrónico"};
 	}
 	
-//	public Object[] columnasVisibles(){
+	static public String[] nombresColumnasReducidas(){
+		return new String[]{"documento","nombre", "apellido"};
+	}
+
+	//	public Object[] columnasVisibles(){
 //		return new Object[]{};
 //	}
 	

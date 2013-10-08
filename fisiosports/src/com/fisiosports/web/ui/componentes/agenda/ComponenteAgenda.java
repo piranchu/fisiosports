@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.web.ui.calendar.FisioSportsCalendar;
-import com.fisiosports.web.ui.componentes.VentanaConsulta;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.vaadin.data.Item;
 import com.vaadin.server.ThemeResource;
@@ -90,7 +89,7 @@ public class ComponenteAgenda extends VerticalLayout{
 	    pictureButton.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaConsulta(calendar);
+				Window window = new VentanaConsulta(ui, calendar);
 				window.setModal(true);
 				ui.addWindow(window);
 			}
