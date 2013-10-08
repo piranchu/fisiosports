@@ -76,6 +76,7 @@ public class VentanaConsulta extends Window {
 		Button botonAnular = obtenerBotonAnular();
 		content.addComponent(botonAnular);
 		content.setComponentAlignment(botonAnular, Alignment.MIDDLE_CENTER);
+		botonSeleccionPaciente.setVisible(false);
 	}
 	
 	
@@ -166,8 +167,11 @@ public class VentanaConsulta extends Window {
 		content.setSpacing(true);
 		this.agenda = FabricaControladores.getIAgenda();
 
+		botonSeleccionPaciente = this.obtenerBotonSeleccionPaciente(); 
+		content.addComponent(botonSeleccionPaciente);
+		
 		this.nombrePaciente = new TextField();
-		this.nombrePaciente.setCaption("Paciente");
+		//this.nombrePaciente.setCaption("Paciente");
 		this.nombrePaciente.setReadOnly(true);
 		content.addComponent(nombrePaciente);
 		
@@ -209,7 +213,9 @@ public class VentanaConsulta extends Window {
 	}
 	
 	public void cargarDatosConsulta(Consulta consulta){
-		this.nombrePaciente.setValue(consulta.getPaciente());
+		this.nombrePaciente.setReadOnly(false);
+		this.paciente = consulta.getPaciente();
+		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido());
 		this.gimnasio.setValue(consulta.getGimnasio()!=null);
 		this.masajes.setValue(consulta.getQuinesiologia()!=null);
 		this.terapiaFisica.setValue(consulta.getTerapiaFisica()!=null);
@@ -223,12 +229,12 @@ public class VentanaConsulta extends Window {
 
 	private void agregarConsulta() {
 		try {
-			if (this.nombrePaciente.getValue() == null
-					|| this.nombrePaciente.getValue().trim().isEmpty()) {
-				Notification.show("Debe indicar nombre del paciente",
+			if (this.paciente == null) {
+				Notification.show("Debe indicar paciente",
 						Notification.Type.WARNING_MESSAGE);
 				return;
 			}
+			/*
 			if (!this.gimnasio.getValue() && !this.terapiaFisica.getValue()
 					&& !this.masajes.getValue()) {
 				Notification.show(
@@ -240,7 +246,7 @@ public class VentanaConsulta extends Window {
 				Notification.show("Debe indicar fecha/hora para la consulta",
 						Notification.Type.WARNING_MESSAGE);
 				return;
-			}
+			}*/
 			cargarConsulta();
 			Notification.show("Se agrego la consulta "+consulta.getCaption(), 
 					Notification.Type.HUMANIZED_MESSAGE);
@@ -266,7 +272,7 @@ public class VentanaConsulta extends Window {
 		gc.setTime(start.getValue());
 		gc.add(GregorianCalendar.HOUR, 1);
 		consulta.setEnd(gc.getTime());
-		consulta.setPaciente(this.nombrePaciente.getValue());
+		consulta.setPaciente(this.paciente);
 		if (masajes.getValue()){
 			consulta.setQuinesiologia(new Quinesiologia());
 		}else{

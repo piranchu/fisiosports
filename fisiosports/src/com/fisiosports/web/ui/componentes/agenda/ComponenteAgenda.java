@@ -83,8 +83,8 @@ public class ComponenteAgenda extends VerticalLayout{
 
 	private Button botonAgendarConsulta(){
 		Button pictureButton = new Button("Agendar consulta");
-		ThemeResource resource = new ThemeResource("img/24/calendar-24.png");
-	    pictureButton.setIcon(resource);
+		//ThemeResource resource = new ThemeResource("img/24/calendar-24.png");
+	    //pictureButton.setIcon(resource);
 	    //pictureButton.setStyleName(BaseTheme.BUTTON_LINK);
 	    pictureButton.addClickListener(new Button.ClickListener() {
 			@Override

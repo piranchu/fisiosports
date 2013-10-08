@@ -39,7 +39,7 @@ public class ControladorPacientes implements IPacientes{
 	}
 
 	@Override
-	public Paciente obtenerPaciente(String documento){
+	public Paciente obtenerPaciente(Long documento){
 		return em.find(Paciente.class, documento);
 		
 	}

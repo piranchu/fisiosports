@@ -35,8 +35,7 @@ public class Consulta implements Serializable{
 	private Long id;
 	
 	// Atributos propios de Consulta 
-	//@ManyToOne 	private Paciente paciente;
-	private String paciente;
+	@ManyToOne private Paciente paciente;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TerapiaFisica terapiaFisica;
@@ -89,11 +88,11 @@ public class Consulta implements Serializable{
 		this.quinesiologia = quinesiologia;
 	}
 
-	public String getPaciente() {
+	public Paciente getPaciente() {
 		return paciente;
 	}
 
-	public void setPaciente(String paciente) {
+	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
 

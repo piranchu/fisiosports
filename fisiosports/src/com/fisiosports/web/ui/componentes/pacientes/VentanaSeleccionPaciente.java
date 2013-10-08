@@ -34,9 +34,14 @@ public class VentanaSeleccionPaciente extends Window{
 	
 	private VerticalLayout layout = new VerticalLayout();
 		
-	public VentanaSeleccionPaciente(VentanaConsulta ventanaConsulta){
+	public VentanaSeleccionPaciente(final VentanaConsulta ventanaConsulta){
 
+		this.ventanaConsulta = ventanaConsulta;
+		this.setModal(true);
+		this.setCaption("Selección de pacientes");
+		layout.setMargin(true);
 		contenedor = new ContenedorPacientes(Paciente.class);
+		tablaPacientes.setSizeFull();
 		tablaPacientes.setContainerDataSource(contenedor);
 		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisiblesReducidas());
 		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnasReducidas());
@@ -45,7 +50,12 @@ public class VentanaSeleccionPaciente extends Window{
             @Override
             public void itemClick(ItemClickEvent event) {
                //implement your logic here
-            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
+            	//System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
+            	//System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem().getClass().getName());
+            	Paciente paciente = iPacientes.obtenerPaciente((Long)event.getItem().getItemProperty("documento").getValue());
+            	//System.out.println("[VentanaSeleccionPaciente] item click:"+paciente);
+            	ventanaConsulta.setPaciente(paciente);
+            	close();
             }
         });
 		contenedor.addContainerFilter(filterDocumento);
@@ -55,8 +65,8 @@ public class VentanaSeleccionPaciente extends Window{
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
-		documento.setWidth("12em");
-		tablaPacientes.setColumnWidth("documento", 200);
+		documento.setWidth("10em");
+		tablaPacientes.setColumnWidth("documento", 110);
 		documento.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
@@ -69,12 +79,11 @@ public class VentanaSeleccionPaciente extends Window{
 		hl.addComponent(documento);
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
-		nombre.setWidth("18em");
-		tablaPacientes.setColumnWidth("nombre", 240);
+		nombre.setWidth("15em");
+		tablaPacientes.setColumnWidth("nombre", 160);
 		nombre.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] nombre.textChange");
 				contenedor.removeContainerFilter(filterNombre);
 				filterNombre = new SimpleStringFilter("nombre", event.getText(), true, true);
 				contenedor.addContainerFilter(filterNombre);
@@ -84,13 +93,11 @@ public class VentanaSeleccionPaciente extends Window{
 		
 		apellido.setInputPrompt("apellido");
 		apellido.setImmediate(true);
-		apellido.setWidth("18em");
-		tablaPacientes.setColumnWidth("apellido", 240);
+		apellido.setWidth("15em");
+		tablaPacientes.setColumnWidth("apellido", 160);
 		apellido.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] apellido.textChange:"+event.getText());
-				System.out.println("[ComponentePacientes] apellido.textChange:"+apellido.getValue());
 				contenedor.removeContainerFilter(filterApellido);
 				filterApellido = new SimpleStringFilter("apellido", event.getText(), true, true);
 				contenedor.addContainerFilter(filterApellido);

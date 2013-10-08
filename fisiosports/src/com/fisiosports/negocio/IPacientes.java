@@ -10,6 +10,6 @@ public interface IPacientes {
 	
 	public List<Paciente> obtenerPacientes();
 
-	public Paciente obtenerPaciente(String documento);
+	public Paciente obtenerPaciente(Long documento);
 	
 }

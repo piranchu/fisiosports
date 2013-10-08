@@ -73,12 +73,11 @@ public class ComponentePacientes extends Panel{
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
-		documento.setWidth("12em");
-		tablaPacientes.setColumnWidth("documento", 200);
+		documento.setWidth("10em");
+		tablaPacientes.setColumnWidth("documento", 105);
 		documento.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] documento.textChange");
 				contenedor.removeContainerFilter(filterDocumento);
 				filterDocumento = new SimpleStringFilter("documento", event.getText(), true, true);
 				contenedor.addContainerFilter(filterDocumento);
@@ -87,12 +86,11 @@ public class ComponentePacientes extends Panel{
 		hl.addComponent(documento);
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
-		nombre.setWidth("18em");
-		tablaPacientes.setColumnWidth("nombre", 240);
+		nombre.setWidth("14em");
+		tablaPacientes.setColumnWidth("nombre", 150);
 		nombre.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] nombre.textChange");
 				contenedor.removeContainerFilter(filterNombre);
 				filterNombre = new SimpleStringFilter("nombre", event.getText(), true, true);
 				contenedor.addContainerFilter(filterNombre);
@@ -102,13 +100,11 @@ public class ComponentePacientes extends Panel{
 		
 		apellido.setInputPrompt("apellido");
 		apellido.setImmediate(true);
-		apellido.setWidth("18em");
-		tablaPacientes.setColumnWidth("apellido", 240);
+		apellido.setWidth("14em");
+		tablaPacientes.setColumnWidth("apellido", 150);
 		apellido.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] apellido.textChange:"+event.getText());
-				System.out.println("[ComponentePacientes] apellido.textChange:"+apellido.getValue());
 				contenedor.removeContainerFilter(filterApellido);
 				filterApellido = new SimpleStringFilter("apellido", event.getText(), true, true);
 				contenedor.addContainerFilter(filterApellido);
