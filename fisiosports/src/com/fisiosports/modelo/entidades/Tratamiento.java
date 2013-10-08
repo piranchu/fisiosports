@@ -21,9 +21,12 @@ public class Tratamiento implements Serializable {
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String diagnostico;
+	@OneToOne
 	private Paciente paciente;
 	@OneToMany
-	private List<Consulta> consultas; 
+	private List<Consulta> consultasAgendadas; 
+	@OneToMany
+	private List<Consulta> consultasRealizadas;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -51,11 +54,17 @@ public class Tratamiento implements Serializable {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
-	public List<Consulta> getSesiones() {
-		return consultas;
+	public List<Consulta> getConsultasAgendadas() {
+		return consultasAgendadas;
 	}
-	public void setSesiones(List<Consulta> consultas) {
-		this.consultas = consultas;
+	public void setConsultasAgendadas(List<Consulta> consultasAgendadas) {
+		this.consultasAgendadas = consultasAgendadas;
+	}
+	public List<Consulta> getConsultasRealizadas() {
+		return consultasRealizadas;
+	}
+	public void setConsultasRealizadas(List<Consulta> consultasRealizadas) {
+		this.consultasRealizadas = consultasRealizadas;
 	}
    
 }

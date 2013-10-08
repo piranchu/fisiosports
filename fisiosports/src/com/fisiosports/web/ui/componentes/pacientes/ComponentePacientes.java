@@ -43,15 +43,10 @@ public class ComponentePacientes extends Panel{
 			}
 		});
 		this.layout.addComponent(layoutMenuPaciente);
+
 		
-		
-		this.listaPacientes = this.iPacientes.obtenerPacientes();
-		ContenedorPacientes contenedor = new ContenedorPacientes(Paciente.class);
-		contenedor.addAll(listaPacientes);
-		this.tablaPacientes.setContainerDataSource(contenedor);
 		tablaPacientes.setImmediate(true);
-		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisibles());
-		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnas());
+		consultarPacientes();
 		this.layout.addComponent(tablaPacientes);
 		
 		this.setContent(layout);
@@ -62,6 +57,16 @@ public class ComponentePacientes extends Panel{
 		ContenedorPacientes contenedor = new ContenedorPacientes(Paciente.class);
 		contenedor.addAll(listaPacientes);
 		this.tablaPacientes.setContainerDataSource(contenedor);
+		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisibles());
+		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnas());
+		if (listaPacientes.size() == 0)
+			tablaPacientes.setVisible(false);
+		if (listaPacientes.size() > 15){
+			tablaPacientes.setPageLength(15);
+		}else{
+			tablaPacientes.setPageLength(listaPacientes.size());
+		}
+		
 	}
 
 }

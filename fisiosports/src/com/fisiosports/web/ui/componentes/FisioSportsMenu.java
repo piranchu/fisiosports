@@ -77,7 +77,7 @@ public class FisioSportsMenu extends HorizontalLayout{
 	    boton.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Notification.show("Próximamente: historia clínica de pacientes", Notification.Type.HUMANIZED_MESSAGE);
+				//Notification.show("Próximamente: historia clínica de pacientes", Notification.Type.HUMANIZED_MESSAGE);
 				componentePrincipal.setContent(new ComponentePacientes(ui));
 			}
 		});

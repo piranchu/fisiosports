@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.Tratamiento;
 
 public class ControladorPacientes implements IPacientes{
 
@@ -28,6 +29,8 @@ public class ControladorPacientes implements IPacientes{
 		System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
 		em.getTransaction().begin();
 		System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
+		paciente.setTratamiento(new Tratamiento());
+		paciente.getTratamiento().setPaciente(paciente);
 		em.persist(paciente);
 		System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
 		em.getTransaction().commit();
