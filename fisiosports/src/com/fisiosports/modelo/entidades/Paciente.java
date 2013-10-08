@@ -11,6 +11,11 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Paciente.all",
+                query="SELECT p FROM Paciente p ")
+}) 
+
 
 public class Paciente implements Serializable{
 

@@ -2,6 +2,7 @@ package com.fisiosports.web.ui.componentes;
 
 import com.fisiosports.web.ui.componentes.agenda.ComponenteAgenda;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteAltaPaciente;
+import com.fisiosports.web.ui.componentes.pacientes.ComponentePacientes;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -77,7 +78,7 @@ public class FisioSportsMenu extends HorizontalLayout{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Notification.show("Próximamente: historia clínica de pacientes", Notification.Type.HUMANIZED_MESSAGE);
-				componentePrincipal.setContent(new ComponenteAltaPaciente());
+				componentePrincipal.setContent(new ComponentePacientes(ui));
 			}
 		});
 		return boton;

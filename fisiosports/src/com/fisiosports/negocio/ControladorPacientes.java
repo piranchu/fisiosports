@@ -1,5 +1,7 @@
 package com.fisiosports.negocio;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -31,6 +33,18 @@ public class ControladorPacientes implements IPacientes{
 		em.getTransaction().commit();
 		System.out.println("[ControladorPacientes.crearPaciente] FIN");
 		
+	}
+
+	@Override
+	public Paciente obtenerPaciente(String documento){
+		return em.find(Paciente.class, documento);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Paciente> obtenerPacientes() {
+		return em.createNamedQuery("Paciente.all").getResultList();
 	}
 	
 	

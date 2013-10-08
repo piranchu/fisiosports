@@ -7,8 +7,12 @@ public class ContenedorPacientes extends BeanItemContainer<Paciente>{
 
 	//public final String id = "3";
 	
-	public Object[] nombresColumnas(){
-		return new Object[]{"documento","nombre", "apellido", "teléfono", "correo electrónico"};
+	static public Object[] columnasVisibles(){
+		return new Object[]{"documento","nombre", "apellido", "telefono", "correoElectronico"};
+	}
+	
+	static public String[] nombresColumnas(){
+		return new String[]{"documento","nombre", "apellido", "teléfono", "correo electrónico"};
 	}
 	
 //	public Object[] columnasVisibles(){
