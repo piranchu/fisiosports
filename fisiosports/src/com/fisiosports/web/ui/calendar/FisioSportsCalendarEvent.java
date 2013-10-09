@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fisiosports.modelo.entidades.Consulta;
+import com.fisiosports.modelo.entidades.ConsultaAgenda;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
@@ -19,11 +19,11 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 	private static final long serialVersionUID = 1L;
 	
 	private IAgenda agenda;
-	private Consulta consulta;
+	private ConsultaAgenda consultaAgenda;
     private transient List<EventChangeListener> listeners = new ArrayList<EventChangeListener>();
 	
-	public FisioSportsCalendarEvent(Consulta consulta){
-		this.consulta = consulta;
+	public FisioSportsCalendarEvent(ConsultaAgenda consultaAgenda){
+		this.consultaAgenda = consultaAgenda;
 		this.agenda = FabricaControladores.getIAgenda();
 	}
 
@@ -38,30 +38,30 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 	@Override
 	public Date getStart() {
 		// TODO Auto-generated method stub
-		return this.consulta.getStart();
+		return this.consultaAgenda.getStart();
 	}
 
 	@Override
 	public Date getEnd() {
 		// TODO Auto-generated method stub
-		return this.consulta.getEnd();
+		return this.consultaAgenda.getEnd();
 	}
 
 	@Override
 	public String getCaption() {
 		// TODO Auto-generated method stub
-		return this.consulta.getCaption();
+		return this.consultaAgenda.getCaption();
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return this.consulta.getDescription();
+		return this.consultaAgenda.getDescription();
 	}
 
 	@Override
 	public String getStyleName() {
-		return this.consulta.getStyleName();
+		return this.consultaAgenda.getStyleName();
 	}
 
 	@Override
@@ -81,31 +81,31 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 
 	@Override
 	public void setCaption(String caption) {
-		this.consulta.setCaption(caption);
+		this.consultaAgenda.setCaption(caption);
         fireEventChange();
 	}
 
 	@Override
 	public void setDescription(String description) {
-		this.consulta.setDescription(description);		
+		this.consultaAgenda.setDescription(description);		
         fireEventChange();
 	}
 
 	@Override
 	public void setEnd(Date end) {
-		this.consulta.setEnd(end);
+		this.consultaAgenda.setEnd(end);
         fireEventChange();
 	}
 
 	@Override
 	public void setStart(Date start) {
-		this.consulta.setStart(start);		
+		this.consultaAgenda.setStart(start);		
         fireEventChange();
 	}
 
 	@Override
 	public void setStyleName(String styleName) {
-		this.consulta.setStyleName(styleName);
+		this.consultaAgenda.setStyleName(styleName);
         fireEventChange();
 	}
 
@@ -113,12 +113,12 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 	public void setAllDay(boolean isAllDay) {
 	}
 
-	public Consulta getConsulta() {
-		return consulta;
+	public ConsultaAgenda getConsulta() {
+		return consultaAgenda;
 	}
 
-	public void setConsulta(Consulta consulta) {
-		this.consulta = consulta;
+	public void setConsulta(ConsultaAgenda consultaAgenda) {
+		this.consultaAgenda = consultaAgenda;
         fireEventChange();
 	}
 		

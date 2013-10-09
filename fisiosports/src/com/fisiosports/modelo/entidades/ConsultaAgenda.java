@@ -16,14 +16,14 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Consulta.findConsultasByDates",
-                query="SELECT c FROM Consulta c "
+    @NamedQuery(name="ConsultaAgenda.findConsultasByDates",
+                query="SELECT c FROM ConsultaAgenda c "
                 		+ "WHERE c.start >= :start AND c.end <= :end "
                 		+ "ORDER BY c.start ")
 }) 
 
 
-public class Consulta implements Serializable{
+public class ConsultaAgenda implements Serializable{
 
     // Atributos propios de clase Calendar
 	private String caption;
@@ -34,15 +34,11 @@ public class Consulta implements Serializable{
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
-	// Atributos propios de Consulta 
+	// Atributos propios de ConsultaAgenda 
 	@ManyToOne private Paciente paciente;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private TerapiaFisica terapiaFisica;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Gimnasio gimnasio;
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Quinesiologia quinesiologia;
+	private Boolean terapiaFisica;
+	private Boolean gimnasio;
+	private Boolean masajes;
     private Boolean nutricionista;
     private Boolean deportologo;
     private Boolean traumatologo;
@@ -50,11 +46,11 @@ public class Consulta implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	public Consulta() {
+	public ConsultaAgenda() {
 		super();		
 	}   
 
-	public Consulta(String caption, String description, Date date) {
+	public ConsultaAgenda(String caption, String description, Date date) {
         this.caption = caption;
         this.description = description;
         start = date;
@@ -68,24 +64,24 @@ public class Consulta implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public TerapiaFisica getTerapiaFisica() {
+	public Boolean getTerapiaFisica() {
 		return terapiaFisica;
 		
 	}
-	public void setTerapiaFisica(TerapiaFisica terapiaFisica) {
+	public void setTerapiaFisica(Boolean terapiaFisica) {
 		this.terapiaFisica = terapiaFisica;
 	}
-	public Gimnasio getGimnasio() {
+	public Boolean getGimnasio() {
 		return gimnasio;
 	}
-	public void setGimnasio(Gimnasio gimnasio) {
+	public void setGimnasio(Boolean gimnasio) {
 		this.gimnasio = gimnasio;
 	}
-	public Quinesiologia getQuinesiologia() {
-		return quinesiologia;
+	public Boolean getMasajes() {
+		return masajes;
 	}
-	public void setQuinesiologia(Quinesiologia quinesiologia) {
-		this.quinesiologia = quinesiologia;
+	public void setMasajes(Boolean masajes) {
+		this.masajes = masajes;
 	}
 
 	public Paciente getPaciente() {

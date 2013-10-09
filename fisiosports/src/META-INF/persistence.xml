@@ -4,10 +4,11 @@
 		<class>com.fisiosports.modelo.entidades.Paciente</class>
 		<class>com.fisiosports.modelo.entidades.TerapiaFisica</class>
 		<class>com.fisiosports.modelo.entidades.Gimnasio</class>
-		<class>com.fisiosports.modelo.entidades.Quinesiologia</class>
+		<class>com.fisiosports.modelo.entidades.Masajes</class>
 		<class>com.fisiosports.modelo.entidades.Tratamiento</class>
-		<class>com.fisiosports.modelo.entidades.Consulta</class>
+		<class>com.fisiosports.modelo.entidades.ConsultaAgenda</class>
 		<class>com.fisiosports.modelo.entidades.SesionRehabilitacion</class>
+		<class>com.fisiosports.modelo.entidades.ConsultaEspecialista</class>
 		<properties>
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
 			<property name="openjpa.ConnectionUserName" value=""/>

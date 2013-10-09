@@ -8,16 +8,16 @@ import java.lang.Long;
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Quinesiologia
+ * Entity implementation class for Entity: Masajes
  *
  */
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Quinesiologia extends SesionRehabilitacion implements Serializable {
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public class Masajes extends SesionRehabilitacion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public Quinesiologia() {
+	public Masajes() {
 		super();
 	}   
 

@@ -3,13 +3,13 @@ package com.fisiosports.negocio;
 import java.util.Date;
 import java.util.List;
 
-import com.fisiosports.modelo.entidades.Consulta;
+import com.fisiosports.modelo.entidades.ConsultaAgenda;
 
 public interface IAgenda {
 	
-	public void agregarConsulta(Consulta consulta);
-	public List<Consulta> obtenerConsultas(Date start, Date end);
-	public void modificarConsulta(Consulta consulta);	
-	public void borrarConsulta(Consulta consulta);
+	public void agregarConsulta(ConsultaAgenda consultaAgenda);
+	public List<ConsultaAgenda> obtenerConsultas(Date start, Date end);
+	public void modificarConsulta(ConsultaAgenda consultaAgenda);	
+	public void borrarConsulta(ConsultaAgenda consultaAgenda);
 
 }

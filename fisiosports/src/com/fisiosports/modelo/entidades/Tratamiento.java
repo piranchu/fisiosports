@@ -17,17 +17,16 @@ import javax.persistence.*;
 @Entity
 
 public class Tratamiento implements Serializable {
-
 	   
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
-	private String diagnostico;
-	@OneToOne
-	private Paciente paciente;
+	
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Consulta> consultasAgendadas = new LinkedList<Consulta>(); 
+	private List<SesionRehabilitacion> sesiones = new LinkedList<SesionRehabilitacion>();
+	
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Consulta> consultasRealizadas = new LinkedList<Consulta>();
+	private List<ConsultaEspecialista> consultasEspecialista = new LinkedList<ConsultaEspecialista>();
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -40,32 +39,21 @@ public class Tratamiento implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public List<SesionRehabilitacion> getSesiones() {
+		return sesiones;
+	}
+	public void setSesiones(List<SesionRehabilitacion> sesiones) {
+		this.sesiones = sesiones;
+	}
+	public List<ConsultaEspecialista> getConsultasEspecialista() {
+		return consultasEspecialista;
+	}
+	public void setConsultasEspecialista(
+			List<ConsultaEspecialista> consultasEspecialista) {
+		this.consultasEspecialista = consultasEspecialista;
 	}   
-	public String getDiagnostico() {
-		return this.diagnostico;
-	}
 
-	public void setDiagnostico(String diagnostico) {
-		this.diagnostico = diagnostico;
-	}   
-	public Paciente getPaciente() {
-		return this.paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-	public List<Consulta> getConsultasAgendadas() {
-		return consultasAgendadas;
-	}
-	public void setConsultasAgendadas(List<Consulta> consultasAgendadas) {
-		this.consultasAgendadas = consultasAgendadas;
-	}
-	public List<Consulta> getConsultasRealizadas() {
-		return consultasRealizadas;
-	}
-	public void setConsultasRealizadas(List<Consulta> consultasRealizadas) {
-		this.consultasRealizadas = consultasRealizadas;
-	}
-   
+	
+	
 }

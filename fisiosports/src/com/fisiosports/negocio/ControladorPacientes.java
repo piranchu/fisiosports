@@ -29,8 +29,6 @@ public class ControladorPacientes implements IPacientes{
 		System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
 		em.getTransaction().begin();
 		System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
-		paciente.setTratamiento(new Tratamiento());
-		paciente.getTratamiento().setPaciente(paciente);
 		em.persist(paciente);
 		System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
 		em.getTransaction().commit();
@@ -40,7 +38,7 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public Paciente obtenerPaciente(Long documento){
-		return em.find(Paciente.class, documento);
+		return em.getReference(Paciente.class, documento);
 		
 	}
 	

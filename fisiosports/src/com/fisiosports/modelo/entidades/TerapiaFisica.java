@@ -17,12 +17,11 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class TerapiaFisica extends SesionRehabilitacion implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
 	private Set<TipoTerapiaFisica> tipos = new HashSet<TipoTerapiaFisica>();
-
-	
-	private static final long serialVersionUID = 1L;
 
 	public TerapiaFisica() {
 		super();

@@ -2,6 +2,7 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -21,16 +22,17 @@ public class Paciente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id //@GeneratedValue(strategy= GenerationType.AUTO)
-	private Long documento;
+	@Id private Long documento;
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String correoElectronico;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Tratamiento tratamiento;
+	private Evaluacion evaluacionInicial;
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Tratamiento> tratamientosAnteriores;
+	private List<Evaluacion> antecedentes = new LinkedList<Evaluacion>();
+	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<ConsultaAgenda> consultasAgendadas = new LinkedList<ConsultaAgenda>();
 	
 	public Paciente() {
 		super();
@@ -65,17 +67,24 @@ public class Paciente implements Serializable{
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
-	public Tratamiento getTratamiento() {
-		return tratamiento;
+	public Evaluacion getEvaluacionInicial() {
+		return evaluacionInicial;
 	}
-	public void setTratamiento(Tratamiento tratamiento) {
-		this.tratamiento = tratamiento;
+	public void setEvaluacionInicial(Evaluacion evaluacionInicial) {
+		this.evaluacionInicial = evaluacionInicial;
 	}
-	public List<Tratamiento> getTratamientosAnteriores() {
-		return tratamientosAnteriores;
+	public List<Evaluacion> getAntecedentes() {
+		return antecedentes;
 	}
-	public void setTratamientosAnteriores(List<Tratamiento> tratamientosAnteriores) {
-		this.tratamientosAnteriores = tratamientosAnteriores;
+	public void setAntecedentes(List<Evaluacion> antecedentes) {
+		this.antecedentes = antecedentes;
 	}
+	public List<ConsultaAgenda> getConsultasAgendadas() {
+		return consultasAgendadas;
+	}
+	public void setConsultasAgendadas(List<ConsultaAgenda> consultasAgendadas) {
+		this.consultasAgendadas = consultasAgendadas;
+	}
+	
 	
 }
