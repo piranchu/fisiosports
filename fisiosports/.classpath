@@ -26,16 +26,16 @@
 			<attribute name="owner.project.facets" value="jpt.jpa"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Derby DB"/>
-	<classpathentry kind="lib" path="/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/jars/vaadin-client-7.1.5.jar" rootpath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/sources/vaadin-client-7.1.5-sources.jar" sourcepath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/sources/vaadin-client-7.1.5-sources.jar">
+	<classpathentry kind="lib" path="/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/jars/vaadin-client-7.1.5.jar" sourcepath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/sources/vaadin-client-7.1.5-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/home/pablo/.ivy2/cache/com.vaadin/vaadin-client/javadocs/vaadin-client-7.1.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/jars/vaadin-server-7.1.5.jar" rootpath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/sources/vaadin-server-7.1.5-sources.jar" sourcepath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/sources/vaadin-server-7.1.5-sources.jar">
+	<classpathentry kind="lib" path="/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/jars/vaadin-server-7.1.5.jar" sourcepath="/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/sources/vaadin-server-7.1.5-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/home/pablo/.ivy2/cache/com.vaadin/vaadin-server/javadocs/vaadin-server-7.1.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/pablo/librerias/h2/bin/h2-1.3.172.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -40,7 +40,7 @@ public class ComponenteEvaluacion extends VerticalLayout {
 		labelDiagnóstico.setStyleName("titulo-2");
 		this.addComponent(labelDiagnóstico);
 		TextArea textAreaDiagnostico = new TextArea();
-		textAreaDiagnostico.setValue(paciente.getEvaluacionInicial()
+		textAreaDiagnostico.setValue(paciente.getEvaluacion()
 				.getDiagnostico());
 		this.addComponent(textAreaDiagnostico);
 
@@ -49,7 +49,7 @@ public class ComponenteEvaluacion extends VerticalLayout {
 		labelIndicaciones.setStyleName("titulo-2");
 		this.addComponent(labelIndicaciones);
 		TextArea textAreaIndicaciones = new TextArea();
-		textAreaIndicaciones.setValue(paciente.getEvaluacionInicial()
+		textAreaIndicaciones.setValue(paciente.getEvaluacion()
 				.getIndicaciones());
 		this.addComponent(textAreaIndicaciones);
 
@@ -59,7 +59,7 @@ public class ComponenteEvaluacion extends VerticalLayout {
 		this.addComponent(labelTratamiento);
 
 		this.tableTratamiento = new Table();
-		this.contenedorSesiones = new ContenedorSesionRehabilitacion(SesionDT.class, getConsultas(paciente.getEvaluacionInicial()
+		this.contenedorSesiones = new ContenedorSesionRehabilitacion(SesionDT.class, getConsultas(paciente.getEvaluacion()
 				.getTratamiento().getConsultas()));
 		this.tableTratamiento.setContainerDataSource(contenedorSesiones);
 

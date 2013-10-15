@@ -6,8 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="EVALUACION")
 public class Evaluacion implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +20,7 @@ public class Evaluacion implements Serializable{
 	
 	private String diagnostico;
 	private String indicaciones;
+	@OneToOne
 	private Tratamiento tratamiento;
 	
 	public Long getId() {

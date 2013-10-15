@@ -11,29 +11,29 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Paciente
  *
  */
-@Entity
 @NamedQueries({
     @NamedQuery(name="Paciente.all",
                 query="SELECT p FROM Paciente p ")
 }) 
 
+@Entity
 public class Paciente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id private Long documento;
+	
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String correoElectronico;
-	@OneToOne
-	private Evaluacion evaluacionInicial;
+	@OneToOne 
+	@JoinColumn(name="EVALUACION_ID", unique=true, nullable=true, updatable=true)
+	private Evaluacion evaluacion;
 	@OneToMany 
-	private List<Evaluacion> antecedentes = new LinkedList<Evaluacion>();
+	//@JoinColumn(name="EVALUACION_ID", updatable=true)
+	private List<Evaluacion> antecedentes;
 	
-	public Paciente() {
-		super();
-	}   
 	public String getNombre() {
 		return nombre;
 	}
@@ -65,11 +65,11 @@ public class Paciente implements Serializable{
 		this.correoElectronico = correoElectronico;
 	}
 
-	public Evaluacion getEvaluacionInicial() {
-		return evaluacionInicial;
+	public Evaluacion getEvaluacion() {
+		return evaluacion;
 	}
-	public void setEvaluacionInicial(Evaluacion evaluacionInicial) {
-		this.evaluacionInicial = evaluacionInicial;
+	public void setEvaluacion(Evaluacion evaluacion) {
+		this.evaluacion = evaluacion;
 	}
 	public List<Evaluacion> getAntecedentes() {
 		return antecedentes;

@@ -14,14 +14,13 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeListener;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier;
 
-@Entity
 @NamedQueries({
     @NamedQuery(name="AgendaConsulta.findConsultasByDates",
                 query="SELECT c FROM AgendaConsulta c "
                 		+ "WHERE c.start >= :start AND c.end <= :end "
                 		+ "ORDER BY c.start ")
 }) 
-
+@Entity
 
 public class AgendaConsulta implements Serializable{
 
@@ -31,6 +30,7 @@ public class AgendaConsulta implements Serializable{
     private Date end;
     private Date start;
     private String styleName;
+    
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
@@ -48,14 +48,13 @@ public class AgendaConsulta implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public AgendaConsulta() {
-		super();		
 	}   
 
 	public AgendaConsulta(String caption, String description, Date date) {
         this.caption = caption;
         this.description = description;
-        start = date;
-        end = date;
+        this.start = date;
+        this.end = date;
     }	
 	
 	public Long getId() {
