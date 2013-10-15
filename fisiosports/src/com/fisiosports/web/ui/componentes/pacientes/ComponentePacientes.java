@@ -13,8 +13,11 @@ import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -25,10 +28,12 @@ import com.vaadin.ui.Window;
 
 public class ComponentePacientes extends Panel{
 	
+	private static final long serialVersionUID = 1L;
 	private UI ui;
 	private VerticalLayout layout = new VerticalLayout();
 	private Table tablaPacientes = new Table();
 	private HorizontalLayout layoutMenuPaciente = new HorizontalLayout();
+	private ComponenteEvaluacion evaluacion; 
 	
 	private List<Paciente> listaPacientes;
 	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
@@ -119,6 +124,15 @@ public class ComponentePacientes extends Panel{
 		this.layout.addComponent(hl);
 		
 		tablaPacientes.setImmediate(true);
+		tablaPacientes.addItemClickListener(new ItemClickListener(){
+
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				Notification.show("event:"+event.getItem());
+			}
+			
+		});
 		consultarPacientes();
 		this.layout.addComponent(tablaPacientes);
 		

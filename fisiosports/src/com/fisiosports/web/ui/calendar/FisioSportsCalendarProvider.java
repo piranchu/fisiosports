@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.fisiosports.modelo.entidades.ConsultaAgenda;
+import com.fisiosports.modelo.entidades.AgendaConsulta;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
@@ -23,9 +23,9 @@ public class FisioSportsCalendarProvider  implements  CalendarEventProvider{
 	@Override
 	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
 		List<CalendarEvent> listaEventos = new LinkedList<CalendarEvent>(); 
-		List<ConsultaAgenda> listaConsultas = agenda.obtenerConsultas(startDate, endDate);
-		for (ConsultaAgenda consultaAgenda:listaConsultas){
-			listaEventos.add(new FisioSportsCalendarEvent(consultaAgenda));
+		List<AgendaConsulta> listaConsultas = agenda.obtenerConsultas(startDate, endDate);
+		for (AgendaConsulta agendaConsulta:listaConsultas){
+			listaEventos.add(new FisioSportsCalendarEvent(agendaConsulta));
 			/*
 			System.out.println("[CalendarProvider] evento.caption:"+consulta.getCaption());
 			System.out.println("[CalendarProvider] 	evento.start:"+consulta.getStart());

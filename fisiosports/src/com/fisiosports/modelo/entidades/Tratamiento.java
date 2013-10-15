@@ -15,24 +15,16 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Tratamiento implements Serializable {
 	   
+	private static final long serialVersionUID = 1L;
+
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<SesionRehabilitacion> sesiones = new LinkedList<SesionRehabilitacion>();
-	
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ConsultaEspecialista> consultasEspecialista = new LinkedList<ConsultaEspecialista>();
-	
-	
-	private static final long serialVersionUID = 1L;
+	@OneToMany
+	private List<Consulta> consultas = new LinkedList<Consulta>();
 
-	public Tratamiento() {
-		super();
-	}   
 	public Long getId() {
 		return this.id;
 	}
@@ -40,20 +32,11 @@ public class Tratamiento implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<SesionRehabilitacion> getSesiones() {
-		return sesiones;
+	public List<Consulta> getConsultas() {
+		return consultas;
 	}
-	public void setSesiones(List<SesionRehabilitacion> sesiones) {
-		this.sesiones = sesiones;
+	public void setConsultas(List<Consulta> consultas) {
+		this.consultas = consultas;
 	}
-	public List<ConsultaEspecialista> getConsultasEspecialista() {
-		return consultasEspecialista;
-	}
-	public void setConsultasEspecialista(
-			List<ConsultaEspecialista> consultasEspecialista) {
-		this.consultasEspecialista = consultasEspecialista;
-	}   
-
-	
-	
+		
 }

@@ -17,7 +17,6 @@ import javax.persistence.*;
                 query="SELECT p FROM Paciente p ")
 }) 
 
-
 public class Paciente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -27,12 +26,10 @@ public class Paciente implements Serializable{
 	private String apellido;
 	private String telefono;
 	private String correoElectronico;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne
 	private Evaluacion evaluacionInicial;
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany 
 	private List<Evaluacion> antecedentes = new LinkedList<Evaluacion>();
-	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ConsultaAgenda> consultasAgendadas = new LinkedList<ConsultaAgenda>();
 	
 	public Paciente() {
 		super();
@@ -67,6 +64,7 @@ public class Paciente implements Serializable{
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
+
 	public Evaluacion getEvaluacionInicial() {
 		return evaluacionInicial;
 	}
@@ -79,12 +77,5 @@ public class Paciente implements Serializable{
 	public void setAntecedentes(List<Evaluacion> antecedentes) {
 		this.antecedentes = antecedentes;
 	}
-	public List<ConsultaAgenda> getConsultasAgendadas() {
-		return consultasAgendadas;
-	}
-	public void setConsultasAgendadas(List<ConsultaAgenda> consultasAgendadas) {
-		this.consultasAgendadas = consultasAgendadas;
-	}
-	
 	
 }

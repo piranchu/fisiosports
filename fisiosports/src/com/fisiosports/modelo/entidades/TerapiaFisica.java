@@ -1,26 +1,29 @@
 package com.fisiosports.modelo.entidades;
 
-import com.fisiosports.modelo.entidades.SesionRehabilitacion;
-import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
-
 import java.io.Serializable;
-import java.lang.Long;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+
+import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 
 /**
  * Entity implementation class for Entity: TerapiaFisica
  *
  */
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class TerapiaFisica extends SesionRehabilitacion implements Serializable {
+public class TerapiaFisica implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Enumerated(EnumType.STRING)
+	@ElementCollection
 	private Set<TipoTerapiaFisica> tipos = new HashSet<TipoTerapiaFisica>();
 
 	public TerapiaFisica() {

@@ -1,14 +1,17 @@
 package com.fisiosports.modelo.entidades;
 
-import com.fisiosports.modelo.entidades.SesionRehabilitacion;
-import com.fisiosports.modelo.tipos.TipoGimnasio;
-
 import java.io.Serializable;
-import java.lang.Long;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+
+import com.fisiosports.modelo.tipos.TipoGimnasio;
 
 /**
  * Entity implementation class for Entity: Gimnasio
@@ -16,11 +19,12 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public class Gimnasio extends SesionRehabilitacion implements Serializable {
+public class Gimnasio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Enumerated(EnumType.STRING)
+	@ElementCollection
 	private Set<TipoGimnasio> tipos = new HashSet<TipoGimnasio>();
 
 	public Gimnasio() {

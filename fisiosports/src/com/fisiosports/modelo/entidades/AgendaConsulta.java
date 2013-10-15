@@ -16,14 +16,14 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="ConsultaAgenda.findConsultasByDates",
-                query="SELECT c FROM ConsultaAgenda c "
+    @NamedQuery(name="AgendaConsulta.findConsultasByDates",
+                query="SELECT c FROM AgendaConsulta c "
                 		+ "WHERE c.start >= :start AND c.end <= :end "
                 		+ "ORDER BY c.start ")
 }) 
 
 
-public class ConsultaAgenda implements Serializable{
+public class AgendaConsulta implements Serializable{
 
     // Atributos propios de clase Calendar
 	private String caption;
@@ -34,8 +34,9 @@ public class ConsultaAgenda implements Serializable{
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
-	// Atributos propios de ConsultaAgenda 
-	@ManyToOne private Paciente paciente;
+	// Atributos propios de AgendaConsulta 
+	@OneToOne 
+	private Paciente paciente;
 	private Boolean terapiaFisica;
 	private Boolean gimnasio;
 	private Boolean masajes;
@@ -46,11 +47,11 @@ public class ConsultaAgenda implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ConsultaAgenda() {
+	public AgendaConsulta() {
 		super();		
 	}   
 
-	public ConsultaAgenda(String caption, String description, Date date) {
+	public AgendaConsulta(String caption, String description, Date date) {
         this.caption = caption;
         this.description = description;
         start = date;
@@ -163,5 +164,6 @@ public class ConsultaAgenda implements Serializable{
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}	
+	
 	
 }

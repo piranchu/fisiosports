@@ -30,6 +30,7 @@ public class FisiosportsUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		
+		content.setStyleName("fondo");
 		content.setMargin(true);
 		setContent(content);
 		agregarCuerpo();

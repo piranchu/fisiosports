@@ -6,22 +6,37 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-public abstract class SesionRehabilitacion  implements Serializable{
+public class SesionRehabilitacion extends Consulta implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+
+	private Boolean masaje;
+	private Gimnasio gimnasio;
+	private TerapiaFisica terapiaFisica;
 	
-	@Id @GeneratedValue(strategy= GenerationType.AUTO)
-	private Long id;
-
-	public Long getId() {
-		return id;
+	public Boolean getMasaje() {
+		return masaje;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setMasaje(Boolean masaje) {
+		this.masaje = masaje;
 	}
+	public Gimnasio getGimnasio() {
+		return gimnasio;
+	}
+	public void setGimnasio(Gimnasio gimnasio) {
+		this.gimnasio = gimnasio;
+	}
+	public TerapiaFisica getTerapiaFisica() {
+		return terapiaFisica;
+	}
+	public void setTerapiaFisica(TerapiaFisica terapiaFisica) {
+		this.terapiaFisica = terapiaFisica;
+	}
+	
 	
 	
 }

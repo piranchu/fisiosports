@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import com.fisiosports.modelo.entidades.ConsultaAgenda;
+import com.fisiosports.modelo.entidades.AgendaConsulta;
 
 public class ControladorAgenda implements IAgenda, Serializable{
 
@@ -26,33 +26,33 @@ public class ControladorAgenda implements IAgenda, Serializable{
 	}
 
 	@Override
-	public void agregarConsulta(ConsultaAgenda consultaAgenda) {
+	public void agregarConsulta(AgendaConsulta agendaConsulta) {
 		em.getTransaction().begin();
-		em.merge(consultaAgenda.getPaciente());
-		em.persist(consultaAgenda);
+		em.merge(agendaConsulta.getPaciente());
+		em.persist(agendaConsulta);
 		em.getTransaction().commit();
 		
 	}
 
 	@Override
-	public List<ConsultaAgenda> obtenerConsultas(Date start, Date end) {
-		return this.em.createNamedQuery("ConsultaAgenda.findConsultasByDates")
+	public List<AgendaConsulta> obtenerConsultas(Date start, Date end) {
+		return this.em.createNamedQuery("AgendaConsulta.findConsultasByDates")
 				.setParameter("start", start)
 				.setParameter("end", end)
 				.getResultList();
 	}
 
 	@Override
-	public void modificarConsulta(ConsultaAgenda consultaAgenda) {
+	public void modificarConsulta(AgendaConsulta agendaConsulta) {
 		em.getTransaction().begin();
-		em.merge(consultaAgenda);
+		em.merge(agendaConsulta);
 		em.getTransaction().commit();
 	}
 
 	@Override
-	public void borrarConsulta(ConsultaAgenda consultaAgenda) {
+	public void borrarConsulta(AgendaConsulta agendaConsulta) {
 		em.getTransaction().begin();
-		em.remove(consultaAgenda);
+		em.remove(agendaConsulta);
 		em.getTransaction().commit();
 	}
 
