@@ -38,8 +38,11 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public Paciente obtenerPaciente(Long documento){
-		return em.getReference(Paciente.class, documento);
-		
+		Paciente paciente = null;
+		System.out.println("[ControladorPacientes] paciente="+paciente);
+		em.find(Paciente.class, documento);
+		System.out.println("[ControladorPacientes] paciente="+paciente);
+		return paciente;		
 	}
 	
 	@SuppressWarnings("unchecked")

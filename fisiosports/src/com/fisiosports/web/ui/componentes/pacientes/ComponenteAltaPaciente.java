@@ -70,12 +70,15 @@ public class ComponenteAltaPaciente extends Window{
 		}
 		
 		Paciente paciente = this.iPacientes.obtenerPaciente(new Long(documento.getValue()));
+		System.out.println("[ComponenteAltaPaciente] paciente:"+paciente);
 		if (paciente != null){
-			Notification.show("Ya existe un paciente con el mismo documento", Notification.Type.ERROR_MESSAGE);
-			return;
+			System.out.println("[ComponenteAltaPaciente] nombre paciente:"+paciente.getNombre()+" "+paciente.getApellido());
+			Notification.show("Ya existe un paciente con el mismo documento", Notification.Type.WARNING_MESSAGE);
+			//return;
+		}else{
+			paciente = new Paciente();
 		}
 		
-		paciente = new Paciente();
 		paciente.setDocumento(doc);
 		paciente.setNombre(nombre.getValue());
 		paciente.setApellido(apellido.getValue());

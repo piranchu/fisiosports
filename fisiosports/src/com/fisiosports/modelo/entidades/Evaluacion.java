@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,6 +23,9 @@ public class Evaluacion implements Serializable{
 	private String indicaciones;
 	@OneToOne
 	private Tratamiento tratamiento;
+	
+    @ManyToOne
+    private Paciente paciente;
 	
 	public Long getId() {
 		return id;
@@ -46,6 +50,12 @@ public class Evaluacion implements Serializable{
 	}
 	public void setTratamiento(Tratamiento tratamiento) {
 		this.tratamiento = tratamiento;
+	}
+	public Paciente getPaciente() {
+		return paciente;
+	}
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	

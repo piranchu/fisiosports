@@ -9,6 +9,7 @@
 		<class>com.fisiosports.modelo.entidades.SesionRehabilitacion</class>
 		<class>com.fisiosports.modelo.entidades.ConsultaEspecialista</class>
 		<class>com.fisiosports.modelo.entidades.Consulta</class>
+		<class>com.fisiosports.modelo.entidades.Evaluacion</class>
 		<properties>
 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
 			<property name="openjpa.ConnectionUserName" value=""/>
