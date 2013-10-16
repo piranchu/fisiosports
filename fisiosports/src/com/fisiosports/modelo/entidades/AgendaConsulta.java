@@ -35,7 +35,7 @@ public class AgendaConsulta implements Serializable{
 	private Long id;
 	
 	// Atributos propios de AgendaConsulta 
-	@OneToOne 
+	@OneToOne(cascade = CascadeType.PERSIST) 
 	private Paciente paciente;
 	private Boolean terapiaFisica;
 	private Boolean gimnasio;

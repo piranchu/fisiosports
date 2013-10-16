@@ -26,22 +26,22 @@ public class ControladorPacientes implements IPacientes{
 	@Override
 	public void crearPaciente(Paciente paciente) {
 		// TODO Auto-generated method stub
-		System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
+		//System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
 		em.getTransaction().begin();
-		System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
+		//System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
 		em.persist(paciente);
-		System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
+		//System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
 		em.getTransaction().commit();
-		System.out.println("[ControladorPacientes.crearPaciente] FIN");
+		//System.out.println("[ControladorPacientes.crearPaciente] FIN");
 		
 	}
 
 	@Override
 	public Paciente obtenerPaciente(Long documento){
 		Paciente paciente = null;
-		System.out.println("[ControladorPacientes] paciente="+paciente);
-		em.find(Paciente.class, documento);
-		System.out.println("[ControladorPacientes] paciente="+paciente);
+		System.out.println("[ControladorPacientes.obtenerPaciente] documento="+documento);
+		paciente = em.getReference(Paciente.class, documento);
+		System.out.println("[ControladorPacientes.obtenerPaciente] paciente="+paciente);
 		return paciente;		
 	}
 	

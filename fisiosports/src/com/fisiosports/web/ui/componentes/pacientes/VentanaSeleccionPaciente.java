@@ -50,10 +50,13 @@ public class VentanaSeleccionPaciente extends Window{
             @Override
             public void itemClick(ItemClickEvent event) {
                //implement your logic here
-            	//System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
-            	//System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem().getClass().getName());
-            	Paciente paciente = iPacientes.obtenerPaciente((Long)event.getItem().getItemProperty("documento").getValue());
-            	//System.out.println("[VentanaSeleccionPaciente] item click:"+paciente);
+            	System.out.println("[VentanaSeleccionPaciente] event.getSource():"+event.getSource());
+            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
+            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem().getClass().getName());
+            	System.out.println("[VentanaSeleccionPaciente] documento:"+(Long)event.getItem().getItemProperty("documento").getValue());
+            	Long documento = (Long)event.getItem().getItemProperty("documento").getValue();
+            	Paciente paciente = iPacientes.obtenerPaciente(documento);
+            	System.out.println("[VentanaSeleccionPaciente] item click:"+paciente);
             	ventanaConsulta.setPaciente(paciente);
             	close();
             }

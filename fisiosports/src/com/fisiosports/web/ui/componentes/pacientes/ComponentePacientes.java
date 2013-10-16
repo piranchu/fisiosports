@@ -52,6 +52,7 @@ public class ComponentePacientes extends Panel{
 	public ComponentePacientes(final UI ui){
 		
 		this.ui = ui;
+		this.setImmediate(true);
 		this.componentePacientes = this;
 		layout.setSpacing(true);
 		layout.setMargin(true);
@@ -70,6 +71,7 @@ public class ComponentePacientes extends Panel{
 		tablaPacientes.setContainerDataSource(contenedor);
 		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisibles());
 		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnas());
+		tablaPacientes.setImmediate(true);
 		contenedor.addContainerFilter(filterDocumento);
 		contenedor.addContainerFilter(filterNombre);
 		contenedor.addContainerFilter(filterApellido);
@@ -78,7 +80,7 @@ public class ComponentePacientes extends Panel{
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
-		documento.setWidth("10em");
+		documento.setWidth("115px");
 		tablaPacientes.setColumnWidth("documento", 105);
 		documento.addTextChangeListener(new TextChangeListener(){
 			@Override
@@ -91,7 +93,7 @@ public class ComponentePacientes extends Panel{
 		hl.addComponent(documento);
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
-		nombre.setWidth("14em");
+		nombre.setWidth("165px");
 		tablaPacientes.setColumnWidth("nombre", 150);
 		nombre.addTextChangeListener(new TextChangeListener(){
 			@Override
@@ -105,7 +107,7 @@ public class ComponentePacientes extends Panel{
 		
 		apellido.setInputPrompt("apellido");
 		apellido.setImmediate(true);
-		apellido.setWidth("14em");
+		apellido.setWidth("165px");
 		tablaPacientes.setColumnWidth("apellido", 150);
 		apellido.addTextChangeListener(new TextChangeListener(){
 			@Override
@@ -113,9 +115,9 @@ public class ComponentePacientes extends Panel{
 				contenedor.removeContainerFilter(filterApellido);
 				filterApellido = new SimpleStringFilter("apellido", event.getText(), true, true);
 				contenedor.addContainerFilter(filterApellido);
-				for (Filter filter:contenedor.getContainerFilters()){
+				/*for (Filter filter:contenedor.getContainerFilters()){
 					System.out.println("\t filter:"+filter.toString());
-				}
+				}*/
 						
 			}
 
@@ -129,7 +131,8 @@ public class ComponentePacientes extends Panel{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				Notification.show("event:"+event.getItem());
+				//Notification.show("Próximamente:"+event.getItem());
+				Notification.show("Próximamente: evaluación, diagnóstico, tratamiento y antecedentes");
 			}
 			
 		});
@@ -151,6 +154,7 @@ public class ComponentePacientes extends Panel{
 		}else{
 			tablaPacientes.setPageLength(listaPacientes.size());
 		}
+		tablaPacientes.markAsDirty();
 		
 	}
 

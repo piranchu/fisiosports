@@ -159,11 +159,13 @@ public class VentanaConsulta extends Window {
 	}
 	
 	public void setPaciente(Paciente paciente){
+		System.out.println("[VentanaConsulta.setPaciente] paciente:"+paciente);
 		if (paciente == null) return;
+		this.paciente = paciente;
 		this.nombrePaciente.setReadOnly(false);
 		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido());
 		this.nombrePaciente.setReadOnly(true);
-		this.paciente = paciente;
+		this.markAsDirty();
 	}
 	
 	
@@ -208,6 +210,7 @@ public class VentanaConsulta extends Window {
 	
 	private void initComponents(){
 		this.center();
+		this.setImmediate(true);
 		this.setSizeUndefined();
 		this.setCaption("Agendar horarios");
 		this.setContent(content);
@@ -305,7 +308,7 @@ public class VentanaConsulta extends Window {
 			agenda.agregarConsulta(agendaConsulta);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Notification.show("Error al intentar agendar la agendaConsulta", e.getMessage(),
+			Notification.show("Error al intentar agendar la consulta:", e.getMessage(),
 					Notification.Type.ERROR_MESSAGE);
 			return;
 		}
