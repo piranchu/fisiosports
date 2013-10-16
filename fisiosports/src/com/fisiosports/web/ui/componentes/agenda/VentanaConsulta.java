@@ -163,7 +163,7 @@ public class VentanaConsulta extends Window {
 		if (paciente == null) return;
 		this.paciente = paciente;
 		this.nombrePaciente.setReadOnly(false);
-		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido());
+		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido() + " ("+paciente.getDocumento()+")");
 		this.nombrePaciente.setReadOnly(true);
 		this.markAsDirty();
 	}
@@ -343,7 +343,7 @@ public class VentanaConsulta extends Window {
 			agenda.borrarConsulta(agendaConsulta);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Notification.show("Error al intentar borrar la agendaConsulta de la agenda", e.getMessage(),
+			Notification.show("Error al intentar borrar la consulta de la agenda", e.getMessage(),
 					Notification.Type.ERROR_MESSAGE);
 			return;
 		}

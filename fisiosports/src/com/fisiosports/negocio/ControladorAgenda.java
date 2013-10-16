@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
+import com.fisiosports.modelo.entidades.Paciente;
 
 public class ControladorAgenda implements IAgenda, Serializable{
 
@@ -28,7 +29,7 @@ public class ControladorAgenda implements IAgenda, Serializable{
 	@Override
 	public void agregarConsulta(AgendaConsulta agendaConsulta) {
 		em.getTransaction().begin();
-		em.merge(agendaConsulta.getPaciente());
+		agendaConsulta.setPaciente(em.getReference(Paciente.class, agendaConsulta.getPaciente().getDocumento()));
 		em.persist(agendaConsulta);
 		em.getTransaction().commit();
 		
