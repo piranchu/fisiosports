@@ -32,7 +32,7 @@ public class VentanaPaciente extends Window {
 		this.setCaption("Alta de paciente");
 		
 		layout = new FormLayout();
-		layout.setCaption("Alta de pacientes");
+		//layout.setCaption("Alta de pacientes");
 		layout.addComponent(documento);
 		layout.addComponent(nombre);
 		layout.addComponent(apellido);

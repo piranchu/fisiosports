@@ -48,7 +48,7 @@ public class VentanaConsulta extends Window {
 	private Calendar calendar;
 	private TextArea observaciones;
 	
-	private PopupDateField otraFecha;
+	//private PopupDateField otraFecha;
 
 	private Paciente paciente;
 
@@ -80,12 +80,9 @@ public class VentanaConsulta extends Window {
 		content.addComponent(botonModificar);
 		content.setComponentAlignment(botonModificar, Alignment.MIDDLE_CENTER);
 		// Copiar consulta para otra fecha
-		HorizontalLayout hl = new HorizontalLayout();
-		this.otraFecha = new PopupDateField();
-		this.otraFecha.setInputPrompt("Otra fecha");
-		content.addComponent(otraFecha);
 		Button botonCopiarConsulta = this.obtenerBotonCopiarConsulta();
 		content.addComponent(botonCopiarConsulta);
+		content.setComponentAlignment(botonCopiarConsulta, Alignment.MIDDLE_CENTER);
 		
 		Button botonAnular = obtenerBotonAnular();
 		content.addComponent(botonAnular);
@@ -130,10 +127,10 @@ public class VentanaConsulta extends Window {
 	public void copiarConsulta(){
 		AgendaConsulta otraConsulta = new AgendaConsulta();
 		otraConsulta.setCaption(nombrePaciente.getValue());
-		otraConsulta.setStart(otraFecha.getValue());
+		otraConsulta.setStart(start.getValue());
 		GregorianCalendar gc = (GregorianCalendar) GregorianCalendar
 				.getInstance();
-		gc.setTime(otraFecha.getValue());
+		gc.setTime(start.getValue());
 		gc.add(GregorianCalendar.HOUR, 1);
 		otraConsulta.setEnd(gc.getTime());
 		otraConsulta.setPaciente(paciente);
@@ -146,7 +143,7 @@ public class VentanaConsulta extends Window {
 		otraConsulta.setObservaciones(observaciones.getValue());
 		this.agenda.agregarConsulta(otraConsulta);
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:ss");
-		String fechaString = df.format(otraFecha.getValue());
+		String fechaString = df.format(start.getValue());
 		Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
 		notification.setDelayMsec(3000);
 		notification.show(ui.getPage());
@@ -302,6 +299,7 @@ public class VentanaConsulta extends Window {
 		Notification.show("Se agendó la agendaConsulta");
 		close();
 	}
+	
 	private void cargarConsulta(){
 		if (agendaConsulta==null){
 			agendaConsulta = new AgendaConsulta();
