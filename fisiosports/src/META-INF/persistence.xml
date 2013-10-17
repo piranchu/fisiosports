@@ -16,7 +16,8 @@
 			<property name="openjpa.ConnectionPassword" value=""/>
 			<!--  <property name="openjpa.ConnectionURL" value="jdbc:derby:/home/pablo/fisiosports/Derby/MyDB;delete=true;create=true;upgrade=true"/> -->  
 			<!-- <property name="openjpa.ConnectionURL" value="jdbc:derby:c:/fisiosports/Derby/MyDB;create=true;upgrade=true"/>  -->
-			<property name="openjpa.ConnectionURL" value="jdbc:h2:/home/pablo/fisiosports/H2/MyDB;"/>
+			  <property name="openjpa.ConnectionURL" value="jdbc:h2:/home/pablo/fisiosports/H2/MyDB;"/>  
+			<!--<property name="openjpa.ConnectionURL" value="jdbc:h2:c:/fisiosports/H2/MyDB;"/> -->
 			<property name="openjpa.ConnectionDriverName" value="org.h2.Driver"/>
 			<property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=80"/>			
 		</properties>

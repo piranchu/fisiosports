@@ -1,6 +1,8 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.FabricaControladores;
@@ -26,10 +28,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Window;
 
-public class ComponentePacientes extends Panel{
+public class ComponentePacientes extends Panel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
-	private UI ui;
 	private VerticalLayout layout = new VerticalLayout();
 	private Table tablaPacientes = new Table();
 	private HorizontalLayout layoutMenuPaciente = new HorizontalLayout();
@@ -51,7 +52,6 @@ public class ComponentePacientes extends Panel{
 	
 	public ComponentePacientes(final UI ui){
 		
-		this.ui = ui;
 		this.setImmediate(true);
 		this.componentePacientes = this;
 		layout.setSpacing(true);
@@ -61,7 +61,7 @@ public class ComponentePacientes extends Panel{
 		botonAltaPaciente.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new ComponenteAltaPaciente(componentePacientes);
+				Window window = new VentanaPaciente(componentePacientes);
 				ui.addWindow(window);
 			}
 		});
@@ -155,6 +155,14 @@ public class ComponentePacientes extends Panel{
 			tablaPacientes.setPageLength(listaPacientes.size());
 		}
 		tablaPacientes.markAsDirty();
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		System.out.println("[ComponentePacientes.update]");
+		this.consultarPacientes();
 		
 	}
 

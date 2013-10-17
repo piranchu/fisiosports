@@ -1,5 +1,7 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
+import java.util.Observer;
+
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
@@ -7,11 +9,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
-public class ComponenteAltaPaciente extends Window{
+public class VentanaPaciente extends Window {
 	
 	private static final long serialVersionUID = 1L;
 	private FormLayout layout;
@@ -22,10 +23,11 @@ public class ComponenteAltaPaciente extends Window{
 	private TextField telefono = new TextField("Teléfono");
 	private TextField correoElectronico = new TextField("Correo electrónico");
 	private IPacientes iPacientes = FabricaControladores.getIClientes();
-	private ComponentePacientes componentePacientes;
+	//private ComponentePacientes componentePacientes;
+	private Observer observer;
 	
-	public ComponenteAltaPaciente(ComponentePacientes componentePacientes){
-		this.componentePacientes = componentePacientes;
+	public VentanaPaciente(Observer observer){
+		this.observer = observer;
 		this.setModal(true);
 		this.setCaption("Alta de paciente");
 		
@@ -40,16 +42,16 @@ public class ComponenteAltaPaciente extends Window{
 		
 		layout.addComponent(botonAlta);
 		botonAlta.addClickListener(new Button.ClickListener(){
-
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				altaPAciente();
+				altaPaciente();
 			}
 		});
 		this.setContent(layout);
 	}
 
-	private void altaPAciente() {
+	private void altaPaciente() {
 		
 		if (this.documento.getValue() == null || documento.getValue().trim().isEmpty()){
 			Notification.show("Debe indicar documento", Notification.Type.WARNING_MESSAGE);
@@ -85,9 +87,8 @@ public class ComponenteAltaPaciente extends Window{
 		this.iPacientes.crearPaciente(paciente);
 		
 		Notification.show("Paciente creado con éxito.", Notification.Type.HUMANIZED_MESSAGE);
-		this.componentePacientes.consultarPacientes();
+		observer.update(null, paciente);
 		close();
 	}
-	
 	
 }

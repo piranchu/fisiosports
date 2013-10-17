@@ -1,7 +1,7 @@
 package com.fisiosports.web.ui.componentes;
 
 import com.fisiosports.web.ui.componentes.agenda.ComponenteAgenda;
-import com.fisiosports.web.ui.componentes.pacientes.ComponenteAltaPaciente;
+import com.fisiosports.web.ui.componentes.pacientes.VentanaPaciente;
 import com.fisiosports.web.ui.componentes.pacientes.ComponentePacientes;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;

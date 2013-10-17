@@ -35,6 +35,7 @@ public class ControladorAgenda implements IAgenda, Serializable{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AgendaConsulta> obtenerConsultas(Date start, Date end) {
 		return this.em.createNamedQuery("AgendaConsulta.findConsultasByDates")

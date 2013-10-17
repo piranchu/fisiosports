@@ -29,7 +29,7 @@ public class ControladorPacientes implements IPacientes{
 		//System.out.println("[ControladorPacientes.crearPaciente] empieza transaccion");
 		em.getTransaction().begin();
 		//System.out.println("[ControladorPacientes.crearPaciente] persist:"+paciente.getDocumento());
-		em.persist(paciente);
+		em.merge(paciente);
 		//System.out.println("[ControladorPacientes.crearPaciente] commit transaccion");
 		em.getTransaction().commit();
 		//System.out.println("[ControladorPacientes.crearPaciente] FIN");
@@ -40,8 +40,11 @@ public class ControladorPacientes implements IPacientes{
 	public Paciente obtenerPaciente(Long documento){
 		Paciente paciente = null;
 		System.out.println("[ControladorPacientes.obtenerPaciente] documento="+documento);
-		paciente = em.getReference(Paciente.class, documento);
+		paciente = em.find(Paciente.class, documento);
 		System.out.println("[ControladorPacientes.obtenerPaciente] paciente="+paciente);
+		if (paciente != null){
+			System.out.println("[ControladorPacientes.obtenerPaciente] paciente.nombre="+paciente.getNombre());
+		}
 		return paciente;		
 	}
 	

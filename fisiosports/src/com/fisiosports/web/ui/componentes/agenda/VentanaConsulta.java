@@ -95,7 +95,7 @@ public class VentanaConsulta extends Window {
 	
 	
 	public Button obtenerBotonAgendar(){
-		Button botonAgendar = new Button("Agendar agendaConsulta");
+		Button botonAgendar = new Button("Agendar consulta");
 		botonAgendar.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -147,7 +147,7 @@ public class VentanaConsulta extends Window {
 		this.agenda.agregarConsulta(otraConsulta);
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:ss");
 		String fechaString = df.format(otraFecha.getValue());
-		Notification notification = new Notification("Se agregó una consulta para mismo paciente. Fecha: "+fechaString);
+		Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
 		notification.setDelayMsec(3000);
 		notification.show(ui.getPage());
 		
@@ -170,7 +170,7 @@ public class VentanaConsulta extends Window {
 	
 	
 	public Button obtenerBotonAnular(){
-		Button botonAnular= new Button("Anular agendaConsulta");
+		Button botonAnular= new Button("Anular consulta");
 		ThemeResource resource = new ThemeResource("img/16/cancel.png");
 		botonAnular.setIcon(resource);
 		botonAnular.addClickListener(new Button.ClickListener() {
@@ -288,22 +288,8 @@ public class VentanaConsulta extends Window {
 						Notification.Type.WARNING_MESSAGE);
 				return;
 			}
-			/*
-			if (!this.gimnasio.getValue() && !this.terapiaFisica.getValue()
-					&& !this.masajes.getValue()) {
-				Notification.show(
-						"Debe seleccionar por lo menos un tipo de terapia",
-						Notification.Type.WARNING_MESSAGE);
-				return;
-			}
-			if (this.start.getValue() == null) {
-				Notification.show("Debe indicar fecha/hora para la agendaConsulta",
-						Notification.Type.WARNING_MESSAGE);
-				return;
-			}*/
 			cargarConsulta();
-			Notification.show("Se agrego la agendaConsulta "+agendaConsulta.getCaption(), 
-					Notification.Type.HUMANIZED_MESSAGE);
+			Notification.show("Se agendó la consulta", Notification.Type.HUMANIZED_MESSAGE);
 			//paciente.getConsultasAgendadas().add(agendaConsulta);
 			agenda.agregarConsulta(agendaConsulta);
 		} catch (Exception e) {

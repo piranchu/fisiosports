@@ -1,6 +1,8 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.FabricaControladores;
@@ -11,14 +13,18 @@ import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
-public class VentanaSeleccionPaciente extends Window{
+public class VentanaSeleccionPaciente extends Window implements Observer{
 	
+	private static final long serialVersionUID = 1L;
 	private VentanaConsulta ventanaConsulta;
 	private TextField documento = new TextField();
 	private TextField nombre = new TextField();
@@ -32,10 +38,13 @@ public class VentanaSeleccionPaciente extends Window{
 	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
 	private ContenedorPacientes contenedor;
 	
+	private Button botonAltaPaciente = new Button("Alta de paciente"); 
+	
 	private VerticalLayout layout = new VerticalLayout();
+	private Observer ventanaActual;
 		
 	public VentanaSeleccionPaciente(final VentanaConsulta ventanaConsulta){
-
+		this.ventanaActual = this;
 		this.ventanaConsulta = ventanaConsulta;
 		this.setModal(true);
 		this.setCaption("Selección de pacientes");
@@ -117,7 +126,16 @@ public class VentanaSeleccionPaciente extends Window{
 		tablaPacientes.setImmediate(true);
 		consultarPacientes();
 		this.layout.addComponent(tablaPacientes);
-		
+
+		layout.addComponent(botonAltaPaciente);
+		botonAltaPaciente.addClickListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Window window = new VentanaPaciente(ventanaActual);
+				UI.getCurrent().addWindow(window);
+			}
+		});
+
 		this.setContent(layout);
 		
 	}
@@ -132,6 +150,17 @@ public class VentanaSeleccionPaciente extends Window{
 			tablaPacientes.setPageLength(15);
 		}else{
 			tablaPacientes.setPageLength(tablaPacientes.size());
+		}
+		
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (arg1 instanceof Paciente){
+        	Paciente paciente = (Paciente)arg1;
+        	System.out.println("[VentanaSeleccionPaciente.update] paciente:"+paciente);
+        	ventanaConsulta.setPaciente(paciente);
+        	close();
 		}
 		
 	}
