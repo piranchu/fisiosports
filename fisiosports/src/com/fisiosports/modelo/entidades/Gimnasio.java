@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
 import com.fisiosports.modelo.tipos.TipoGimnasio;
+import com.fisiosports.negocio.TipoConsulta;
 
 /**
  * Entity implementation class for Entity: Gimnasio
@@ -19,7 +20,7 @@ import com.fisiosports.modelo.tipos.TipoGimnasio;
  *
  */
 @Entity
-public class Gimnasio implements Serializable {
+public class Gimnasio extends SesionRehabilitacion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,6 +30,7 @@ public class Gimnasio implements Serializable {
 
 	public Gimnasio() {
 		super();
+		this.setDescripcion(TipoConsulta.GIMNASIO.getDescripcion());
 	}   
 	public Set<TipoGimnasio> getTipos() {
 		return tipos;

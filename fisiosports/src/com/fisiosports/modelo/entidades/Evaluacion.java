@@ -2,7 +2,9 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,11 +23,17 @@ public class Evaluacion implements Serializable{
 	
 	private String diagnostico;
 	private String indicaciones;
-	@OneToOne
-	private Tratamiento tratamiento;
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	private Tratamiento tratamiento = new Tratamiento();
 	
     @ManyToOne
     private Paciente paciente;
+    
+    public Evaluacion(){}
+    
+    public Evaluacion(Paciente paciente){
+    	this.paciente = paciente;
+    }
 	
 	public Long getId() {
 		return id;

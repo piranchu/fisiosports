@@ -1,5 +1,6 @@
 package com.fisiosports.web.ui.componentes;
 
+import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.agenda.ComponenteAgenda;
 import com.fisiosports.web.ui.componentes.pacientes.VentanaPaciente;
 import com.fisiosports.web.ui.componentes.pacientes.ComponentePacientes;
@@ -7,6 +8,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
@@ -18,14 +20,13 @@ public class FisioSportsMenu extends HorizontalLayout{
 
 	private static final long serialVersionUID = 1L;
 
-	private Panel componentePrincipal;
-	private UI ui;
+	//private Panel componentePrincipal;
+	private FisiosportsUI ui;
 
 	private HorizontalLayout layoutBotones = new HorizontalLayout(); 
 	private HorizontalLayout layoutLogo = new HorizontalLayout(); 
 	
-	public FisioSportsMenu(UI ui, Panel componentePrincipal){
-	    this.componentePrincipal = componentePrincipal;
+	public FisioSportsMenu(FisiosportsUI ui){
 	    this.ui = ui;
 		this.setWidth("100%");
 		this.setHeight("50px");
@@ -58,9 +59,10 @@ public class FisioSportsMenu extends HorizontalLayout{
 		//boton.setIcon(resource);
 		//boton.setStyleName(BaseTheme.BUTTON_LINK);
 	    boton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				componentePrincipal.setContent(new ComponenteAgenda(ui));
+				ui.setComponentePrincipal(new ComponenteAgenda(ui));
 			}
 		});
 		return boton;
@@ -75,10 +77,12 @@ public class FisioSportsMenu extends HorizontalLayout{
 	    boton.setStyleName(BaseTheme.BUTTON_LINK);
 	    */
 	    boton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				//Notification.show("Próximamente: historia clínica de pacientes", Notification.Type.HUMANIZED_MESSAGE);
-				componentePrincipal.setContent(new ComponentePacientes(ui));
+				ui.setComponentePrincipal(new ComponentePacientes(ui));
 			}
 		});
 		return boton;

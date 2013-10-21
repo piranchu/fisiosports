@@ -163,6 +163,28 @@ public class AgendaConsulta implements Serializable{
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}	
-	
+
+	@PreUpdate
+	@PrePersist
+	public void onUpdate() {
+		if (terapiaFisica && masajes){
+			this.styleName = "cyan";
+		}else if (terapiaFisica){
+			this.styleName = "yellow";
+		}else if (gimnasio){
+			this.styleName = "purple";
+		}else if (masajes){
+			this.styleName = "blue";
+		}else if(nutricionista){
+			this.styleName = "fucsia";
+		}else if(traumatologo){
+			this.styleName = "orange";
+		}else if(deportologo){
+			this.styleName = "grey";
+		}else{
+			this.styleName = " ";
+		}
+		
+	}		
 	
 }

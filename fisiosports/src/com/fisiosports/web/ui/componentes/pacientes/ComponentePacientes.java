@@ -7,6 +7,7 @@ import java.util.Observer;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
+import com.fisiosports.web.FisiosportsUI;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -34,7 +35,6 @@ public class ComponentePacientes extends Panel implements Observer{
 	private VerticalLayout layout = new VerticalLayout();
 	private Table tablaPacientes = new Table();
 	private HorizontalLayout layoutMenuPaciente = new HorizontalLayout();
-	private ComponenteEvaluacion evaluacion; 
 	
 	private List<Paciente> listaPacientes;
 	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
@@ -50,7 +50,7 @@ public class ComponentePacientes extends Panel implements Observer{
 	private Filter filterNombre = new SimpleStringFilter("nombre", "", true, false);
 	private Filter filterApellido = new SimpleStringFilter("apellido", "", true, false);
 	
-	public ComponentePacientes(final UI ui){
+	public ComponentePacientes(final FisiosportsUI ui){
 		
 		this.setImmediate(true);
 		this.componentePacientes = this;
@@ -115,10 +115,6 @@ public class ComponentePacientes extends Panel implements Observer{
 				contenedor.removeContainerFilter(filterApellido);
 				filterApellido = new SimpleStringFilter("apellido", event.getText(), true, true);
 				contenedor.addContainerFilter(filterApellido);
-				/*for (Filter filter:contenedor.getContainerFilters()){
-					System.out.println("\t filter:"+filter.toString());
-				}*/
-						
 			}
 
 		});
@@ -131,8 +127,7 @@ public class ComponentePacientes extends Panel implements Observer{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				//Notification.show("Próximamente:"+event.getItem());
-				Notification.show("Próximamente: evaluación, diagnóstico, tratamiento y antecedentes");
+				ui.setComponentePrincipal(new ComponenteEvaluacion((Paciente)event.getItemId()));
 			}
 			
 		});
@@ -161,7 +156,7 @@ public class ComponentePacientes extends Panel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		System.out.println("[ComponentePacientes.update]");
+		System.out.println("[ComponentePacientes.update] ");
 		this.consultarPacientes();
 		
 	}

@@ -3,11 +3,13 @@ package com.fisiosports.web;
 import javax.servlet.annotation.WebServlet;
 
 import com.fisiosports.web.ui.componentes.FisioSportsMenu;
+import com.google.gwt.layout.client.Layout;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
@@ -24,7 +26,8 @@ public class FisiosportsUI extends UI {
 	}
 	
 	private VerticalLayout content = new VerticalLayout();
-	private Panel componentePrincipal = new Panel();
+	private VerticalLayout layout = new VerticalLayout();
+	private Component componentePrincipal = new Panel();
 	
 
 	@Override
@@ -39,10 +42,17 @@ public class FisiosportsUI extends UI {
 	}
 
 	private void agregarCuerpo() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(new FisioSportsMenu(this, componentePrincipal));
+		layout.addComponent(new FisioSportsMenu(this));
 		layout.addComponent(componentePrincipal);
 		content.addComponent(layout);
 	}
 
+	public void setComponentePrincipal(Component component){
+		if (this.componentePrincipal != null){
+			layout.removeComponent(this.componentePrincipal);
+		}
+		this.componentePrincipal = component;
+		layout.addComponent(this.componentePrincipal);
+	}
+	
 }

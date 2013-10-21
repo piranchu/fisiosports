@@ -37,21 +37,47 @@
 }
 
 .titulo-1 {
-	backround: green !important;
+	backround-color: green !important;
 	color: red;
 }
 
 .titulo-2 {
-	backround: blue !important;
-	color: white;
+	backround: darkblue !important;
+	color: yellow;
 }	
-/*
-.v-calendar {
-	background-color: #cccccc;
+
+.v-calendar .v-calendar-event-yellow {
+	background-color: yellow;	
 }
-*/
+.v-calendar .v-calendar-event-cyan {
+	background-color: cyan;	
+}
+.v-calendar .v-calendar-event-blue {
+	background-color: blue;	
+}
+.v-calendar .v-calendar-event-purple {
+	background-color: #CC66FF;	
+}
+.v-calendar .v-calendar-event-grey {
+	background-color: grey;	
+}
+.v-calendar .v-calendar-event-orange {
+	background-color: orange;	
+}
+.v-calendar .v-calendar-event-fucsia {
+	background-color: #FF00CC;	
+}
+
+
+
+.v-calendar-event-content {
+	opacity: 0.5 !important;
+}
+
+
+
 .fondo {
-	background-color: #cccccc;
+	background-color: #989898;
 }
 	
 }

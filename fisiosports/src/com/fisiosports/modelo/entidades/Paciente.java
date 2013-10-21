@@ -25,12 +25,12 @@ public class Paciente implements Serializable {
 	private String telefono;
 	private String correoElectronico;
 
-	@OneToOne(fetch=FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy="paciente")
+	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
 	//@JoinColumn(name = "EVALUACION_ID", unique = true, nullable = true, updatable = true)
-	private Evaluacion evaluacion;
+	private Evaluacion evaluacion = new Evaluacion();
 
-	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy="paciente")
-	private List<Evaluacion> antecedentes;
+	@OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
+	private List<Evaluacion> antecedentes = new LinkedList<Evaluacion>();
 
 	public String getNombre() {
 		return nombre;

@@ -22,7 +22,7 @@ public class Tratamiento implements Serializable {
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany
+	@OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
 	private List<Consulta> consultas = new LinkedList<Consulta>();
 
 	public Long getId() {

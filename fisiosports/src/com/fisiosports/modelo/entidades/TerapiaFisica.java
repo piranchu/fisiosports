@@ -12,13 +12,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
+import com.fisiosports.negocio.TipoConsulta;
 
 /**
  * Entity implementation class for Entity: TerapiaFisica
  *
  */
 @Entity
-public class TerapiaFisica implements Serializable {
+public class TerapiaFisica extends SesionRehabilitacion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -28,6 +29,7 @@ public class TerapiaFisica implements Serializable {
 
 	public TerapiaFisica() {
 		super();
+		this.setDescripcion(TipoConsulta.TERAPIA_FISICA.getDescripcion());
 	}   
 
 	public Set<TipoTerapiaFisica> getTipos() {

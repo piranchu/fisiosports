@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
-import com.fisiosports.modelo.entidades.Gimnasio;
 import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.fisiosports.web.ui.componentes.pacientes.VentanaSeleccionPaciente;
@@ -125,6 +123,10 @@ public class VentanaConsulta extends Window {
 	}
 	
 	public void copiarConsulta(){
+		if (start.getValue().equals(this.agendaConsulta.getStart())){
+			Notification.show("Debe seleccionar otra fecha.", Notification.Type.WARNING_MESSAGE);
+			return;
+		}
 		AgendaConsulta otraConsulta = new AgendaConsulta();
 		otraConsulta.setCaption(nombrePaciente.getValue());
 		otraConsulta.setStart(start.getValue());
@@ -147,7 +149,7 @@ public class VentanaConsulta extends Window {
 		Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
 		notification.setDelayMsec(3000);
 		notification.show(ui.getPage());
-		
+		calendar.markAsDirty();
 	}	
 	
 	private void seleccionarPaciente(){
@@ -266,7 +268,8 @@ public class VentanaConsulta extends Window {
 	public void cargarDatosConsulta(AgendaConsulta agendaConsulta){
 		this.nombrePaciente.setReadOnly(false);
 		this.paciente = agendaConsulta.getPaciente();
-		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido());
+		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido() + " ("+paciente.getTelefono()+")");
+		this.nombrePaciente.setReadOnly(true);
 		this.gimnasio.setValue(agendaConsulta.getGimnasio());
 		this.masajes.setValue(agendaConsulta.getMasajes());
 		this.terapiaFisica.setValue(agendaConsulta.getTerapiaFisica());
