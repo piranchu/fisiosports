@@ -2,6 +2,8 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.ElementCollection;
@@ -25,17 +27,17 @@ public class TerapiaFisica extends SesionRehabilitacion implements Serializable 
 
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
-	private Set<TipoTerapiaFisica> tipos = new HashSet<TipoTerapiaFisica>();
+	private List<TipoTerapiaFisica> tipos = new LinkedList<TipoTerapiaFisica>();
 
 	public TerapiaFisica() {
 		super();
 		this.setDescripcion(TipoConsulta.TERAPIA_FISICA.getDescripcion());
 	}   
 
-	public Set<TipoTerapiaFisica> getTipos() {
+	public List<TipoTerapiaFisica> getTipos() {
 		return tipos;
 	}
-	public void setTipos(Set<TipoTerapiaFisica> tipos) {
+	public void setTipos(List<TipoTerapiaFisica> tipos) {
 		this.tipos = tipos;
 	}
    

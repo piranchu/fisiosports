@@ -1,6 +1,7 @@
 package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ public abstract class Consulta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Date fecha;
 	private String descripcion;
 	private String observacion;	
 	
@@ -43,6 +45,15 @@ public abstract class Consulta implements Serializable {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	
 	
    
 }

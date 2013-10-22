@@ -1,6 +1,9 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
+import java.util.Calendar;
+import java.util.List;
 import java.util.Observer;
+import java.util.Set;
 
 import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.modelo.entidades.ConsultaEspecialista;
@@ -8,6 +11,8 @@ import com.fisiosports.modelo.entidades.Gimnasio;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.modelo.entidades.SesionRehabilitacion;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.modelo.tipos.TipoGimnasio;
+import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.negocio.TipoConsulta;
@@ -17,9 +22,9 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -29,39 +34,61 @@ public class VentanaAltaConsultaSesion extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private VerticalLayout layout = new VerticalLayout();
+	private HorizontalLayout layoutAdicional = new HorizontalLayout();
 	private Button botonAlta = new Button("Ingersar consulta/sesión");
 	private BeanItemContainer<TipoConsulta> containerTipoConsulta;
+	private BeanItemContainer<TipoTerapiaFisica> containerTipoTerapiaFisica;
+	private BeanItemContainer<TipoGimnasio> containerTipoGimnasio;
 	private ComboBox comboBoxTipoConsulta;
 	private IPacientes iPacientes = FabricaControladores.getIClientes();
 	private Paciente paciente;
 	private Consulta consulta;
 	private Observer observer;
+	private PopupDateField fecha;
 	
-	private TwinColSelect opcionesTerapiaFisica;
+	private TwinColSelect opcionesTerapiaFisica = new TwinColSelect();
+	private TwinColSelect opcionesGimnasio = new TwinColSelect();
 
-	public VentanaAltaConsultaSesion(Observer observer, Paciente paciente) {
+	public VentanaAltaConsultaSesion(Observer observer, final Paciente paciente) {
 		this.observer = observer;
 		this.paciente = paciente;
 		setModal(true);
 		setCaption("Ingeso de consulta/sesión");
 		layout.setMargin(true);
 
+		fecha = new PopupDateField();
+		fecha.setValue(Calendar.getInstance().getTime());
+		layout.addComponent(fecha);
+		
 		containerTipoConsulta = new BeanItemContainer<TipoConsulta>(TipoConsulta.class,
 				TipoConsulta.getAll());
 		comboBoxTipoConsulta = new ComboBox();
 		comboBoxTipoConsulta.setContainerDataSource(containerTipoConsulta);
 		comboBoxTipoConsulta.setItemCaptionPropertyId("descripcion");
 		comboBoxTipoConsulta.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		comboBoxTipoConsulta.setImmediate(true);
 		comboBoxTipoConsulta.addValueChangeListener(new ValueChangeListener(){
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty() != null){
-					Notification.show("Opcion:"+event.getProperty());
+					TipoConsulta tipoConsulta = (TipoConsulta) event.getProperty().getValue();
+					layoutAdicional.removeAllComponents();
+					if (tipoConsulta!=null){
+						if (tipoConsulta.equals(TipoConsulta.TERAPIA_FISICA)){
+							layoutAdicional.addComponent(opcionesTerapiaFisica);
+						}else if  (tipoConsulta.equals(TipoConsulta.GIMNASIO)){
+							layoutAdicional.addComponent(opcionesGimnasio);
+						}
+					}
+					
 				}
 			}});
 
 		layout.addComponent(comboBoxTipoConsulta);
+		cargarTipoTerapiaFisica();
+		cargarTipoGimnasio();
+		layout.addComponent(layoutAdicional);
 		layout.addComponent(botonAlta);
 		botonAlta.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -69,11 +96,12 @@ public class VentanaAltaConsultaSesion extends Window {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (comboBoxTipoConsulta.getValue() != null) {
-					Notification.show("TipoConsulta:"
-							+ comboBoxTipoConsulta.getValue());
 					TipoConsulta tipoConsulta = (TipoConsulta) comboBoxTipoConsulta
 							.getValue();
 					consulta = altaConsultaSesion(tipoConsulta);
+					paciente.getEvaluacion().getTratamiento().getConsultas().add(consulta);
+					iPacientes.crearPaciente(paciente);
+					close();
 				}
 			}
 		});
@@ -97,11 +125,18 @@ public class VentanaAltaConsultaSesion extends Window {
 			break;
 		case GIMNASIO:
 			consulta = new Gimnasio();
+			Gimnasio gimnasio = (Gimnasio) consulta;
+			gimnasio.setTipos((List<TipoGimnasio>) this.opcionesGimnasio.getItemIds());
 			break;
 		case TERAPIA_FISICA:
 			consulta = new TerapiaFisica();
+			TerapiaFisica terapia = (TerapiaFisica) consulta;
+			terapia.setTipos((List<TipoTerapiaFisica>) this.opcionesTerapiaFisica.getItemIds());
 		}
 		consulta.setDescripcion(tipoConsulta.getDescripcion());
+		System.out.println("[VentanaAltaConsultaSesion.alta] fecha:"+fecha.getValue() );
+		consulta.setFecha(fecha.getValue());
+		
 		return consulta;
 	}
 	
@@ -110,6 +145,32 @@ public class VentanaAltaConsultaSesion extends Window {
 		System.out.println("[VentanaAlstaConsultaSesion.close]");
 		observer.update(null, consulta);
 		super.close();
+	}
+	
+	public void cargarTipoTerapiaFisica(){
+		containerTipoTerapiaFisica = new BeanItemContainer<TipoTerapiaFisica>(TipoTerapiaFisica.class,
+				TipoTerapiaFisica.getAll());
+		opcionesTerapiaFisica.setContainerDataSource(containerTipoTerapiaFisica);
+		opcionesTerapiaFisica.setNullSelectionAllowed(true);
+		opcionesTerapiaFisica.setMultiSelect(true);
+		opcionesTerapiaFisica.setImmediate(true);
+		opcionesTerapiaFisica.setWidth("30em");
+		/*opcionesTerapiaFisica.setLeftColumnCaption("Tipos de terapia física");
+		opcionesTerapiaFisica.setRightColumnCaption("Seleccionadas");*/
+	}
+
+	public void cargarTipoGimnasio(){
+		containerTipoGimnasio = new BeanItemContainer<TipoGimnasio>(TipoGimnasio.class,
+				TipoGimnasio.getAll());
+		opcionesGimnasio.setContainerDataSource(containerTipoGimnasio);
+		opcionesGimnasio.setNullSelectionAllowed(true);
+		opcionesGimnasio.setMultiSelect(true);
+		opcionesGimnasio.setImmediate(true);
+		opcionesGimnasio.setWidth("25em");
+		/*
+		opcionesGimnasio.setLeftColumnCaption("Gimnasio");
+		opcionesGimnasio.setRightColumnCaption("Seleccionadas");
+		*/
 	}
 
 }

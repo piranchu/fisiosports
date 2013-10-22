@@ -2,6 +2,8 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.ElementCollection;
@@ -26,16 +28,16 @@ public class Gimnasio extends SesionRehabilitacion implements Serializable {
 	
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
-	private Set<TipoGimnasio> tipos = new HashSet<TipoGimnasio>();
+	private List<TipoGimnasio> tipos = new LinkedList<TipoGimnasio>();
 
 	public Gimnasio() {
 		super();
 		this.setDescripcion(TipoConsulta.GIMNASIO.getDescripcion());
 	}   
-	public Set<TipoGimnasio> getTipos() {
+	public List<TipoGimnasio> getTipos() {
 		return tipos;
 	}
-	public void setTipos(Set<TipoGimnasio> tipos) {
+	public void setTipos(List<TipoGimnasio> tipos) {
 		this.tipos = tipos;
 	}
    

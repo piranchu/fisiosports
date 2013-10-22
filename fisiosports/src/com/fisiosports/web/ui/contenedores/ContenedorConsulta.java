@@ -11,11 +11,11 @@ import com.vaadin.data.util.VaadinPropertyDescriptor;
 public class ContenedorConsulta extends BeanItemContainer<Consulta> {
 
 	public Object[] getColumnasVisibles(){
-		return new Object[]{"descripcion"};
+		return new Object[]{"descripcion", "fecha"};
 	}
 
 	public String[] getNonbresColumnas(){
-		return new String[]{"consulta/sesión"};
+		return new String[]{"consulta/sesión", "fecha"};
 	}
 
 	public ContenedorConsulta(Class<? super Consulta> type,

@@ -53,7 +53,6 @@ public class ControladorPacientes implements IPacientes{
 	public List<Paciente> obtenerPacientes() {
 		return em.createNamedQuery("Paciente.all").getResultList();
 	}
-	
-	
+
 	
 }
