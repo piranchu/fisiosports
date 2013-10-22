@@ -19,5 +19,10 @@ public enum TipoGimnasio {
 		return all;
 	}
 	
+	public String getNombre(){
+		return this.name();
+	}
+
+	
 	
 }

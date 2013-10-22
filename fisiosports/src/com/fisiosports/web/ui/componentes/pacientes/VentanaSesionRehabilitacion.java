@@ -29,7 +29,7 @@ public class VentanaSesionRehabilitacion extends Window {
 			containerGimansio = new BeanItemContainer<TipoGimnasio>(TipoGimnasio.class, gimnasio.getTipos());
 			tabla.setContainerDataSource(containerGimansio);
 			tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
-			tabla.setVisibleColumns(new Object[]{"name"});			
+			tabla.setVisibleColumns(new Object[]{"nombre"});			
 		}else if (consulta instanceof TerapiaFisica){
 			TerapiaFisica terapia = (TerapiaFisica) consulta;
 			containerTerapiaFisica = new BeanItemContainer<TipoTerapiaFisica>(TipoTerapiaFisica.class, terapia.getTipos());

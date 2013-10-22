@@ -1,6 +1,7 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observer;
 import java.util.Set;
@@ -126,12 +127,22 @@ public class VentanaAltaConsultaSesion extends Window {
 		case GIMNASIO:
 			consulta = new Gimnasio();
 			Gimnasio gimnasio = (Gimnasio) consulta;
-			gimnasio.setTipos((List<TipoGimnasio>) this.opcionesGimnasio.getItemIds());
+			if (this.opcionesGimnasio.getValue() != null){
+				Collection<TipoGimnasio> setGimnasio = (Collection<TipoGimnasio>) this.opcionesGimnasio.getValue();
+				for (TipoGimnasio tipo:setGimnasio){
+					gimnasio.getTipos().add(tipo);
+				}
+			}
 			break;
 		case TERAPIA_FISICA:
 			consulta = new TerapiaFisica();
 			TerapiaFisica terapia = (TerapiaFisica) consulta;
-			terapia.setTipos((List<TipoTerapiaFisica>) this.opcionesTerapiaFisica.getItemIds());
+			if (this.opcionesTerapiaFisica.getValue() != null){
+				Collection<TipoTerapiaFisica> setTerapiaFisica = (Collection<TipoTerapiaFisica>) this.opcionesTerapiaFisica.getValue();
+				for (TipoTerapiaFisica tipo:setTerapiaFisica){
+					terapia.getTipos().add(tipo);
+				}
+			}
 		}
 		consulta.setDescripcion(tipoConsulta.getDescripcion());
 		System.out.println("[VentanaAltaConsultaSesion.alta] fecha:"+fecha.getValue() );
