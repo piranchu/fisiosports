@@ -10,6 +10,8 @@ import com.fisiosports.modelo.entidades.Evaluacion;
 import com.fisiosports.modelo.entidades.Gimnasio;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.negocio.FabricaControladores;
+import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.contenedores.ContenedorConsulta;
 import com.vaadin.data.Property;
 import com.vaadin.event.ItemClickEvent;
@@ -20,6 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
@@ -51,6 +54,9 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 	private ContenedorConsulta contenedorConsultas;
 	private VerticalLayout layout = new VerticalLayout();
 	private ComponenteEvaluacion componenteActual;
+	private TextArea textAreaDiagnostico;
+	private TextArea textAreaIndicaciones;
+	private IPacientes iPacientes = FabricaControladores.getIClientes();
 
 	public ComponenteEvaluacion(final Paciente paciente) {
 
@@ -82,7 +88,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 				ContentMode.HTML);
 		labelDiagnóstico.setSizeFull();
 		vl1.addComponent(labelDiagnóstico);
-		TextArea textAreaDiagnostico = new TextArea();
+		textAreaDiagnostico = new TextArea();
 		if (paciente.getEvaluacion() == null) {
 			paciente.setEvaluacion(new Evaluacion(paciente));
 		}
@@ -100,7 +106,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 				ContentMode.HTML);
 		labelIndicaciones.setSizeFull();
 		vl1.addComponent(labelIndicaciones);
-		TextArea textAreaIndicaciones = new TextArea();
+		textAreaIndicaciones = new TextArea();
 		if (paciente.getEvaluacion().getIndicaciones() != null) {
 			textAreaIndicaciones.setValue(paciente.getEvaluacion()
 					.getIndicaciones());
@@ -110,6 +116,19 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 		textAreaIndicaciones.setInputPrompt("Ingresar indicaciones");
 		textAreaIndicaciones.setNullRepresentation("");
 		vl1.addComponent(textAreaIndicaciones);
+		
+		Button botonModificarDatos = new Button("modificar datos");
+		botonModificarDatos.addClickListener(new ClickListener(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				paciente.getEvaluacion().setDiagnostico(textAreaDiagnostico.getValue());
+				paciente.getEvaluacion().setIndicaciones(textAreaIndicaciones.getValue());
+				iPacientes.crearPaciente(paciente);		
+				Notification.show("Se ingresaron los datos.");
+			}
+		});
+		vl1.addComponent(botonModificarDatos);
 
 		Label labelTratamiento = new Label("<b>Tratamiento</b>",
 				ContentMode.HTML);
@@ -155,7 +174,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("[ComponenteEvaluacion.update] consulta:" + arg1);
+		//System.out.println("[ComponenteEvaluacion.update] consulta:" + arg1);
 		cargarConsultas();
 
 	}

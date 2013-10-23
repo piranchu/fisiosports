@@ -39,12 +39,12 @@ public class ControladorPacientes implements IPacientes{
 	@Override
 	public Paciente obtenerPaciente(Long documento){
 		Paciente paciente = null;
-		System.out.println("[ControladorPacientes.obtenerPaciente] documento="+documento);
+		//System.out.println("[ControladorPacientes.obtenerPaciente] documento="+documento);
 		paciente = em.find(Paciente.class, documento);
-		System.out.println("[ControladorPacientes.obtenerPaciente] paciente="+paciente);
-		if (paciente != null){
+		//System.out.println("[ControladorPacientes.obtenerPaciente] paciente="+paciente);
+		/*if (paciente != null){
 			System.out.println("[ControladorPacientes.obtenerPaciente] paciente.nombre="+paciente.getNombre());
-		}
+		}*/
 		return paciente;		
 	}
 	

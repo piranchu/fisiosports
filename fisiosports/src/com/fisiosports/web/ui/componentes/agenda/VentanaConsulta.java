@@ -158,7 +158,7 @@ public class VentanaConsulta extends Window {
 	}
 	
 	public void setPaciente(Paciente paciente){
-		System.out.println("[VentanaConsulta.setPaciente] paciente:"+paciente);
+		//System.out.println("[VentanaConsulta.setPaciente] paciente:"+paciente);
 		if (paciente == null) return;
 		this.paciente = paciente;
 		this.nombrePaciente.setReadOnly(false);
@@ -257,6 +257,7 @@ public class VentanaConsulta extends Window {
 		content.addComponent(hl);
 		
 		this.observaciones = new TextArea("Observaciones");
+		observaciones.setSizeFull();
 		content.addComponent(observaciones);
 		this.start = new PopupDateField();
 		this.start.setCaption("Indicar fecha/hora para agendar");

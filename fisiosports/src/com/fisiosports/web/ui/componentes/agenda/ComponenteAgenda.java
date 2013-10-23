@@ -128,20 +128,20 @@ public class ComponenteAgenda extends VerticalLayout{
 		// Set start date to first date in this month
 		GregorianCalendar startDate = new GregorianCalendar();
 		startDate.setTime(calendar.getStartDate());
-		System.out.println("[ComponenteAgenda.vistaMes] startDate:"+startDate);
+		//System.out.println("[ComponenteAgenda.vistaMes] startDate:"+startDate);
         startDate.set(java.util.Calendar.MONTH, startDate.get(Calendar.MONTH));
         startDate.set(java.util.Calendar.DATE, 1);
         calendar.setStartDate(startDate.getTime());
-        System.out.println("[ComponenteAgenda.vistaMes] calendar.startDate:"+startDate);
+        //System.out.println("[ComponenteAgenda.vistaMes] calendar.startDate:"+startDate);
 
         // Set end date to last day of this month
         GregorianCalendar endDate = new GregorianCalendar();
         endDate.set(java.util.Calendar.MONTH, startDate.get(Calendar.MONTH));
-		System.out.println("[ComponenteAgenda.vistaMes] endDate:"+endDate);
+		//System.out.println("[ComponenteAgenda.vistaMes] endDate:"+endDate);
         endDate.set(java.util.Calendar.DATE, 1);
         endDate.roll(java.util.Calendar.DATE, -1);
         calendar.setEndDate(endDate.getTime());
-        System.out.println("[ComponenteAgenda.vistaMes] calendar.endDate:"+endDate);
+        //System.out.println("[ComponenteAgenda.vistaMes] calendar.endDate:"+endDate);
 		
 	}
 

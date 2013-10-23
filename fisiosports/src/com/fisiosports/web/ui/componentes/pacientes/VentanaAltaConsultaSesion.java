@@ -42,7 +42,7 @@ public class VentanaAltaConsultaSesion extends Window {
 	private BeanItemContainer<TipoGimnasio> containerTipoGimnasio;
 	private ComboBox comboBoxTipoConsulta;
 	private IPacientes iPacientes = FabricaControladores.getIClientes();
-	private Paciente paciente;
+	//private Paciente paciente;
 	private Consulta consulta;
 	private Observer observer;
 	private PopupDateField fecha;
@@ -52,7 +52,7 @@ public class VentanaAltaConsultaSesion extends Window {
 
 	public VentanaAltaConsultaSesion(Observer observer, final Paciente paciente) {
 		this.observer = observer;
-		this.paciente = paciente;
+		//this.paciente = paciente;
 		setModal(true);
 		setCaption("Ingeso de consulta/sesión");
 		layout.setMargin(true);
@@ -145,7 +145,7 @@ public class VentanaAltaConsultaSesion extends Window {
 			}
 		}
 		consulta.setDescripcion(tipoConsulta.getDescripcion());
-		System.out.println("[VentanaAltaConsultaSesion.alta] fecha:"+fecha.getValue() );
+		//System.out.println("[VentanaAltaConsultaSesion.alta] fecha:"+fecha.getValue() );
 		consulta.setFecha(fecha.getValue());
 		
 		return consulta;
