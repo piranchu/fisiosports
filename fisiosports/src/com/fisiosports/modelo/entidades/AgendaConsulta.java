@@ -1,18 +1,17 @@
 package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
-import java.lang.Long;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.*;
-
-import com.vaadin.ui.components.calendar.event.BasicEvent;
-import com.vaadin.ui.components.calendar.event.EditableCalendarEvent;
-import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeEvent;
-import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeListener;
-import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @NamedQueries({
     @NamedQuery(name="AgendaConsulta.findConsultasByDates",
@@ -35,7 +34,7 @@ public class AgendaConsulta implements Serializable{
 	private Long id;
 	
 	// Atributos propios de AgendaConsulta 
-	@OneToOne(cascade = CascadeType.PERSIST) 
+	@OneToOne //(cascade = CascadeType.PERSIST) 
 	private Paciente paciente;
 	private Boolean terapiaFisica;
 	private Boolean gimnasio;

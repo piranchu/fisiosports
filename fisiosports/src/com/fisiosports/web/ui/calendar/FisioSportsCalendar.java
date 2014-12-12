@@ -1,9 +1,9 @@
 package com.fisiosports.web.ui.calendar;
 
 import java.util.Date;
-import java.util.EventListener;
 import java.util.GregorianCalendar;
 
+import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -11,7 +11,6 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.Table.TableTransferable;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.DateClickEvent;
@@ -19,7 +18,6 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClick;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.MoveEvent;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.RangeSelectEvent;
-import com.vaadin.ui.components.calendar.CalendarComponentEvents.RangeSelectHandler;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.RangeSelectNotifier;
 import com.vaadin.ui.components.calendar.CalendarTargetDetails;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
@@ -32,7 +30,7 @@ public class FisioSportsCalendar extends Calendar{
 	private static final long serialVersionUID = 1L;
 	private Calendar calendar;
 
-	public FisioSportsCalendar(final UI ui) {
+	public FisioSportsCalendar(final FisiosportsUI ui) {
 
 		this.calendar = this;
 		this.setWidth("600px");
@@ -42,7 +40,7 @@ public class FisioSportsCalendar extends Calendar{
 		this.setLastVisibleDayOfWeek(6);
 		this.setSizeFull();
 		this.setTimeFormat(TimeFormat.Format24H);
-		this.setEventProvider(new FisioSportsCalendarProvider());
+		this.setEventProvider(new FisioSportsCalendarProvider(ui.getIAgenda()));
 
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
 		cal.setTime(new Date());
@@ -53,16 +51,19 @@ public class FisioSportsCalendar extends Calendar{
 
 		this.setHandler(new BasicEventMoveHandler() {
 			private static final long serialVersionUID = 1L;
+			@Override
 			public void eventMove(MoveEvent event) {
 				super.eventMove(event);
 			}
+			@Override
 			protected void setDates(EditableCalendarEvent event, Date start,
 					Date end) {
-				super.setDates((EditableCalendarEvent) event, start, end);
+				super.setDates(event, start, end);
 			}
 		});
 
 		this.setDropHandler(new DropHandler() {
+			@Override
 			public void drop(DragAndDropEvent event) {
 				CalendarTargetDetails details = (CalendarTargetDetails) event
 						.getTargetDetails();
@@ -70,6 +71,7 @@ public class FisioSportsCalendar extends Calendar{
 						.getTransferable();
 			}
 
+			@Override
 			public AcceptCriterion getAcceptCriterion() {
 				return AcceptAll.get();
 			}
@@ -89,6 +91,7 @@ public class FisioSportsCalendar extends Calendar{
 		});
 
 		this.setHandler(new BasicDateClickHandler() {
+			@Override
 			public void dateClick(DateClickEvent event) {
 				
 				System.out.println("[FSCalendar.BasicDateClickHandler]");

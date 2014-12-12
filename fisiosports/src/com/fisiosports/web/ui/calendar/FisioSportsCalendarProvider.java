@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
@@ -16,8 +15,8 @@ public class FisioSportsCalendarProvider  implements  CalendarEventProvider{
 
 	private IAgenda agenda;
 	
-	public FisioSportsCalendarProvider(){
-		this.agenda = FabricaControladores.getIAgenda();
+	public FisioSportsCalendarProvider(IAgenda iAgenda){
+		this.agenda = iAgenda;
 	}
 	
 	@Override
@@ -25,7 +24,7 @@ public class FisioSportsCalendarProvider  implements  CalendarEventProvider{
 		List<CalendarEvent> listaEventos = new LinkedList<CalendarEvent>(); 
 		List<AgendaConsulta> listaConsultas = agenda.obtenerConsultas(startDate, endDate);
 		for (AgendaConsulta agendaConsulta:listaConsultas){
-			listaEventos.add(new FisioSportsCalendarEvent(agendaConsulta));
+			listaEventos.add(new FisioSportsCalendarEvent(this.agenda, agendaConsulta));
 			/*
 			System.out.println("[CalendarProvider] evento.caption:"+consulta.getCaption());
 			System.out.println("[CalendarProvider] 	evento.start:"+consulta.getStart());

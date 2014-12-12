@@ -1,23 +1,15 @@
 package com.fisiosports.web.ui.componentes.agenda;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.calendar.FisioSportsCalendar;
-import com.google.gwt.user.client.ui.MenuItem;
-import com.vaadin.data.Item;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.MenuBar.Command;
-import com.vaadin.ui.themes.BaseTheme;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -25,11 +17,11 @@ public class ComponenteAgenda extends VerticalLayout{
 	
 	private static final long serialVersionUID = 1L;
 	//private Button agendarConsulta;
-	private UI ui;
+	private FisiosportsUI ui;
 	//private HorizontalLayout opcionVistasCalendario;
 	private FisioSportsCalendar calendar;
 
-	public ComponenteAgenda(final UI ui){
+	public ComponenteAgenda(final FisiosportsUI ui){
 		this.ui = ui;
 		this.setSpacing(true);
 		this.setMargin(true);
@@ -51,21 +43,26 @@ public class ComponenteAgenda extends VerticalLayout{
 		
 		HorizontalLayout layoutBotones = new HorizontalLayout();
 		layoutBotones.setSpacing(true);
-		Button botonMes = new Button("mes");
+		Button botonMes = new Button(new ThemeResource(
+	            "img/16/grids-16.png"));
 		botonMes.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				vistaMes();
 			}
 		});
-		Button botonAnterior = new Button("<< anterior ");
+		Button botonAnterior = new Button(new ThemeResource(
+	            "img/16/arrow-left-big-16.png"));
 		botonAnterior.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				mesAnterior();
 			}
 		});
-		Button botonSiguiente = new Button("siguiente >>");
+		Button botonSiguiente = new Button();
+		
+		botonSiguiente.setIcon(new ThemeResource(
+	            "img/16/arrow-right-big-16.png"));
 		botonSiguiente.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -82,10 +79,8 @@ public class ComponenteAgenda extends VerticalLayout{
 	}
 
 	private Button botonAgendarConsulta(){
-		Button pictureButton = new Button("Agendar consulta");
-		//ThemeResource resource = new ThemeResource("img/24/calendar-24.png");
-	    //pictureButton.setIcon(resource);
-	    //pictureButton.setStyleName(BaseTheme.BUTTON_LINK);
+		Button pictureButton = new Button(new ThemeResource(
+	            "img/16/social-addthis-16.png"));
 	    pictureButton.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

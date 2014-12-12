@@ -10,7 +10,6 @@ import com.fisiosports.modelo.entidades.Evaluacion;
 import com.fisiosports.modelo.entidades.Gimnasio;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.contenedores.ContenedorConsulta;
 import com.vaadin.data.Property;
@@ -56,10 +55,11 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 	private ComponenteEvaluacion componenteActual;
 	private TextArea textAreaDiagnostico;
 	private TextArea textAreaIndicaciones;
-	private IPacientes iPacientes = FabricaControladores.getIClientes();
+	private IPacientes iPacientes;
 
-	public ComponenteEvaluacion(final Paciente paciente) {
+	public ComponenteEvaluacion(final IPacientes iPacientes, final Paciente paciente) {
 
+		this.iPacientes = iPacientes;
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		this.paciente = paciente;
@@ -158,7 +158,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaAltaConsultaSesion(componenteActual,
+				Window window = new VentanaAltaConsultaSesion(iPacientes, componenteActual,
 						paciente);
 				getUI().addWindow(window);
 			}

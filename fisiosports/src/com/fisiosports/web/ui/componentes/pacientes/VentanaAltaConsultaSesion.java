@@ -2,9 +2,7 @@ package com.fisiosports.web.ui.componentes.pacientes;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 import java.util.Observer;
-import java.util.Set;
 
 import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.modelo.entidades.ConsultaEspecialista;
@@ -14,7 +12,6 @@ import com.fisiosports.modelo.entidades.SesionRehabilitacion;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.negocio.TipoConsulta;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -22,14 +19,13 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class VentanaAltaConsultaSesion extends Window {
 
@@ -41,7 +37,7 @@ public class VentanaAltaConsultaSesion extends Window {
 	private BeanItemContainer<TipoTerapiaFisica> containerTipoTerapiaFisica;
 	private BeanItemContainer<TipoGimnasio> containerTipoGimnasio;
 	private ComboBox comboBoxTipoConsulta;
-	private IPacientes iPacientes = FabricaControladores.getIClientes();
+	private IPacientes iPacientes;
 	//private Paciente paciente;
 	private Consulta consulta;
 	private Observer observer;
@@ -50,7 +46,8 @@ public class VentanaAltaConsultaSesion extends Window {
 	private TwinColSelect opcionesTerapiaFisica = new TwinColSelect();
 	private TwinColSelect opcionesGimnasio = new TwinColSelect();
 
-	public VentanaAltaConsultaSesion(Observer observer, final Paciente paciente) {
+	public VentanaAltaConsultaSesion(final IPacientes iPacientes, Observer observer, final Paciente paciente) {
+		this.iPacientes = iPacientes;
 		this.observer = observer;
 		//this.paciente = paciente;
 		setModal(true);

@@ -7,13 +7,13 @@ import java.util.GregorianCalendar;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
 import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.negocio.FabricaControladores;
-import com.fisiosports.negocio.IAgenda;
+import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.pacientes.VentanaSeleccionPaciente;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -21,19 +21,16 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class VentanaConsulta extends Window {
 
 	private static final long serialVersionUID = 1L;
 
-	private UI ui;
+	private FisiosportsUI ui;
 	private VerticalLayout content = new VerticalLayout();
 	private AgendaConsulta agendaConsulta;
-	private IAgenda agenda;
 	private Button botonSeleccionPaciente;
 	private TextField nombrePaciente;
 	private PopupDateField start;
@@ -51,7 +48,7 @@ public class VentanaConsulta extends Window {
 	private Paciente paciente;
 
 	// Se crea cuando se selecciona la agenda
-	public VentanaConsulta(UI ui, Calendar calendar) {
+	public VentanaConsulta(FisiosportsUI ui, Calendar calendar) {
 		this.calendar = calendar;
 		this.ui = ui;
 		this.initComponents();
@@ -59,7 +56,7 @@ public class VentanaConsulta extends Window {
 	}
 
 	// Se crea para una fecha en particular
-	public VentanaConsulta(UI ui, Calendar calendar, Date startDate) {
+	public VentanaConsulta(FisiosportsUI ui, Calendar calendar, Date startDate) {
 		this.calendar = calendar;
 		this.ui = ui;
 		this.initComponents();
@@ -68,7 +65,7 @@ public class VentanaConsulta extends Window {
 	}
 
 	// Se crea para una consulta en particular (se pueden modificar los datos)
-	public VentanaConsulta(UI ui, Calendar calendar, AgendaConsulta agendaConsulta) {
+	public VentanaConsulta(FisiosportsUI ui, Calendar calendar, AgendaConsulta agendaConsulta) {
 		this.calendar = calendar;
 		this.agendaConsulta = agendaConsulta;
 		this.ui = ui;
@@ -143,7 +140,7 @@ public class VentanaConsulta extends Window {
 		otraConsulta.setTraumatologo(traumatologo.getValue());
 		otraConsulta.setNutricionista(nutricionista.getValue());
 		otraConsulta.setObservaciones(observaciones.getValue());
-		this.agenda.agregarConsulta(otraConsulta);
+		this.ui.getIAgenda().agregarConsulta(otraConsulta);
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:ss");
 		String fechaString = df.format(start.getValue());
 		Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
@@ -153,7 +150,7 @@ public class VentanaConsulta extends Window {
 	}	
 	
 	private void seleccionarPaciente(){
-		VentanaSeleccionPaciente window = new VentanaSeleccionPaciente (this); 
+		VentanaSeleccionPaciente window = new VentanaSeleccionPaciente (ui.getIPacientes(), this); 
 		this.ui.addWindow(window);
 	}
 	
@@ -195,7 +192,7 @@ public class VentanaConsulta extends Window {
 	private void modificarDatos() {
 		try {
 			cargarConsulta();
-			agenda.modificarConsulta(agendaConsulta);
+			ui.getIAgenda().modificarConsulta(agendaConsulta);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Notification.show("Error al intentar modificar los datos de la agendaConsulta", e.getMessage(),
@@ -218,8 +215,7 @@ public class VentanaConsulta extends Window {
 
 		content.setMargin(true);
 		content.setSpacing(true);
-		this.agenda = FabricaControladores.getIAgenda();
-
+		
 		botonSeleccionPaciente = this.obtenerBotonSeleccionPaciente(); 
 		content.addComponent(botonSeleccionPaciente);
 		
@@ -292,7 +288,7 @@ public class VentanaConsulta extends Window {
 			cargarConsulta();
 			Notification.show("Se agendó la consulta", Notification.Type.HUMANIZED_MESSAGE);
 			//paciente.getConsultasAgendadas().add(agendaConsulta);
-			agenda.agregarConsulta(agendaConsulta);
+			ui.getIAgenda().agregarConsulta(agendaConsulta);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Notification.show("Error al intentar agendar la consulta:", e.getMessage(),
@@ -328,7 +324,7 @@ public class VentanaConsulta extends Window {
 	
 	private void borrarConsulta() {
 		try {
-			agenda.borrarConsulta(agendaConsulta);
+			ui.getIAgenda().borrarConsulta(agendaConsulta);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Notification.show("Error al intentar borrar la consulta de la agenda", e.getMessage(),

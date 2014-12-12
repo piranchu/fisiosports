@@ -1,11 +1,17 @@
 package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
-import java.lang.Long;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: Paciente
@@ -25,7 +31,7 @@ public class Paciente implements Serializable {
 	private String telefono;
 	private String correoElectronico;
 
-	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
+	@OneToOne (fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
 	//@JoinColumn(name = "EVALUACION_ID", unique = true, nullable = true, updatable = true)
 	private Evaluacion evaluacion = new Evaluacion();
 

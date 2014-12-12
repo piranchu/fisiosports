@@ -3,7 +3,6 @@ package com.fisiosports.web.ui.componentes.pacientes;
 import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -22,11 +21,12 @@ public class VentanaPaciente extends Window {
 	private TextField apellido = new TextField("Apellido");
 	private TextField telefono = new TextField("Teléfono");
 	private TextField correoElectronico = new TextField("Correo electrónico");
-	private IPacientes iPacientes = FabricaControladores.getIClientes();
+	private IPacientes iPacientes;
 	//private ComponentePacientes componentePacientes;
 	private Observer observer;
 	
-	public VentanaPaciente(Observer observer){
+	public VentanaPaciente(IPacientes iPacientes, Observer observer){
+		this.iPacientes = iPacientes;
 		this.observer = observer;
 		this.setModal(true);
 		this.setCaption("Alta de paciente");

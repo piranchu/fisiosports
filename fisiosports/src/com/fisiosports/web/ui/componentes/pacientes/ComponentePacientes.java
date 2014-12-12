@@ -5,39 +5,33 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.negocio.FabricaControladores;
-import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.FisiosportsUI;
 import com.vaadin.data.Container.Filter;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.event.FieldEvents.BlurEvent;
-import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Window;
 
 public class ComponentePacientes extends Panel implements Observer{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private FisiosportsUI ui;
+	
 	private VerticalLayout layout = new VerticalLayout();
 	private Table tablaPacientes = new Table();
 	private HorizontalLayout layoutMenuPaciente = new HorizontalLayout();
 	
 	private List<Paciente> listaPacientes;
-	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
 	private Button botonAltaPaciente = new Button("Alta de paciente");
 	private ComponentePacientes componentePacientes;
 	private ContenedorPacientes contenedor;
@@ -52,6 +46,8 @@ public class ComponentePacientes extends Panel implements Observer{
 	
 	public ComponentePacientes(final FisiosportsUI ui){
 		
+		this.ui = ui;
+		
 		this.setImmediate(true);
 		this.componentePacientes = this;
 		layout.setSpacing(true);
@@ -61,7 +57,7 @@ public class ComponentePacientes extends Panel implements Observer{
 		botonAltaPaciente.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaPaciente(componentePacientes);
+				Window window = new VentanaPaciente(ui.getIPacientes(), componentePacientes);
 				ui.addWindow(window);
 			}
 		});
@@ -127,7 +123,7 @@ public class ComponentePacientes extends Panel implements Observer{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				ui.setComponentePrincipal(new ComponenteEvaluacion((Paciente)event.getItemId()));
+				//ui.setComponentePrincipal(new ComponenteEvaluacion((Paciente)event.getItemId()));
 			}
 			
 		});
@@ -138,7 +134,7 @@ public class ComponentePacientes extends Panel implements Observer{
 	}
 	
 	public void consultarPacientes(){
-		this.listaPacientes = this.iPacientes.obtenerPacientes();
+		this.listaPacientes = ui.getIPacientes().obtenerPacientes();
 		contenedor.removeAllItems();
 		contenedor.addAll(listaPacientes);
 		

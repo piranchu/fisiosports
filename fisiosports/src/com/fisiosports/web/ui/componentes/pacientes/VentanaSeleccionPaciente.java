@@ -1,11 +1,9 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
 import com.vaadin.data.Container.Filter;
@@ -14,13 +12,13 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class VentanaSeleccionPaciente extends Window implements Observer{
 	
@@ -35,7 +33,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	private Filter filterApellido = new SimpleStringFilter("apellido", "", true, false);
 
 	private Table tablaPacientes = new Table();
-	private IPacientes iPacientes = FabricaControladores.getIClientes(); 
+	private IPacientes iPacientes; 
 	private ContenedorPacientes contenedor;
 	
 	private Button botonAltaPaciente = new Button("Alta de paciente"); 
@@ -43,7 +41,8 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	private VerticalLayout layout = new VerticalLayout();
 	private Observer ventanaActual;
 		
-	public VentanaSeleccionPaciente(final VentanaConsulta ventanaConsulta){
+	public VentanaSeleccionPaciente(final IPacientes iPacientes, final VentanaConsulta ventanaConsulta){
+		this.iPacientes = iPacientes;
 		this.ventanaActual = this;
 		this.ventanaConsulta = ventanaConsulta;
 		this.setModal(true);
@@ -62,7 +61,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
             	System.out.println("[VentanaSeleccionPaciente] event.getSource():"+event.getSource());
             	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
             	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem().getClass().getName());
-            	System.out.println("[VentanaSeleccionPaciente] documento:"+(Long)event.getItem().getItemProperty("documento").getValue());
+            	System.out.println("[VentanaSeleccionPaciente] documento:"+event.getItem().getItemProperty("documento").getValue());
             	Long documento = (Long)event.getItem().getItemProperty("documento").getValue();
             	Paciente paciente = iPacientes.obtenerPaciente(documento);
             	System.out.println("[VentanaSeleccionPaciente] item click:"+paciente);
@@ -131,7 +130,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		botonAltaPaciente.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaPaciente(ventanaActual);
+				Window window = new VentanaPaciente(iPacientes, ventanaActual);
 				UI.getCurrent().addWindow(window);
 			}
 		});

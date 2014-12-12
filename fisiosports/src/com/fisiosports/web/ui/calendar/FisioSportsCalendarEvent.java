@@ -5,14 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
-import com.fisiosports.negocio.FabricaControladores;
 import com.fisiosports.negocio.IAgenda;
-import com.vaadin.ui.components.calendar.event.BasicEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
-import com.vaadin.ui.components.calendar.event.EditableCalendarEvent;
-import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeEvent;
-import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeListener;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier;
+import com.vaadin.ui.components.calendar.event.EditableCalendarEvent;
 
 public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventChangeNotifier, CalendarEvent {
 
@@ -22,9 +18,9 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 	private AgendaConsulta agendaConsulta;
     private transient List<EventChangeListener> listeners = new ArrayList<EventChangeListener>();
 	
-	public FisioSportsCalendarEvent(AgendaConsulta agendaConsulta){
+	public FisioSportsCalendarEvent(IAgenda iAgenda, AgendaConsulta agendaConsulta){
 		this.agendaConsulta = agendaConsulta;
-		this.agenda = FabricaControladores.getIAgenda();
+		this.agenda = iAgenda;
 	}
 
     protected void fireEventChange() {

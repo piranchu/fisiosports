@@ -1,37 +1,30 @@
 package com.fisiosports.negocio;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
 import com.fisiosports.modelo.entidades.Paciente;
 
-public class ControladorAgenda implements IAgenda, Serializable{
+@Stateless
+public class ControladorAgenda implements IAgenda{
 
-	private static final long serialVersionUID = 1L;
+	@PersistenceContext(unitName="fisiosportsPU")
 	private EntityManager em;
-	static private ControladorAgenda instance; 
 	
-	private ControladorAgenda(){
-		em = Persistence.createEntityManagerFactory("fisiosports-pu").createEntityManager();
+	public ControladorAgenda(){
+		//em = Persistence.createEntityManagerFactory("java:jboss/datasources/fisiosportsDS").createEntityManager();
+		System.out.println("Controlador agenda - em:"+em);
 	}
 	
-	static public ControladorAgenda getInstance(){
-		if (instance == null)
-			instance = new ControladorAgenda();
-		return instance;
-	}
-
 	@Override
 	public void agregarConsulta(AgendaConsulta agendaConsulta) {
-		em.getTransaction().begin();
 		agendaConsulta.setPaciente(em.getReference(Paciente.class, agendaConsulta.getPaciente().getDocumento()));
 		em.persist(agendaConsulta);
-		em.getTransaction().commit();
 		
 	}
 
@@ -46,16 +39,12 @@ public class ControladorAgenda implements IAgenda, Serializable{
 
 	@Override
 	public void modificarConsulta(AgendaConsulta agendaConsulta) {
-		em.getTransaction().begin();
 		em.merge(agendaConsulta);
-		em.getTransaction().commit();
 	}
 
 	@Override
 	public void borrarConsulta(AgendaConsulta agendaConsulta) {
-		em.getTransaction().begin();
 		em.remove(agendaConsulta);
-		em.getTransaction().commit();
 	}
 
 }
