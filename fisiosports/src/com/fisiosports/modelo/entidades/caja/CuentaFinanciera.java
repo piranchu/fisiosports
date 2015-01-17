@@ -1,13 +1,17 @@
 package com.fisiosports.modelo.entidades.caja;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @Entity
-public class CuentaFinanciera {
+public class CuentaFinanciera implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String nombre;
 	private Double saldo;

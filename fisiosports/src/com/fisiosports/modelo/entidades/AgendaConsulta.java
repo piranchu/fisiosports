@@ -16,7 +16,8 @@ import javax.persistence.PreUpdate;
 @NamedQueries({
     @NamedQuery(name="AgendaConsulta.findConsultasByDates",
                 query="SELECT c FROM AgendaConsulta c "
-                		+ "WHERE c.start >= :start AND c.end <= :end "
+                		+ "WHERE c.start >= :start "
+                		+ "AND c.end <= :end "
                 		+ "ORDER BY c.start ")
 }) 
 @Entity

@@ -1,0 +1,84 @@
+/* Import the reindeer theme.*/
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../reindeer/reindeer.scss";
+
+/* This contains all of your theme.*/
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin fisiosports {
+  /* Include all the styles from the reindeer theme */
+  @include reindeer;
+  
+.menuview {
+	background: black;
+	}
+
+.menu-calendario {
+	backround: grey !important;
+	color: white;
+}
+
+.menu-button {
+
+	/*border: 1px solid #36aac8 !important;*/
+	border: none !important;
+	/*background: url("img/CashRegister-t-64.png") #2687b1 top left repeat-x;*/
+	background: transparent;
+	color: #5CADFF !important;
+	font: 400 24px/1.5 "Open Sans","Helvetica Neue",sans-serif !important;
+	cursor: pointer !important;
+/*	-moz-border-radius: 9px !important;
+	-webkit-border-radius: 9px !important;
+	border-radius: 9px !important; 
+	
+	-moz-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+	-webkit-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+*/	
+}
+
+.titulo-1 {
+	backround: blue;
+	color: black;
+	font: 400 18px/1.5 "Open Sans","Helvetica Neue",sans-serif !important;
+}
+
+.titulo-2 {
+	backround: darkblue !important;
+	color: yellow;
+}	
+
+.v-calendar .v-calendar-event-yellow {
+	background-color: yellow;	
+}
+.v-calendar .v-calendar-event-cyan {
+	background-color: cyan;	
+}
+.v-calendar .v-calendar-event-blue {
+	background-color: blue;	
+}
+.v-calendar .v-calendar-event-purple {
+	background-color: #CC66FF;	
+}
+.v-calendar .v-calendar-event-grey {
+	background-color: grey;	
+}
+.v-calendar .v-calendar-event-orange {
+	background-color: orange;	
+}
+.v-calendar .v-calendar-event-fucsia {
+	background-color: #FF00CC;	
+}
+
+
+
+.v-calendar-event-content {
+	opacity: 0.5 !important;
+}
+
+
+
+.fondo {
+	background-color: #989898;
+}
+	
+}

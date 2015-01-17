@@ -1,29 +1,63 @@
 package com.fisiosports.modelo.entidades.caja;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.fisiosports.modelo.entidades.Paciente;
 
+@NamedQueries({ 
+	@NamedQuery(
+			name = "Movimiento.all", 
+			query = "SELECT m FROM Movimiento m "
+			) 
+})
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TIPO")
-public class Movimiento {
+public class Movimiento{
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private Double importe;
-	private Moneda moneda;
+	@Enumerated(EnumType.STRING)
+	private Moneda moneda = Moneda.UYU;
+	@NotNull
 	private CuentaFinanciera cuentaFinanciera;
 	private Categoria categoria;
 	private Paciente paciente;
 	private String observaciones;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date fecha = Calendar.getInstance().getTime();
 	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -48,12 +82,6 @@ public class Movimiento {
 	public void setCuentaFinanciera(CuentaFinanciera cuentaFinanciera) {
 		this.cuentaFinanciera = cuentaFinanciera;
 	}
-	public Categoria getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -66,7 +94,5 @@ public class Movimiento {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	} 
-	
-
 	
 }

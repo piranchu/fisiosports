@@ -33,12 +33,13 @@ public class FisioSportsCalendar extends Calendar{
 	public FisioSportsCalendar(final FisiosportsUI ui) {
 
 		this.calendar = this;
-		this.setWidth("600px");
-		this.setHeight("400px");
+//		this.setWidth("600px");
+//		this.setHeight("400px");
+		this.setSizeFull();
 		this.setFirstVisibleHourOfDay(8);
 		this.setFirstVisibleDayOfWeek(1);
-		this.setLastVisibleDayOfWeek(6);
-		this.setSizeFull();
+		this.setLastVisibleDayOfWeek(7);
+		this.setWidth(100.0f, Unit.PERCENTAGE);
 		this.setTimeFormat(TimeFormat.Format24H);
 		this.setEventProvider(new FisioSportsCalendarProvider(ui.getIAgenda()));
 
@@ -133,30 +134,6 @@ public class FisioSportsCalendar extends Calendar{
 			}
 		});
 		
-		/*
-		this.setHandler(new com.vaadin.ui.components.calendar.CalendarComponentEvents.RangeSelectNotifier(){
-			
-			  public void rangeSelect(RangeSelectEvent event) {
-			    BasicEvent calendarEvent = new BasicEvent();
-			    calendarEvent.setStart(event.getStart());
-			    calendarEvent.setEnd(event.getEnd());
-			    System.out.println("[inicio:"+event.getStart()+"]");
-			    System.out.println("[fin:"+event.getEnd()+"]");
-				Window window = new VentanaConsulta(calendar, event.getStart());
-				ui.addWindow(window);
-			  }
-
-			@Override
-			public EventListener getHandler(String eventId) {
-				return null;
-			}
-
-			@Override
-			public void setHandler(RangeSelectHandler listener) {
-			}
-
-
-			});*/
 	}
 
 	private void setHandler(RangeSelectNotifier rangeSelectNotifier) {

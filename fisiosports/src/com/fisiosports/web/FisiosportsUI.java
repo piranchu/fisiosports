@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fisiosports.negocio.IAgenda;
+import com.fisiosports.negocio.IMovimientos;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.componentes.FisioSportsMenu;
 import com.vaadin.annotations.Theme;
@@ -22,17 +23,19 @@ import com.vaadin.ui.VerticalLayout;
 
 @Title("FisioSports")
 @SuppressWarnings("serial")
-@Theme("valo")
+@Theme("fisiosports")
 public class FisiosportsUI extends UI {
 
-	@EJB IPacientes iPacientes;
-	@EJB IAgenda iAgenda;
+	private IPacientes iPacientes;
+	private IAgenda iAgenda;
+	private IMovimientos iMovimientos;
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = FisiosportsUI.class)
 	public static class Servlet extends VaadinServlet {
 		@EJB IPacientes iPacientes;
 		@EJB IAgenda iAgenda;
+		@EJB IMovimientos iMovimientos;
 		
 		@Override
 		protected VaadinServletRequest createVaadinRequest(
@@ -40,12 +43,13 @@ public class FisiosportsUI extends UI {
 			
 			request.setAttribute("pacientes", iPacientes);
 			request.setAttribute("agenda", iAgenda);
+			request.setAttribute("movimientos", iMovimientos);
 			
 			return super.createVaadinRequest(request);
 		}
 	}
 	
-	private VerticalLayout content = new VerticalLayout();
+	private VerticalLayout content;
 //	private VerticalLayout layout = new VerticalLayout();
 //	private Component componentePrincipal = new Panel();
 	
@@ -53,11 +57,12 @@ public class FisiosportsUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		request.getService();
+		content = new VerticalLayout();
+		content.setWidth(100.0f, Unit.PERCENTAGE);
+		
 		this.iPacientes = (IPacientes) VaadinService.getCurrentRequest().getAttribute("pacientes");
-		System.out.println("[FisiosportsUI.init] iPacientes:"+iPacientes);
-		request.getService();
 		this.iAgenda = (IAgenda) VaadinService.getCurrentRequest().getAttribute("agenda");
+		this.setiMovimientos((IMovimientos) VaadinService.getCurrentRequest().getAttribute("movimientos"));
 		
 		HorizontalLayout barraSuperior = new HorizontalLayout();
 		
@@ -101,6 +106,14 @@ public class FisiosportsUI extends UI {
 
 	public void setiAgenda(IAgenda iAgenda) {
 		this.iAgenda = iAgenda;
+	}
+
+	public IMovimientos getiMovimientos() {
+		return iMovimientos;
+	}
+
+	public void setiMovimientos(IMovimientos iMovimientos) {
+		this.iMovimientos = iMovimientos;
 	}
 	
 	

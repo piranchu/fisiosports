@@ -6,12 +6,12 @@ import java.util.GregorianCalendar;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.calendar.FisioSportsCalendar;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class ComponenteAgenda extends VerticalLayout{
 	
@@ -25,73 +25,72 @@ public class ComponenteAgenda extends VerticalLayout{
 		this.ui = ui;
 		this.setSpacing(true);
 		this.setMargin(true);
-		this.setHeight("100%");
-		this.setWidth("100%");
+		this.setSizeFull();
 
+		this.addComponent(this.createMenuBar());
 		calendar = new FisioSportsCalendar(ui);
-		this.addComponent(getOpcionesVistaCalendario(calendar));
+		//this.addComponent(getOpcionesVistaCalendario(calendar));
 		
-		calendar = new FisioSportsCalendar(ui);
+		//calendar = new FisioSportsCalendar(ui);
 		this.addComponent(calendar);
 		
 	}
 	
-	private Component getOpcionesVistaCalendario(FisioSportsCalendar calendario) {
-		HorizontalLayout opcionVistasCalendario = new HorizontalLayout();
-		opcionVistasCalendario.setStyleName("menu-calendario");
-		opcionVistasCalendario.setWidth("100%");
+	private MenuBar createMenuBar(){
+		MenuBar menu = new MenuBar();
 		
-		HorizontalLayout layoutBotones = new HorizontalLayout();
-		layoutBotones.setSpacing(true);
-		Button botonMes = new Button(new ThemeResource(
-	            "img/16/grids-16.png"));
-		botonMes.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				vistaMes();
-			}
-		});
-		Button botonAnterior = new Button(new ThemeResource(
-	            "img/16/arrow-left-big-16.png"));
-		botonAnterior.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				mesAnterior();
-			}
-		});
-		Button botonSiguiente = new Button();
-		
-		botonSiguiente.setIcon(new ThemeResource(
-	            "img/16/arrow-right-big-16.png"));
-		botonSiguiente.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				mesSiguiente();
-			}
-		});
-		
-		layoutBotones.addComponent(botonMes);
-		layoutBotones.addComponent(botonAnterior);
-		layoutBotones.addComponent(botonSiguiente);
-		layoutBotones.addComponent(botonAgendarConsulta());
-		opcionVistasCalendario.addComponent(layoutBotones);
-		return opcionVistasCalendario;
-	}
+		menu.addItem("add", 
+				new ThemeResource("img/16/social-addthis-16.png"), 
+				this.addCommand);
+		menu.addItem("prev", 
+				//new ThemeResource("img/16/social-addthis-16.png"), 
+				this.prevCommand);
+		menu.addItem("next", 
+				//new ThemeResource("img/16/social-addthis-16.png"), 
+				this.nextCommand);
+		menu.addItem("month", 
+				//new ThemeResource("img/16/social-addthis-16.png"), 
+				this.monthCommand);
 
-	private Button botonAgendarConsulta(){
-		Button pictureButton = new Button(new ThemeResource(
-	            "img/16/social-addthis-16.png"));
-	    pictureButton.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaConsulta(ui, calendar);
-				window.setModal(true);
-				ui.addWindow(window);
-			}
-		});
-		return pictureButton;
+		menu.addStyleName(ValoTheme.MENU_BADGE);
+		return menu;
 	}
+	
+	private Command addCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			Window window = new VentanaConsulta(ui, calendar);
+			window.setModal(true);
+			ui.addWindow(window);
+		}
+	};
 
+	private Command prevCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			mesAnterior();
+		}
+	};
+
+	private Command nextCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			mesSiguiente();
+		}
+	};
+
+	private Command monthCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			vistaMes();
+		}
+	};
+
+	
 	private void mesAnterior() {
 		vistaMes();
 		GregorianCalendar startDate = new GregorianCalendar();
