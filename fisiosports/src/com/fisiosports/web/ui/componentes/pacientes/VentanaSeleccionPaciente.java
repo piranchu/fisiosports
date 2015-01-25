@@ -1,24 +1,30 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
+import com.fisiosports.web.ui.contenedores.ContenedorPacientes;
+import com.fisiosports.web.ui.contenedores.beantypes.PacienteDT;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class VentanaSeleccionPaciente extends Window implements Observer{
 	
@@ -28,15 +34,15 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	private TextField nombre = new TextField();
 	private TextField apellido = new TextField();
 	
-	private Filter filterDocumento = new SimpleStringFilter("documento", "", true, false);
-	private Filter filterNombre = new SimpleStringFilter("nombre", "", true, false);
-	private Filter filterApellido = new SimpleStringFilter("apellido", "", true, false);
+	private Filter filterDocumento = new SimpleStringFilter("paciente.documento", "", true, false);
+	private Filter filterNombre = new SimpleStringFilter("paciente.nombre", "", true, false);
+	private Filter filterApellido = new SimpleStringFilter("paciente.apellido", "", true, false);
 
 	private Table tablaPacientes = new Table();
 	private IPacientes iPacientes; 
 	private ContenedorPacientes contenedor;
 	
-	private Button botonAltaPaciente = new Button("Alta de paciente"); 
+	private Button botonAltaPaciente; 
 	
 	private VerticalLayout layout = new VerticalLayout();
 	private Observer ventanaActual;
@@ -48,23 +54,36 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		this.setModal(true);
 		this.setCaption("Selección de pacientes");
 		layout.setMargin(true);
-		contenedor = new ContenedorPacientes(Paciente.class);
-		tablaPacientes.setSizeFull();
+
+		botonAltaPaciente = new Button("", FontAwesome.PLUS_CIRCLE);
+		botonAltaPaciente.setDescription("Nuevo cliente");
+		botonAltaPaciente.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		botonAltaPaciente.addClickListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Window window = new VentanaPaciente(iPacientes, ventanaActual, null);
+				UI.getCurrent().addWindow(window);
+			}
+		});
+		layout.addComponent(botonAltaPaciente);
+		
+		contenedor = new ContenedorPacientes(PacienteDT.class);
+//		tablaPacientes.setSizeFull();
 		tablaPacientes.setContainerDataSource(contenedor);
 		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisiblesReducidas());
 		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnasReducidas());
 		tablaPacientes.setSelectable(true);
 		tablaPacientes.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-            @Override
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void itemClick(ItemClickEvent event) {
-               //implement your logic here
-            	System.out.println("[VentanaSeleccionPaciente] event.getSource():"+event.getSource());
-            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem());
-            	System.out.println("[VentanaSeleccionPaciente] item click:"+event.getItem().getClass().getName());
-            	System.out.println("[VentanaSeleccionPaciente] documento:"+event.getItem().getItemProperty("documento").getValue());
-            	Long documento = (Long)event.getItem().getItemProperty("documento").getValue();
+            	Long documento = (Long)event.getItem().getItemProperty("paciente.documento").getValue();
             	Paciente paciente = iPacientes.obtenerPaciente(documento);
-            	System.out.println("[VentanaSeleccionPaciente] item click:"+paciente);
             	ventanaConsulta.setPaciente(paciente);
             	close();
             }
@@ -72,18 +91,21 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		contenedor.addContainerFilter(filterDocumento);
 		contenedor.addContainerFilter(filterNombre);
 		contenedor.addContainerFilter(filterApellido);
-		HorizontalLayout hl = new HorizontalLayout();
+		VerticalLayout hl = new VerticalLayout();
+		hl.setMargin(new MarginInfo(false, false, true, false));
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
 		documento.setWidth("10em");
-		tablaPacientes.setColumnWidth("documento", 110);
+//		tablaPacientes.setColumnWidth("documento", 110);
 		documento.addTextChangeListener(new TextChangeListener(){
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void textChange(TextChangeEvent event) {
-				System.out.println("[ComponentePacientes] documento.textChange");
 				contenedor.removeContainerFilter(filterDocumento);
-				filterDocumento = new SimpleStringFilter("documento", event.getText(), true, true);
+				filterDocumento = new SimpleStringFilter("paciente.documento", event.getText(), true, true);
 				contenedor.addContainerFilter(filterDocumento);
 			}
 		});
@@ -91,12 +113,12 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
 		nombre.setWidth("15em");
-		tablaPacientes.setColumnWidth("nombre", 160);
+//		tablaPacientes.setColumnWidth("nombre", 160);
 		nombre.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
 				contenedor.removeContainerFilter(filterNombre);
-				filterNombre = new SimpleStringFilter("nombre", event.getText(), true, true);
+				filterNombre = new SimpleStringFilter("paciente.nombre", event.getText(), true, true);
 				contenedor.addContainerFilter(filterNombre);
 			}
 		});
@@ -105,16 +127,16 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		apellido.setInputPrompt("apellido");
 		apellido.setImmediate(true);
 		apellido.setWidth("15em");
-		tablaPacientes.setColumnWidth("apellido", 160);
+//		tablaPacientes.setColumnWidth("apellido", 160);
 		apellido.addTextChangeListener(new TextChangeListener(){
 			@Override
 			public void textChange(TextChangeEvent event) {
 				contenedor.removeContainerFilter(filterApellido);
-				filterApellido = new SimpleStringFilter("apellido", event.getText(), true, true);
+				filterApellido = new SimpleStringFilter("paciente.apellido", event.getText(), true, true);
 				contenedor.addContainerFilter(filterApellido);
-				for (Filter filter:contenedor.getContainerFilters()){
-					System.out.println("\t filter:"+filter.toString());
-				}
+//				for (Filter filter:contenedor.getContainerFilters()){
+//					System.out.println("\t filter:"+filter.toString());
+//				}
 						
 			}
 
@@ -126,22 +148,18 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		consultarPacientes();
 		this.layout.addComponent(tablaPacientes);
 
-		layout.addComponent(botonAltaPaciente);
-		botonAltaPaciente.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaPaciente(iPacientes, ventanaActual);
-				UI.getCurrent().addWindow(window);
-			}
-		});
-
 		this.setContent(layout);
 		
 	}
 	
 	public void consultarPacientes(){
 		contenedor.removeAllItems();
-		contenedor.addAll(this.iPacientes.obtenerPacientes());
+		List<PacienteDT> listaPacientesDT = new LinkedList<>();
+		for (Paciente paciente:this.iPacientes.obtenerPacientes()){
+			listaPacientesDT.add(new PacienteDT(paciente, null));
+		}
+
+		contenedor.addAll(listaPacientesDT);
 		
 		if (tablaPacientes.size() == 0)
 			tablaPacientes.setVisible(false);
@@ -157,7 +175,6 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof Paciente){
         	Paciente paciente = (Paciente)arg1;
-        	System.out.println("[VentanaSeleccionPaciente.update] paciente:"+paciente);
         	ventanaConsulta.setPaciente(paciente);
         	close();
 		}

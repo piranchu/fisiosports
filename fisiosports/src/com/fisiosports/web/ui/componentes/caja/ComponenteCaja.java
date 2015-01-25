@@ -6,7 +6,7 @@ import com.fisiosports.modelo.entidades.caja.Movimiento;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorMovimientosCaja;
 import com.fisiosports.web.ui.contenedores.beantypes.MovimientoDT;
-import com.vaadin.server.ThemeResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -61,25 +61,26 @@ public class ComponenteCaja extends VerticalLayout{
 
 	public ComponenteCaja(){
 	
+		this.setMargin(true);
+		this.setSpacing(true);
+		
 		menu = new MenuBar();
 		menu.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
-		MenuItem itemAdd = menu.addItem("agregar", addMovimiento);
-		itemAdd.setIcon(new ThemeResource("img/16/grids-16.png"));
-
-		MenuItem menuConfiguracion = menu.addItem("configuracion", null);
+		menu.addItem("", FontAwesome.PLUS_CIRCLE, addMovimiento).setDescription("Nuevo movimiento");;
+		
+		MenuItem menuConfiguracion = menu.addItem("", FontAwesome.GEAR, null);
+		menuConfiguracion.setDescription("configuración");
 		menuConfiguracion.addItem("cuentas", this.commandCuentas);
 		menuConfiguracion.addItem("categorias", this.commandCategorias);
+		
 
 		List<? extends Movimiento> movimientos = ((FisiosportsUI) UI.getCurrent()).getiMovimientos().obtenerMovimientos(Movimiento.class, null, null, null, null, null);
 		contenedor = new ContenedorMovimientosCaja(MovimientoDT.class, MovimientoDT.buildList(movimientos));
-		//table.setSizeFull();
+		
 		table.setContainerDataSource(contenedor);
 		table.setVisibleColumns(ContenedorMovimientosCaja.getColumnasVisibles());
 		table.setColumnHeaders(ContenedorMovimientosCaja.getNonbresColumnas());
 		
-		
-		this.setSizeFull();
-		this.setSpacing(true);
 		this.addComponent(menu);
 		this.addComponent(table);
 	}

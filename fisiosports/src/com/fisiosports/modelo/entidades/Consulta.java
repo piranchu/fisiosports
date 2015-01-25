@@ -3,22 +3,38 @@ package com.fisiosports.modelo.entidades;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-/**
- * Entity implementation class for Entity: Consulta
- *
- */
+@NamedQueries({
+	@NamedQuery(name = "Consulta.findByTratamiento", 
+			query = "SELECT c FROM Consulta c WHERE c.tratamiento.id = :idTratamiento")
+})
+
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Consulta implements Serializable {
+public class Consulta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Date fecha;
 	private String descripcion;
 	private String observacion;	
+	@ManyToOne
+	private Tratamiento tratamiento;
 	
+	public Tratamiento getTratamiento() {
+		return tratamiento;
+	}
+
+	public void setTratamiento(Tratamiento tratamiento) {
+		this.tratamiento = tratamiento;
+	}
+
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 

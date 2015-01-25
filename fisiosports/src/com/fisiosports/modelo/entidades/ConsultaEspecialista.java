@@ -2,14 +2,13 @@ package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Entity implementation class for Entity: ConsultaEspecialista
  *
  */
 @Entity
-@Table(name="CONSULTAESPECIALISTA")
 public class ConsultaEspecialista extends Consulta implements Serializable {
 
 	private static final long serialVersionUID = 1L;

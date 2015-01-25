@@ -11,13 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: Paciente
  * 
  */
-@NamedQueries({ @NamedQuery(name = "Paciente.all", query = "SELECT p FROM Paciente p ") })
+@NamedQueries({
+	@NamedQuery(name = "Paciente.all", query = "SELECT p FROM Paciente p ")
+	
+
+})
+
 @Entity
 public class Paciente implements Serializable {
 
@@ -25,18 +29,21 @@ public class Paciente implements Serializable {
 
 	@Id
 	private Long documento;
-
 	private String nombre;
 	private String apellido;
 	private String telefono;
 	private String correoElectronico;
 
-	@OneToOne (fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
-	//@JoinColumn(name = "EVALUACION_ID", unique = true, nullable = true, updatable = true)
-	private Evaluacion evaluacion = new Evaluacion();
+	@OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
+	private List<Evaluacion> evaluaciones = new LinkedList<Evaluacion>();
 
-	@OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
-	private List<Evaluacion> antecedentes = new LinkedList<Evaluacion>();
+	public List<Evaluacion> getEvaluaciones() {
+		return evaluaciones;
+	}
+
+	public void setEvaluaciones(List<Evaluacion> evaluaciones) {
+		this.evaluaciones = evaluaciones;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -76,22 +83,6 @@ public class Paciente implements Serializable {
 
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
-	}
-
-	public Evaluacion getEvaluacion() {
-		return evaluacion;
-	}
-
-	public void setEvaluacion(Evaluacion evaluacion) {
-		this.evaluacion = evaluacion;
-	}
-
-	public List<Evaluacion> getAntecedentes() {
-		return antecedentes;
-	}
-
-	public void setAntecedentes(List<Evaluacion> antecedentes) {
-		this.antecedentes = antecedentes;
 	}
 
 }

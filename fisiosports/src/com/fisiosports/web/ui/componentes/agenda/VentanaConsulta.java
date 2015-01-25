@@ -8,21 +8,26 @@ import java.util.GregorianCalendar;
 import com.fisiosports.modelo.entidades.AgendaConsulta;
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.web.FisiosportsUI;
+import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.fisiosports.web.ui.componentes.pacientes.VentanaSeleccionPaciente;
-import com.vaadin.server.ThemeResource;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class VentanaConsulta extends Window {
 
@@ -32,6 +37,7 @@ public class VentanaConsulta extends Window {
 	private VerticalLayout content = new VerticalLayout();
 	private AgendaConsulta agendaConsulta;
 	private Button botonSeleccionPaciente;
+	private Button botonInfoPaciente;
 	private TextField nombrePaciente;
 	private PopupDateField start;
 	private CheckBox masajes;
@@ -52,7 +58,7 @@ public class VentanaConsulta extends Window {
 		this.calendar = calendar;
 		this.ui = ui;
 		this.initComponents();
-		content.addComponent(obtenerBotonAgendar());
+		content.addComponent(this.createMenuBar(null));
 	}
 
 	// Se crea para una fecha en particular
@@ -61,7 +67,7 @@ public class VentanaConsulta extends Window {
 		this.ui = ui;
 		this.initComponents();
 		this.start.setValue(startDate);
-		content.addComponent(obtenerBotonAgendar());
+		content.addComponent(this.createMenuBar(null));
 	}
 
 	// Se crea para una consulta en particular (se pueden modificar los datos)
@@ -71,139 +77,60 @@ public class VentanaConsulta extends Window {
 		this.ui = ui;
 		this.initComponents();
 		cargarDatosConsulta(agendaConsulta);
-		Button botonModificar = obtenerBotonModificar();
-		content.addComponent(botonModificar);
-		content.setComponentAlignment(botonModificar, Alignment.MIDDLE_CENTER);
-		// Copiar consulta para otra fecha
-		Button botonCopiarConsulta = this.obtenerBotonCopiarConsulta();
-		content.addComponent(botonCopiarConsulta);
-		content.setComponentAlignment(botonCopiarConsulta, Alignment.MIDDLE_CENTER);
-		
-		Button botonAnular = obtenerBotonAnular();
-		content.addComponent(botonAnular);
-		content.setComponentAlignment(botonAnular, Alignment.MIDDLE_CENTER);
+		content.addComponent(this.createMenuBar(agendaConsulta));
 		botonSeleccionPaciente.setVisible(false);
+		this.botonInfoPaciente.setVisible(true);
 	}
 	
-	
-	public Button obtenerBotonAgendar(){
-		Button botonAgendar = new Button("Agendar consulta");
-		botonAgendar.addClickListener(new Button.ClickListener() {
+	public Button obtenerBotonInfoPaciente(){
+		Button boton = new Button("", FontAwesome.INFO_CIRCLE);
+		boton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+		boton.setDescription("evaluaciones del paciente");
+		boton.setVisible(false);
+		boton.addClickListener(new Button.ClickListener() {
+			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
-				agregarConsulta();
+				Window window = new Window ("Evaluaciones");
+				window.setContent(new ComponenteEvaluacion(paciente, null));
+				window.setModal(true);
+				VentanaConsulta.this.ui.addWindow(window);
 			}
 		});
-		return botonAgendar;
+		return boton;		
 	}
 	
 	public Button obtenerBotonSeleccionPaciente(){
-		Button boton = new Button("Seleccionar paciente");
+		Button boton = new Button("", FontAwesome.SEARCH);
+		boton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+		boton.setDescription("seleccionar paciente");
 		boton.addClickListener(new Button.ClickListener() {
+			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
-				seleccionarPaciente();
+				VentanaSeleccionPaciente window = new VentanaSeleccionPaciente (
+						VentanaConsulta.this.ui.getiPacientes(), 
+						VentanaConsulta.this); 
+				VentanaConsulta.this.ui.addWindow(window);
 			}
 		});
 		return boton;		
-	}
-	
-	public Button obtenerBotonCopiarConsulta(){
-		Button boton = new Button("Copiar consulta");
-		boton.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				copiarConsulta();
-			}
-		});
-		return boton;		
-	}
-	
-	public void copiarConsulta(){
-		if (start.getValue().equals(this.agendaConsulta.getStart())){
-			Notification.show("Debe seleccionar otra fecha.", Notification.Type.WARNING_MESSAGE);
-			return;
-		}
-		AgendaConsulta otraConsulta = new AgendaConsulta();
-		otraConsulta.setCaption(nombrePaciente.getValue());
-		otraConsulta.setStart(start.getValue());
-		GregorianCalendar gc = (GregorianCalendar) GregorianCalendar
-				.getInstance();
-		gc.setTime(start.getValue());
-		gc.add(GregorianCalendar.HOUR, 1);
-		otraConsulta.setEnd(gc.getTime());
-		otraConsulta.setPaciente(paciente);
-		otraConsulta.setMasajes(masajes.getValue());
-		otraConsulta.setGimnasio(gimnasio.getValue());
-		otraConsulta.setTerapiaFisica(terapiaFisica.getValue());
-		otraConsulta.setDeportologo(deportologo.getValue());
-		otraConsulta.setTraumatologo(traumatologo.getValue());
-		otraConsulta.setNutricionista(nutricionista.getValue());
-		otraConsulta.setObservaciones(observaciones.getValue());
-		this.ui.getIAgenda().agregarConsulta(otraConsulta);
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:ss");
-		String fechaString = df.format(start.getValue());
-		Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
-		notification.setDelayMsec(3000);
-		notification.show(ui.getPage());
-		calendar.markAsDirty();
-	}	
-	
-	private void seleccionarPaciente(){
-		VentanaSeleccionPaciente window = new VentanaSeleccionPaciente (ui.getIPacientes(), this); 
-		this.ui.addWindow(window);
 	}
 	
 	public void setPaciente(Paciente paciente){
-		//System.out.println("[VentanaConsulta.setPaciente] paciente:"+paciente);
 		if (paciente == null) return;
 		this.paciente = paciente;
 		this.nombrePaciente.setReadOnly(false);
 		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido() + " ("+paciente.getDocumento()+")");
 		this.nombrePaciente.setReadOnly(true);
+		this.botonInfoPaciente.setVisible(true);
 		this.markAsDirty();
 	}
-	
-	
-	public Button obtenerBotonAnular(){
-		Button botonAnular= new Button("Anular consulta");
-		ThemeResource resource = new ThemeResource("img/16/cancel.png");
-		botonAnular.setIcon(resource);
-		botonAnular.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				borrarConsulta();
-			}
-		});
-		return botonAnular;		
-	}
 
-	public Button obtenerBotonModificar(){
-		Button botonAnular= new Button("Modificar datos");
-		botonAnular.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				modificarDatos();
-			}
-		});
-		return botonAnular;		
-	}
-
-	private void modificarDatos() {
-		try {
-			cargarConsulta();
-			ui.getIAgenda().modificarConsulta(agendaConsulta);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Notification.show("Error al intentar modificar los datos de la agendaConsulta", e.getMessage(),
-					Notification.Type.ERROR_MESSAGE);
-			return;
-		}
-		calendar.markAsDirty();
-		Notification.show("Se modificaron los datos");
-		close();
-	}
-	
 	private void initComponents(){
 		this.center();
 		this.setImmediate(true);
@@ -216,16 +143,22 @@ public class VentanaConsulta extends Window {
 		content.setMargin(true);
 		content.setSpacing(true);
 		
-		botonSeleccionPaciente = this.obtenerBotonSeleccionPaciente(); 
-		content.addComponent(botonSeleccionPaciente);
+		HorizontalLayout layoutNombrePaciente = new HorizontalLayout();
 		
 		this.nombrePaciente = new TextField();
-		//this.nombrePaciente.setCaption("Paciente");
 		this.nombrePaciente.setReadOnly(true);
-		content.addComponent(nombrePaciente);
+		layoutNombrePaciente.addComponent(nombrePaciente);
+		
+		botonSeleccionPaciente = this.obtenerBotonSeleccionPaciente(); 
+		layoutNombrePaciente.addComponent(botonSeleccionPaciente);
+		botonInfoPaciente = obtenerBotonInfoPaciente();
+		layoutNombrePaciente.addComponent(botonInfoPaciente);
+		
+		content.addComponent(layoutNombrePaciente);
 		
 		HorizontalLayout hl = new HorizontalLayout();
 		VerticalLayout vl1 = new VerticalLayout();
+		vl1.setMargin(new MarginInfo(false, true, false, false));
 		VerticalLayout vl2 = new VerticalLayout();
 		
 		this.masajes = new CheckBox();
@@ -278,28 +211,6 @@ public class VentanaConsulta extends Window {
 		
 	}
 
-	private void agregarConsulta() {
-		try {
-			if (this.paciente == null) {
-				Notification.show("Debe indicar paciente",
-						Notification.Type.WARNING_MESSAGE);
-				return;
-			}
-			cargarConsulta();
-			Notification.show("Se agendó la consulta", Notification.Type.HUMANIZED_MESSAGE);
-			//paciente.getConsultasAgendadas().add(agendaConsulta);
-			ui.getIAgenda().agregarConsulta(agendaConsulta);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Notification.show("Error al intentar agendar la consulta:", e.getMessage(),
-					Notification.Type.ERROR_MESSAGE);
-			return;
-		}
-		calendar.markAsDirty();
-		Notification.show("Se agendó la agendaConsulta");
-		close();
-	}
-	
 	private void cargarConsulta(){
 		if (agendaConsulta==null){
 			agendaConsulta = new AgendaConsulta();
@@ -322,20 +233,135 @@ public class VentanaConsulta extends Window {
 	}
 	
 	
-	private void borrarConsulta() {
-		try {
-			ui.getIAgenda().borrarConsulta(agendaConsulta);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Notification.show("Error al intentar borrar la consulta de la agenda", e.getMessage(),
-					Notification.Type.ERROR_MESSAGE);
-			return;
+	private MenuBar createMenuBar(AgendaConsulta consulta){
+		MenuBar menu = new MenuBar();
+		
+		if (consulta == null){
+			MenuItem addItem = menu.addItem("", 
+					FontAwesome.SAVE, 
+					this.addCommand);
+			addItem.setDescription("Guardar datos");
+			
+		}else{
+			MenuItem modItem = menu.addItem("", 
+					FontAwesome.SAVE, 
+					this.modifyCommand);
+			modItem.setDescription("Guardar datos");
+			
+			MenuItem copyItem = menu.addItem("", 
+					FontAwesome.COPY, 
+					this.copyCommand);
+			copyItem.setDescription("copiar consulta");
+			
+			MenuItem delItem = menu.addItem("", 
+					FontAwesome.TRASH_O, 
+					this.deleteCommand);
+			delItem.setDescription("Eliminar consulta");
 		}
-		calendar.markAsDirty();
-		Notification.show("Se borró la agendaConsulta");
-		close();
+		
+
+		menu.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
+		menu.addStyleName(ValoTheme.TABSHEET_FRAMED);
+		menu.setSizeFull();
+		return menu;
 	}
 	
+	private Command addCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			try {
+				if (VentanaConsulta.this.paciente == null) {
+					Notification.show("Debe indicar paciente",
+							Notification.Type.WARNING_MESSAGE);
+					return;
+				}
+				cargarConsulta();
+				Notification.show("Se agendó la consulta", Notification.Type.HUMANIZED_MESSAGE);
+				//paciente.getConsultasAgendadas().add(agendaConsulta);
+				ui.getiAgenda().agregarConsulta(agendaConsulta);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Notification.show("Error al intentar agendar la consulta:", e.getMessage(),
+						Notification.Type.ERROR_MESSAGE);
+				return;
+			}
+			calendar.markAsDirty();
+			Notification.show("Se agendó la agendaConsulta");
+			close();
+		}
+	};
+
+	private Command modifyCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			try {
+				cargarConsulta();
+				ui.getiAgenda().modificarConsulta(agendaConsulta);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Notification.show("Error al intentar modificar los datos de la agendaConsulta", e.getMessage(),
+						Notification.Type.ERROR_MESSAGE);
+				return;
+			}
+			calendar.markAsDirty();
+			Notification.show("Se modificaron los datos");
+			close();
+		}
+	};
+
+	private Command deleteCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			try {
+				ui.getiAgenda().borrarConsulta(agendaConsulta);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Notification.show("Error al intentar borrar la consulta de la agenda", e.getMessage(),
+						Notification.Type.ERROR_MESSAGE);
+				return;
+			}
+			calendar.markAsDirty();
+			Notification.show("Se borró la agendaConsulta");
+			close();
+		}
+	};
+	
+	private Command copyCommand = new Command(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			if (start.getValue().equals(VentanaConsulta.this.agendaConsulta.getStart())){
+				Notification.show("Debe seleccionar otra fecha.", Notification.Type.WARNING_MESSAGE);
+				return;
+			}
+			AgendaConsulta otraConsulta = new AgendaConsulta();
+			otraConsulta.setCaption(nombrePaciente.getValue());
+			otraConsulta.setStart(start.getValue());
+			GregorianCalendar gc = (GregorianCalendar) GregorianCalendar
+					.getInstance();
+			gc.setTime(start.getValue());
+			gc.add(GregorianCalendar.HOUR, 1);
+			otraConsulta.setEnd(gc.getTime());
+			otraConsulta.setPaciente(paciente);
+			otraConsulta.setMasajes(masajes.getValue());
+			otraConsulta.setGimnasio(gimnasio.getValue());
+			otraConsulta.setTerapiaFisica(terapiaFisica.getValue());
+			otraConsulta.setDeportologo(deportologo.getValue());
+			otraConsulta.setTraumatologo(traumatologo.getValue());
+			otraConsulta.setNutricionista(nutricionista.getValue());
+			otraConsulta.setObservaciones(observaciones.getValue());
+			VentanaConsulta.this.ui.getiAgenda().agregarConsulta(otraConsulta);
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:ss");
+			String fechaString = df.format(start.getValue());
+			Notification notification = new Notification("Se copió la consulta para la siguiente fecha/hora: "+fechaString);
+			notification.setDelayMsec(3000);
+			notification.show(ui.getPage());
+			calendar.markAsDirty();
+		}
+	};
 	
 
 }

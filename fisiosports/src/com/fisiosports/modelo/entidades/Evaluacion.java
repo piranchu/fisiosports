@@ -1,19 +1,18 @@
 package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="EVALUACION")
 public class Evaluacion implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,8 +21,10 @@ public class Evaluacion implements Serializable{
 	private Long id;
 	
 	private String diagnostico;
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date fecha;
 	private String indicaciones;
-	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne 
 	private Tratamiento tratamiento = new Tratamiento();
 	
     @ManyToOne
@@ -31,10 +32,6 @@ public class Evaluacion implements Serializable{
     
     public Evaluacion(){}
     
-    public Evaluacion(Paciente paciente){
-    	this.paciente = paciente;
-    }
-	
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +61,14 @@ public class Evaluacion implements Serializable{
 	}
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	

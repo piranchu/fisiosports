@@ -7,6 +7,9 @@ import com.fisiosports.web.ui.componentes.pacientes.ComponentePacientes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class FisioSportsMenu extends HorizontalLayout{
 
@@ -16,10 +19,22 @@ public class FisioSportsMenu extends HorizontalLayout{
 
 		this.setWidth(100.0f, Unit.PERCENTAGE);
 		TabSheet tabSheet = new TabSheet();
-		tabSheet.addTab(new ComponenteAgenda(ui), "agenda", FontAwesome.CALENDAR);
-		tabSheet.addTab(new ComponentePacientes(ui), "pacientes", null);
-		tabSheet.addTab(new ComponenteCaja(), "caja", null);
+		tabSheet.addTab(new ComponenteAgenda(ui), "agenda", FontAwesome.CALENDAR_O);
+		tabSheet.addTab(new ComponentePacientes(ui), "clientes", FontAwesome.USER);
+		tabSheet.addTab(new ComponenteCaja(), "caja", FontAwesome.USD);
+		tabSheet.addStyleName(ValoTheme.PANEL_BORDERLESS);
 		this.addComponent(tabSheet);
+		
+		tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void selectedTabChange(SelectedTabChangeEvent event) {
+				if (event.getTabSheet().getSelectedTab() instanceof ComponentePacientes){
+					ComponentePacientes component = (ComponentePacientes) event.getTabSheet().getSelectedTab();
+					component.setComponentMantenimientoPacientes();
+				}
+			}
+		});
 		
 	}
 	

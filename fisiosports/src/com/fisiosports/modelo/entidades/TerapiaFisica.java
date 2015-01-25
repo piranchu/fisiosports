@@ -1,17 +1,13 @@
 package com.fisiosports.modelo.entidades;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 import com.fisiosports.negocio.TipoConsulta;

@@ -41,7 +41,7 @@ public class FisioSportsCalendar extends Calendar{
 		this.setLastVisibleDayOfWeek(7);
 		this.setWidth(100.0f, Unit.PERCENTAGE);
 		this.setTimeFormat(TimeFormat.Format24H);
-		this.setEventProvider(new FisioSportsCalendarProvider(ui.getIAgenda()));
+		this.setEventProvider(new FisioSportsCalendarProvider(ui.getiAgenda()));
 
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
 		cal.setTime(new Date());

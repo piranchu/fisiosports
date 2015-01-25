@@ -3,8 +3,6 @@ package com.fisiosports.modelo.tipos;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.Embeddable;
-
 public enum TipoGimnasio {
 	
 	FUERZA,

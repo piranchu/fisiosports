@@ -72,25 +72,12 @@ public class FisiosportsUI extends UI {
 		logo.setHeight("50px");
 		barraSuperior.addComponent(logo);
 
-//		Image fodoLogo = new Image();
-//		fodoLogo.setSource(new ThemeResource("img/fondo-logo.png"));
-//		fodoLogo.setWidth("-1px");
-//		fodoLogo.setHeight("50px");
-//		barraSuperior.addComponent(fodoLogo);
-		
 		content.addComponent(barraSuperior);
 		content.addComponent(new FisioSportsMenu(this));
 		setContent(content);
 		
 	}
 
-	public IPacientes getIPacientes(){
-		return this.iPacientes;
-	}
-
-	public IAgenda getIAgenda(){
-		return this.iAgenda;
-	}
 
 	public IPacientes getiPacientes() {
 		return iPacientes;

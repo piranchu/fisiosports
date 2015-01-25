@@ -4,16 +4,19 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-/**
- * Entity implementation class for Entity: Tratamiento
- *
- */
+//@NamedQueries({
+//	@NamedQuery(name = "Tratamiento.findByPaciente", 
+//			query = "SELECT t FROM Tratamiento t WHERE t.paciente.id = :idPaciente")
+//})
+
 @Entity
 public class Tratamiento implements Serializable {
 	   
@@ -22,7 +25,7 @@ public class Tratamiento implements Serializable {
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany //(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+	@OneToMany (mappedBy="tratamiento") //, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	private List<Consulta> consultas = new LinkedList<Consulta>();
 
 	public Long getId() {

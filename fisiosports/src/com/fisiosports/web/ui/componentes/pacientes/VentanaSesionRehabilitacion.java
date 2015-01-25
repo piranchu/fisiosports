@@ -2,7 +2,6 @@ package com.fisiosports.web.ui.componentes.pacientes;
 
 import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.SesionRehabilitacion;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
@@ -26,13 +25,17 @@ public class VentanaSesionRehabilitacion extends Window {
 		
 		if (consulta instanceof Gimnasio){
 			Gimnasio gimnasio = (Gimnasio) consulta;
-			containerGimansio = new BeanItemContainer<TipoGimnasio>(TipoGimnasio.class, gimnasio.getTipos());
+			containerGimansio = new BeanItemContainer<TipoGimnasio>(
+					TipoGimnasio.class, 
+					gimnasio.getTipos());
 			tabla.setContainerDataSource(containerGimansio);
 			tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 			tabla.setVisibleColumns(new Object[]{"nombre"});			
 		}else if (consulta instanceof TerapiaFisica){
 			TerapiaFisica terapia = (TerapiaFisica) consulta;
-			containerTerapiaFisica = new BeanItemContainer<TipoTerapiaFisica>(TipoTerapiaFisica.class, terapia.getTipos());
+			containerTerapiaFisica = new BeanItemContainer<TipoTerapiaFisica>(
+					TipoTerapiaFisica.class, 
+					terapia.getTipos());
 			tabla.setContainerDataSource(containerTerapiaFisica);
 			tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 			tabla.setVisibleColumns(new Object[]{"nombre"});			

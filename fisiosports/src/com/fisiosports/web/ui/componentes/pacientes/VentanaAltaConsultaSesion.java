@@ -6,8 +6,8 @@ import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Consulta;
 import com.fisiosports.modelo.entidades.ConsultaEspecialista;
+import com.fisiosports.modelo.entidades.Evaluacion;
 import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.modelo.entidades.SesionRehabilitacion;
 import com.fisiosports.modelo.entidades.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
@@ -17,22 +17,24 @@ import com.fisiosports.negocio.TipoConsulta;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class VentanaAltaConsultaSesion extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private VerticalLayout layout = new VerticalLayout();
 	private HorizontalLayout layoutAdicional = new HorizontalLayout();
-	private Button botonAlta = new Button("Ingersar consulta/sesión");
 	private BeanItemContainer<TipoConsulta> containerTipoConsulta;
 	private BeanItemContainer<TipoTerapiaFisica> containerTipoTerapiaFisica;
 	private BeanItemContainer<TipoGimnasio> containerTipoGimnasio;
@@ -45,11 +47,14 @@ public class VentanaAltaConsultaSesion extends Window {
 	
 	private TwinColSelect opcionesTerapiaFisica = new TwinColSelect();
 	private TwinColSelect opcionesGimnasio = new TwinColSelect();
+	private Evaluacion evaluacion;
+	
+	private TextArea textArea = new TextArea();
 
-	public VentanaAltaConsultaSesion(final IPacientes iPacientes, Observer observer, final Paciente paciente) {
+	public VentanaAltaConsultaSesion(final IPacientes iPacientes, Observer observer, Evaluacion evaluacion) {
 		this.iPacientes = iPacientes;
 		this.observer = observer;
-		//this.paciente = paciente;
+		this.evaluacion = evaluacion;
 		setModal(true);
 		setCaption("Ingeso de consulta/sesión");
 		layout.setMargin(true);
@@ -57,6 +62,9 @@ public class VentanaAltaConsultaSesion extends Window {
 		fecha = new PopupDateField();
 		fecha.setValue(Calendar.getInstance().getTime());
 		layout.addComponent(fecha);
+		
+		textArea.setInputPrompt("observaciones");
+		layout.addComponent(textArea);
 		
 		containerTipoConsulta = new BeanItemContainer<TipoConsulta>(TipoConsulta.class,
 				TipoConsulta.getAll());
@@ -87,22 +95,7 @@ public class VentanaAltaConsultaSesion extends Window {
 		cargarTipoTerapiaFisica();
 		cargarTipoGimnasio();
 		layout.addComponent(layoutAdicional);
-		layout.addComponent(botonAlta);
-		botonAlta.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (comboBoxTipoConsulta.getValue() != null) {
-					TipoConsulta tipoConsulta = (TipoConsulta) comboBoxTipoConsulta
-							.getValue();
-					consulta = altaConsultaSesion(tipoConsulta);
-					paciente.getEvaluacion().getTratamiento().getConsultas().add(consulta);
-					iPacientes.crearPaciente(paciente);
-					close();
-				}
-			}
-		});
+		layout.addComponent(this.obtenerBotonGuardar());
 		this.setContent(layout);
 	}
 
@@ -125,7 +118,8 @@ public class VentanaAltaConsultaSesion extends Window {
 			consulta = new Gimnasio();
 			Gimnasio gimnasio = (Gimnasio) consulta;
 			if (this.opcionesGimnasio.getValue() != null){
-				Collection<TipoGimnasio> setGimnasio = (Collection<TipoGimnasio>) this.opcionesGimnasio.getValue();
+				Collection<TipoGimnasio> setGimnasio = 
+						(Collection<TipoGimnasio>) this.opcionesGimnasio.getValue();
 				for (TipoGimnasio tipo:setGimnasio){
 					gimnasio.getTipos().add(tipo);
 				}
@@ -135,13 +129,15 @@ public class VentanaAltaConsultaSesion extends Window {
 			consulta = new TerapiaFisica();
 			TerapiaFisica terapia = (TerapiaFisica) consulta;
 			if (this.opcionesTerapiaFisica.getValue() != null){
-				Collection<TipoTerapiaFisica> setTerapiaFisica = (Collection<TipoTerapiaFisica>) this.opcionesTerapiaFisica.getValue();
+				Collection<TipoTerapiaFisica> setTerapiaFisica = 
+						(Collection<TipoTerapiaFisica>) this.opcionesTerapiaFisica.getValue();
 				for (TipoTerapiaFisica tipo:setTerapiaFisica){
 					terapia.getTipos().add(tipo);
 				}
 			}
 		}
 		consulta.setDescripcion(tipoConsulta.getDescripcion());
+		consulta.setObservacion(this.textArea.getValue());
 		//System.out.println("[VentanaAltaConsultaSesion.alta] fecha:"+fecha.getValue() );
 		consulta.setFecha(fecha.getValue());
 		
@@ -150,7 +146,6 @@ public class VentanaAltaConsultaSesion extends Window {
 	
 	@Override
 	public void close(){
-		System.out.println("[VentanaAlstaConsultaSesion.close]");
 		observer.update(null, consulta);
 		super.close();
 	}
@@ -175,10 +170,30 @@ public class VentanaAltaConsultaSesion extends Window {
 		opcionesGimnasio.setMultiSelect(true);
 		opcionesGimnasio.setImmediate(true);
 		opcionesGimnasio.setWidth("25em");
-		/*
-		opcionesGimnasio.setLeftColumnCaption("Gimnasio");
-		opcionesGimnasio.setRightColumnCaption("Seleccionadas");
-		*/
 	}
+	
+	private Button obtenerBotonGuardar(){
+		Button botonAlta = new Button("", FontAwesome.SAVE);
+		botonAlta.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		botonAlta.setDescription("guardar");
+		botonAlta.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (comboBoxTipoConsulta.getValue() != null) {
+					TipoConsulta tipoConsulta = (TipoConsulta) comboBoxTipoConsulta
+							.getValue();
+					consulta = altaConsultaSesion(tipoConsulta);
+					iPacientes.agregarConsultaTratamiento(consulta, evaluacion);
+					close();
+				}
+			}
+		});
+
+		return botonAlta;
+		
+	}
+
 
 }

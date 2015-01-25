@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.calendar.FisioSportsCalendar;
-import com.vaadin.server.ThemeResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -39,20 +39,29 @@ public class ComponenteAgenda extends VerticalLayout{
 	private MenuBar createMenuBar(){
 		MenuBar menu = new MenuBar();
 		
-		menu.addItem("add", 
-				new ThemeResource("img/16/social-addthis-16.png"), 
+		MenuItem itemAdd = menu.addItem("", 
+				FontAwesome.PLUS_CIRCLE, 
 				this.addCommand);
-		menu.addItem("prev", 
-				//new ThemeResource("img/16/social-addthis-16.png"), 
-				this.prevCommand);
-		menu.addItem("next", 
-				//new ThemeResource("img/16/social-addthis-16.png"), 
-				this.nextCommand);
-		menu.addItem("month", 
-				//new ThemeResource("img/16/social-addthis-16.png"), 
+		itemAdd.setDescription("reservar hora");
+		
+		MenuItem itemMonth = menu.addItem("", 
+				FontAwesome.CALENDAR, 
 				this.monthCommand);
+		itemMonth.setDescription("ver mes");
 
-		menu.addStyleName(ValoTheme.MENU_BADGE);
+		MenuItem itemPrev = menu.addItem("", 
+				FontAwesome.ARROW_CIRCLE_LEFT, 
+				this.prevCommand);
+		itemPrev.setDescription("mes anterior");
+		
+		MenuItem itemNext = menu.addItem("", 
+				FontAwesome.ARROW_CIRCLE_RIGHT, 
+				this.nextCommand);
+		itemNext.setDescription("mes siguiente");
+		
+		
+		menu.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
+		
 		return menu;
 	}
 	
