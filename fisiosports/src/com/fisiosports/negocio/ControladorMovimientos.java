@@ -51,4 +51,54 @@ public class ControladorMovimientos implements IMovimientos{
 		return em.find(Movimiento.class, id);
 	}
 
+	@Override
+	public void crearCategoria(Categoria categoria) {
+		em.merge(categoria);
+		
+	}
+
+	@Override
+	public void borrarCategoria(Categoria categoria) {
+		categoria = em.merge(categoria);
+		em.remove(categoria);
+		em.flush();
+	}
+
+	@Override
+	public Categoria obtenerCategoria(Long idCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Categoria> consultarCategorias() {
+//		em.flush();
+		return em.createNamedQuery("Categoria.all").getResultList();
+	}
+
+	@Override
+	public void crearCuentaFinanciera(CuentaFinanciera cuenta) {
+		em.merge(cuenta);
+	}
+
+	@Override
+	public void borrarCuentaFinanciera(CuentaFinanciera cuenta) {
+		cuenta = em.merge(cuenta);
+		em.remove(cuenta);
+		em.flush();
+	}
+
+	@Override
+	public CuentaFinanciera obtenerCuentaFinanciera(Long idCuenta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CuentaFinanciera> consultarCuentasFinancieras() {
+		return em.createNamedQuery("CuentaFinanciera.all").getResultList();
+	}
+
 }

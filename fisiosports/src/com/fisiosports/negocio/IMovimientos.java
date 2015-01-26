@@ -20,5 +20,15 @@ public interface IMovimientos {
 			Paciente paciente, Date fechaInicial, Date fechaFinal);
 	public Movimiento obtenerMovimiento(Long id);
 	
+	
+	public void crearCategoria(Categoria categoria);
+	public void borrarCategoria(Categoria categoria);
+	public Categoria obtenerCategoria(Long idCategoria);
+	public List<Categoria> consultarCategorias();
+	
+	public void crearCuentaFinanciera(CuentaFinanciera cuenta);
+	public void borrarCuentaFinanciera(CuentaFinanciera cuenta);
+	public CuentaFinanciera obtenerCuentaFinanciera(Long idCuenta);
+	public List<CuentaFinanciera> consultarCuentasFinancieras();
 
 }

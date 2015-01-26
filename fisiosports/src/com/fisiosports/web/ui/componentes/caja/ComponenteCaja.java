@@ -1,6 +1,8 @@
 package com.fisiosports.web.ui.componentes.caja;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.caja.Movimiento;
 import com.fisiosports.web.FisiosportsUI;
@@ -15,9 +17,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class ComponenteCaja extends VerticalLayout{
+public class ComponenteCaja extends VerticalLayout implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +43,8 @@ public class ComponenteCaja extends VerticalLayout{
 
 		@Override
 		public void menuSelected(MenuItem selectedItem) {
-			Notification.show("cuentas", Type.TRAY_NOTIFICATION);
+			Window window = new VentanaCuentaFinanciera(ComponenteCaja.this);
+			getUI().addWindow(window);
 		}
 		
 	};
@@ -51,7 +55,8 @@ public class ComponenteCaja extends VerticalLayout{
 
 		@Override
 		public void menuSelected(MenuItem selectedItem) {
-			Notification.show("categorias", Type.TRAY_NOTIFICATION);
+			Window window = new VentanaCategoria(ComponenteCaja.this);
+			getUI().addWindow(window);
 		}
 		
 	};
@@ -83,6 +88,12 @@ public class ComponenteCaja extends VerticalLayout{
 		
 		this.addComponent(menu);
 		this.addComponent(table);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
