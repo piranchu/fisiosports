@@ -14,9 +14,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import com.fisiosports.modelo.entidades.Paciente;
 
@@ -30,15 +30,21 @@ import com.fisiosports.modelo.entidades.Paciente;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TIPO")
 public class Movimiento{
+	
+	public enum TipoMovimiento{
+		INGRESO, EGRESO;
+	}
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private Double importe;
 	@Enumerated(EnumType.STRING)
 	private Moneda moneda = Moneda.UYU;
-	@NotNull
+	@OneToOne
 	private CuentaFinanciera cuentaFinanciera;
+	@OneToOne
 	private Categoria categoria;
+	@OneToOne
 	private Paciente paciente;
 	private String observaciones;
 	@Temporal(value = TemporalType.TIMESTAMP)

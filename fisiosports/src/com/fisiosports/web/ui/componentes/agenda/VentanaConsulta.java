@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.AgendaConsulta;
 import com.fisiosports.modelo.entidades.Paciente;
@@ -29,16 +31,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class VentanaConsulta extends Window {
+public class VentanaConsulta extends Window implements Observer{
 
 	private static final long serialVersionUID = 1L;
 
 	private FisiosportsUI ui;
 	private VerticalLayout content = new VerticalLayout();
 	private AgendaConsulta agendaConsulta;
-	private Button botonSeleccionPaciente;
-	private Button botonInfoPaciente;
 	private TextField nombrePaciente;
+	private Button botonSeleccionPaciente;
+	private Paciente paciente;
+	private Button botonInfoPaciente;
 	private PopupDateField start;
 	private CheckBox masajes;
 	private CheckBox terapiaFisica;
@@ -51,7 +54,6 @@ public class VentanaConsulta extends Window {
 	
 	//private PopupDateField otraFecha;
 
-	private Paciente paciente;
 
 	// Se crea cuando se selecciona la agenda
 	public VentanaConsulta(FisiosportsUI ui, Calendar calendar) {
@@ -362,6 +364,14 @@ public class VentanaConsulta extends Window {
 			calendar.markAsDirty();
 		}
 	};
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (arg1 instanceof Paciente){
+			this.setPaciente((Paciente)arg1);
+		}
+		
+	}
 	
 
 }

@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value="INGRESO")
+@DiscriminatorValue(value="EGRESO")
 public class Egreso extends Movimiento {
 
 }

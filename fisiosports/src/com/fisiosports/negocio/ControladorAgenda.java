@@ -17,8 +17,6 @@ public class ControladorAgenda implements IAgenda{
 	private EntityManager em;
 	
 	public ControladorAgenda(){
-		//em = Persistence.createEntityManagerFactory("java:jboss/datasources/fisiosportsDS").createEntityManager();
-		System.out.println("Controlador agenda - em:"+em);
 	}
 	
 	@Override
@@ -44,7 +42,7 @@ public class ControladorAgenda implements IAgenda{
 
 	@Override
 	public void borrarConsulta(AgendaConsulta agendaConsulta) {
-		em.remove(agendaConsulta);
+		em.remove(em.merge(agendaConsulta));
 	}
 
 }

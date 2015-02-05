@@ -33,6 +33,7 @@ public class PacienteDT implements Serializable{
 		evalButton.setDescription("Evaluación");
 		
 		modifyButton.setStyleName(ValoTheme.BUTTON_BORDERLESS);
+//		modifyButton.addStyleName("redicon");
 		this.modifyButton.addClickListener(new ClickListener(){
 			private static final long serialVersionUID = 1L;
 			@Override

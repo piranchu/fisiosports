@@ -13,16 +13,18 @@ public class ContenedorMovimientosCaja extends BeanItemContainer<MovimientoDT>{
 			Collection<? extends MovimientoDT> collection)
 			throws IllegalArgumentException {
 		super(type, collection);
-		this.addNestedContainerBean("cuentaFinanciera");
-		this.addNestedContainerBean("categoria");
+		this.addNestedContainerBean("movimiento");
+		this.addNestedContainerBean("movimiento.cuentaFinanciera");
+		this.addNestedContainerBean("movimiento.categoria");
 	}
 
 	public static Object[] getColumnasVisibles(){
-		return new Object[]{"tipo","cuentaFinanciera.nombre","categoria.nombre","ingreso","egreso","moneda","fecha"};
+		return new Object[]{"icon","movimiento.cuentaFinanciera.nombre", "movimiento.categoria.nombre", "movimiento.importe", 
+				"movimiento.moneda","movimiento.fecha", "movimiento.cuentaFinanciera.saldo", "movimiento.observaciones", "deleteButton"};
 	}
 
 	public static String[] getNonbresColumnas(){
-		return new String[]{"tipo","cuenta","categoria","ingreso","egreso","moneda","fecha"};
+		return new String[]{"tipo","cuenta", "categoria", "importe","moneda", "fecha", "saldo", "observaciones", ""};
 	}
 	
 	

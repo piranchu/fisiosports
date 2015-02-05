@@ -7,7 +7,6 @@ import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.Paciente;
 import com.fisiosports.negocio.IPacientes;
-import com.fisiosports.web.ui.componentes.agenda.VentanaConsulta;
 import com.fisiosports.web.ui.contenedores.ContenedorPacientes;
 import com.fisiosports.web.ui.contenedores.beantypes.PacienteDT;
 import com.vaadin.data.Container.Filter;
@@ -29,7 +28,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class VentanaSeleccionPaciente extends Window implements Observer{
 	
 	private static final long serialVersionUID = 1L;
-	private VentanaConsulta ventanaConsulta;
+	private ComponenteSeleccionPaciente componenteSeleccion;
 	private TextField documento = new TextField();
 	private TextField nombre = new TextField();
 	private TextField apellido = new TextField();
@@ -45,12 +44,11 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	private Button botonAltaPaciente; 
 	
 	private VerticalLayout layout = new VerticalLayout();
-	private Observer ventanaActual;
+	private Observer observer;
 		
-	public VentanaSeleccionPaciente(final IPacientes iPacientes, final VentanaConsulta ventanaConsulta){
+	public VentanaSeleccionPaciente(final IPacientes iPacientes, final Observer observer){
 		this.iPacientes = iPacientes;
-		this.ventanaActual = this;
-		this.ventanaConsulta = ventanaConsulta;
+		this.observer = observer;
 		this.setModal(true);
 		this.setCaption("Selección de pacientes");
 		layout.setMargin(true);
@@ -64,7 +62,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Window window = new VentanaPaciente(iPacientes, ventanaActual, null);
+				Window window = new VentanaPaciente(iPacientes, VentanaSeleccionPaciente.this, null);
 				UI.getCurrent().addWindow(window);
 			}
 		});
@@ -84,7 +82,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
             public void itemClick(ItemClickEvent event) {
             	Long documento = (Long)event.getItem().getItemProperty("paciente.documento").getValue();
             	Paciente paciente = iPacientes.obtenerPaciente(documento);
-            	ventanaConsulta.setPaciente(paciente);
+            	observer.update(null, paciente);
             	close();
             }
         });
@@ -175,7 +173,8 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof Paciente){
         	Paciente paciente = (Paciente)arg1;
-        	ventanaConsulta.setPaciente(paciente);
+        	if (observer != null)
+        		this.observer.update(null, paciente);
         	close();
 		}
 		

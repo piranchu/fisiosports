@@ -77,13 +77,9 @@ public class VentanaCategoria extends Window{
 		tablaCategoria.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
 		tablaCategoria.getContainerDataSource().removeAllItems();
-		System.out.println("[VentanaCategoria.cargarTabla] tablaCategoria.size(): "+tablaCategoria.size());
 		for (Categoria categoria:this.ui.getiMovimientos().consultarCategorias()){
-			System.out.println("[VentanaCategoria.cargarTabla] Cargando: "+categoria.getNombre());
 			tablaCategoria.getContainerDataSource().addItem(new BeanItemCategoria(categoria, this));
 		}
-		System.out.println("[VentanaCategoria.cargarTabla] tablaCategoria.size(): "+tablaCategoria.size());
-		System.out.println("[VentanaCategoria.cargarTabla] tablaCategoria.getContainerDataSource().size(): "+tablaCategoria.getContainerDataSource().size());
 		if (tablaCategoria.getContainerDataSource().size()>10){
 			tablaCategoria.setPageLength(10);
 		}else{
@@ -107,6 +103,7 @@ public class VentanaCategoria extends Window{
 		
 		if (this.textCategoria.getValue() == null || this.textCategoria.getValue().trim().isEmpty()){
 			Notification.show("Debe indicar nombre de categoría", Type.ERROR_MESSAGE);
+			return;
 		}
 		Categoria categoria = new Categoria();
 		categoria.setNombre(this.textCategoria.getValue());

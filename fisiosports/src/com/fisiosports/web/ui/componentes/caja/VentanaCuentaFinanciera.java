@@ -93,12 +93,10 @@ public class VentanaCuentaFinanciera extends Window{
 		tabla = new Table();
 		tabla.setContainerDataSource(container);
 		tabla.setVisibleColumns(new Object[]{
-				"cuentaFinanciera.nombre", "cuentaFinanciera.descripcion", 
-				"cuentaFinanciera.moneda", "botonEliminar"
+				"cuentaFinanciera.nombre", "cuentaFinanciera.descripcion", "cuentaFinanciera.moneda", "botonEliminar"
 		});
 		tabla.setColumnHeaders(new String[]{
-				"nombre", "descripcion", 
-				"moneda", ""
+				"nombre", "descripcion", "moneda", ""
 		});
 //		tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
@@ -129,6 +127,7 @@ public class VentanaCuentaFinanciera extends Window{
 		
 		if (this.textNombre.getValue() == null || this.textNombre.getValue().trim().isEmpty()){
 			Notification.show("Debe indicar nombre de la cuenta", Type.ERROR_MESSAGE);
+			return;
 		}
 		CuentaFinanciera cuenta = new CuentaFinanciera();
 		cuenta.setNombre(this.textNombre.getValue());

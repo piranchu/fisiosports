@@ -23,7 +23,7 @@ public class CuentaFinanciera implements Serializable{
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String nombre;
-	private Double saldo;
+	private Double saldo = 0.0;
 	@Enumerated(EnumType.STRING)
 	private Moneda moneda;
 	private String descripcion;

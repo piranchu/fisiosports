@@ -29,11 +29,6 @@ public class ContenedorPacientes extends BeanItemContainer<PacienteDT>{
 			throws IllegalArgumentException {
 		super(type);
 		addNestedContainerBean("paciente");
-//		addNestedContainerProperty("paciente.documento");
-//		addNestedContainerProperty("paciente.nombre");
-//		addNestedContainerProperty("paciente.apellido");
-//		addNestedContainerProperty("paciente.correoElectronico");
-//		addNestedContainerProperty("paciente.telefono");
 		
 	}
 
