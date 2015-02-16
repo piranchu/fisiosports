@@ -18,6 +18,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
@@ -105,6 +107,7 @@ public class VentanaAltaMovimiento extends Window{
 		moneda.setItemCaptionPropertyId("descripcion");
 		contenedorMoneda.addAll(Arrays.asList(Moneda.values()));
 		moneda.setValue(Moneda.UYU);
+		moneda.setNullSelectionAllowed(false);
 		formLayout.addComponent(moneda);
 		
 //		importe.addValidator(new Validator(){
@@ -165,10 +168,26 @@ public class VentanaAltaMovimiento extends Window{
 		default: movimiento = new Ingreso();
 		}
 		
+		if (cuenta.getValue() == null){
+			Notification.show("debe seleccionar cuenta", Type.WARNING_MESSAGE);
+			return;
+		}
+		
+		if (importe.getValue() == null || importe.getValue().trim().isEmpty()){
+			Notification.show("debe ingresar importe", Type.WARNING_MESSAGE);
+			return;
+		}
+
+		try{
+			movimiento.setImporte(Double.parseDouble(this.importe.getValue()));			
+		}catch(Exception e){
+			Notification.show("importe incorrecto", Type.WARNING_MESSAGE);
+			return;
+		}
+		
 		movimiento.setCategoria((Categoria)this.categoria.getValue());
 		movimiento.setCuentaFinanciera((CuentaFinanciera)this.cuenta.getValue());
 		movimiento.setMoneda((Moneda)this.moneda.getValue());
-		movimiento.setImporte(Double.parseDouble(this.importe.getValue()));
 		movimiento.setFecha(this.fecha.getValue());
 		movimiento.setPaciente(this.seleccionPaciente.getPaciente());
 		movimiento.setObservaciones(observaciones.getValue());

@@ -114,7 +114,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 		if (evaluacion != null && evaluacion.getTratamiento() != null){
 //			List<ConsultaDT> listaConsutaDT = new LinkedList<>();
 			for (Consulta consulta:ui.getiPacientes().obtenerConsultas(evaluacion.getId())){
-				contenedorConsulta.addBean(new ConsultaDT(consulta, ui.getiPacientes()));
+				contenedorConsulta.addBean(new ConsultaDT(consulta, this));
 			}
 //			contenedorConsulta.addAll(ui.getiPacientes().obtenerConsultas(evaluacion.getId()));
 			
@@ -188,7 +188,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 		
 		List<EvaluacionDT> listaEvaliacionDT = new LinkedList<EvaluacionDT>();
 		for (Evaluacion evaluacion:paciente.getEvaluaciones()){
-			listaEvaliacionDT.add(new EvaluacionDT(evaluacion, ui.getiPacientes()));
+			listaEvaliacionDT.add(new EvaluacionDT(evaluacion, this));
 		}
 		
 		this.contenedorEvaluacion = new ContenedorEvaluacion(EvaluacionDT.class, listaEvaliacionDT);
@@ -228,7 +228,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 		ui.getiPacientes().obtenerPaciente(paciente.getDocumento());
 		
 		for (Evaluacion evaluacion:paciente.getEvaluaciones()){
-			contenedorEvaluacion.addBean(new EvaluacionDT(evaluacion, ui.getiPacientes()));
+			contenedorEvaluacion.addBean(new EvaluacionDT(evaluacion, this));
 		}
 		
 		
@@ -349,12 +349,20 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 
 	}
 	
-	public void borrarEvaluacion(Evaluacion evaluacion){
-		this.ui.getiPacientes().borrarEvaluacion(evaluacion);
+	public void borrarEvaluacion(EvaluacionDT evaluacionDT){
+		this.ui.getiPacientes().borrarEvaluacion(evaluacionDT.getEvaluacion());
+		this.evaluacion = null;
+		this.tableEvaluacion.getContainerDataSource().removeItem(evaluacionDT);
+		this.tableEvaluacion.markAsDirty();
+		this.cargarConsultas();
+		
 	}
 	
-	public void borrarConsultaTratamiento(Consulta consulta){
-		this.ui.getiPacientes().borrarConsultaTratamiento(consulta);
+	public void borrarConsultaTratamiento(ConsultaDT consultaDT){
+		this.ui.getiPacientes().borrarConsultaTratamiento(consultaDT.getConsulta());
+		this.tableTratamiento.getContainerDataSource().removeItem(consultaDT);
+		this.tableTratamiento.markAsDirty();
+		this.cargarConsultas();
 		
 	}
 	

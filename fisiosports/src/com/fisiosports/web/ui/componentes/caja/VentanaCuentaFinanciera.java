@@ -93,10 +93,11 @@ public class VentanaCuentaFinanciera extends Window{
 		tabla = new Table();
 		tabla.setContainerDataSource(container);
 		tabla.setVisibleColumns(new Object[]{
-				"cuentaFinanciera.nombre", "cuentaFinanciera.descripcion", "cuentaFinanciera.moneda", "botonEliminar"
+				"cuentaFinanciera.nombre", "cuentaFinanciera.descripcion", 
+				"cuentaFinanciera.moneda", "cuentaFinanciera.saldo", "botonEliminar"
 		});
 		tabla.setColumnHeaders(new String[]{
-				"nombre", "descripcion", "moneda", ""
+				"nombre", "descripcion", "moneda", "saldo", ""
 		});
 //		tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
@@ -143,7 +144,13 @@ public class VentanaCuentaFinanciera extends Window{
 	}
 	
 	public void borrar(CuentaFinanciera cuenta){
-		this.ui.getiMovimientos().borrarCuentaFinanciera(cuenta);
+		try{
+			this.ui.getiMovimientos().borrarCuentaFinanciera(cuenta);
+		}catch(Exception e){
+			Notification.show("No se pudo eliminar la cuenta. "
+					+ "Pueden haber movimientos asociados a la misma", 
+					Type.ERROR_MESSAGE);
+		}
 		this.cargarTabla();
 	}
 	

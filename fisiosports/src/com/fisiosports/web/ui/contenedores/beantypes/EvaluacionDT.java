@@ -1,7 +1,7 @@
 package com.fisiosports.web.ui.contenedores.beantypes;
 
 import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.negocio.IPacientes;
+import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -13,7 +13,7 @@ public class EvaluacionDT {
 	private Evaluacion evaluacion;
 	private Button deleteButton = new Button("");
 
-	public EvaluacionDT(final Evaluacion evaluacion, final IPacientes iPacientes){
+	public EvaluacionDT(final Evaluacion evaluacion, final ComponenteEvaluacion componente){
 		this.evaluacion = evaluacion;
 		deleteButton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
 		deleteButton.setIcon(FontAwesome.TRASH_O);
@@ -21,7 +21,7 @@ public class EvaluacionDT {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				iPacientes.borrarEvaluacion(evaluacion);
+				componente.borrarEvaluacion(EvaluacionDT.this);
 			}			
 		});
 	}

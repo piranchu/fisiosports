@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 @NamedQueries({
 	@NamedQuery(name = "CuentaFinanciera.all", query = "SELECT c FROM CuentaFinanciera c ")
@@ -19,6 +20,9 @@ import javax.persistence.NamedQuery;
 public class CuentaFinanciera implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+    @Version
+    private Long version;
 	
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;

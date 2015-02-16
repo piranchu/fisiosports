@@ -29,7 +29,7 @@ import com.fisiosports.modelo.entidades.Paciente;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="TIPO")
-public class Movimiento{
+public abstract class Movimiento{
 	
 	public enum TipoMovimiento{
 		INGRESO, EGRESO;
@@ -40,7 +40,7 @@ public class Movimiento{
 	private Double importe;
 	@Enumerated(EnumType.STRING)
 	private Moneda moneda = Moneda.UYU;
-	@OneToOne
+	@OneToOne 
 	private CuentaFinanciera cuentaFinanciera;
 	@OneToOne
 	private Categoria categoria;
@@ -49,6 +49,10 @@ public class Movimiento{
 	private String observaciones;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date fecha = Calendar.getInstance().getTime();
+	
+	
+	public abstract void ejecutar();
+	public abstract void anular();
 	
 	public Categoria getCategoria() {
 		return categoria;

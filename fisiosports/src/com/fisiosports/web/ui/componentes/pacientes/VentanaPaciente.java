@@ -9,6 +9,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -23,6 +24,11 @@ public class VentanaPaciente extends Window {
 	private TextField apellido = new TextField("Apellido");
 	private TextField telefono = new TextField("Teléfono");
 	private TextField correoElectronico = new TextField("Correo electrónico");
+	private TextField emergenciaMovil = new TextField("Emergencia móvil"); 
+	private TextField ocupacion = new TextField("Ocupación");
+	private PopupDateField fechaNacimiento = new PopupDateField("Fecha nacimiento"); 
+	
+	
 	private IPacientes iPacientes;
 	//private ComponentePacientes componentePacientes;
 	private Observer observer;
@@ -54,6 +60,9 @@ public class VentanaPaciente extends Window {
 		apellido.setValue(paciente.getApellido());
 		telefono.setValue(paciente.getTelefono());
 		correoElectronico.setValue(paciente.getCorreoElectronico());
+		ocupacion.setValue(paciente.getOcupacion());
+		emergenciaMovil.setValue(paciente.getEmergenciaMedica());
+		fechaNacimiento.setValue(paciente.getFechaNacimiento());
 	}
 
 	private FormLayout crearFormLayout(){
@@ -67,6 +76,9 @@ public class VentanaPaciente extends Window {
 		layout.addComponent(apellido);
 		layout.addComponent(telefono);
 		layout.addComponent(correoElectronico);
+		layout.addComponent(ocupacion);
+		layout.addComponent(emergenciaMovil);
+		layout.addComponent(fechaNacimiento);
 		layout.setSpacing(false);
 		layout.setMargin(false);
 		return layout;
@@ -96,10 +108,20 @@ public class VentanaPaciente extends Window {
 		if (paciente == null){
 			return;
 		}
+		
+		try{
+			paciente.setDocumento(new Long(documento.getValue()));
+		}catch(Exception e){
+			Notification.show("Documento incorrecto", Notification.Type.ERROR_MESSAGE);
+			return;
+		}
 		paciente.setNombre(nombre.getValue());
 		paciente.setApellido(apellido.getValue());
 		paciente.setTelefono(telefono.getValue());
 		paciente.setCorreoElectronico(correoElectronico.getValue());
+		paciente.setFechaNacimiento(fechaNacimiento.getValue());
+		paciente.setOcupacion(ocupacion.getValue());
+		paciente.setEmergenciaMedica(emergenciaMovil.getValue());
 		this.iPacientes.crearPaciente(paciente);
 		
 		Notification.show("Datos del paciente modificados.", Notification.Type.HUMANIZED_MESSAGE);
@@ -136,10 +158,14 @@ public class VentanaPaciente extends Window {
 		}
 		
 		paciente.setDocumento(doc);
+		
 		paciente.setNombre(nombre.getValue());
 		paciente.setApellido(apellido.getValue());
 		paciente.setTelefono(telefono.getValue());
 		paciente.setCorreoElectronico(correoElectronico.getValue());
+		paciente.setFechaNacimiento(fechaNacimiento.getValue());
+		paciente.setOcupacion(ocupacion.getValue());
+		paciente.setEmergenciaMedica(emergenciaMovil.getValue());
 		this.iPacientes.crearPaciente(paciente);
 		
 		Notification.show("Paciente creado con éxito.", Notification.Type.HUMANIZED_MESSAGE);

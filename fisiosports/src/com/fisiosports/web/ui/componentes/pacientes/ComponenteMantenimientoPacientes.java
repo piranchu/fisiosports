@@ -1,5 +1,6 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -10,6 +11,7 @@ import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorPacientes;
 import com.fisiosports.web.ui.contenedores.beantypes.PacienteDT;
 import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -17,6 +19,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -30,7 +33,21 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 	
 	private FisiosportsUI ui;
 	
-	private Table tablaPacientes = new Table();
+	private Table tablaPacientes = new Table(){
+		private static final long serialVersionUID = 1L;
+		@Override
+		protected String formatPropertyValue(Object rowId, Object colId,
+				Property<?> property) {
+			Object v = property.getValue();
+			if (v instanceof Long) {
+				Long longValue = (Long) v;
+				DecimalFormat df = new DecimalFormat("###");
+				return df.format(longValue);
+			}
+			return super.formatPropertyValue(rowId, colId, property);
+		}
+	};
+	
 	private List<Paciente> listaPacientes;
 	List<PacienteDT> listaPacientesDT;
 	private ContenedorPacientes contenedor;
@@ -38,10 +55,12 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 	private TextField documento = new TextField();
 	private TextField nombre = new TextField();
 	private TextField apellido = new TextField();
+	private TextField telefono = new TextField();
 	
 	private Filter filterDocumento = new SimpleStringFilter("paciente.documento", "", true, false);
 	private Filter filterNombre = new SimpleStringFilter("paciente.nombre", "", true, false);
 	private Filter filterApellido = new SimpleStringFilter("paciente.apellido", "", true, false);
+	private Filter filterTelefono = new SimpleStringFilter("paciente.telefono", "", true, false);
 
 	private ComponentePacientes componentePacientes;
 	
@@ -61,6 +80,7 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 		contenedor.addContainerFilter(filterDocumento);
 		contenedor.addContainerFilter(filterNombre);
 		contenedor.addContainerFilter(filterApellido);
+		contenedor.addContainerFilter(filterTelefono);
 
 		tablaPacientes.setContainerDataSource(contenedor);
 		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisibles());
@@ -84,6 +104,7 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 			}
 		});
 		hl.addComponent(documento);
+		
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
 		nombre.setWidth("165px");
@@ -116,6 +137,23 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 
 		});
 		hl.addComponent(apellido);
+
+		telefono.setInputPrompt("teléfono");
+		telefono.setImmediate(true);
+		telefono.setWidth("165px");
+		telefono.addTextChangeListener(new TextChangeListener(){
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void textChange(TextChangeEvent event) {
+				contenedor.removeContainerFilter(filterTelefono);
+				filterTelefono = new SimpleStringFilter("paciente.telefono", event.getText(), true, true);
+				contenedor.addContainerFilter(filterTelefono);
+			}
+		});
+		hl.addComponent(telefono);
+		
 		this.addComponent(hl);
 		
 		tablaPacientes.setImmediate(true);
@@ -182,7 +220,9 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 	}
 	
 	public void deletePaciente(Paciente paciente){
-	
+		this.ui.getiPacientes().borrarPaciente(paciente);
+		this.update(null, null);
+		Notification.show("Paciente eliminado");
 	}
 	
 	public void evaluacionPaciente(Paciente paciente){

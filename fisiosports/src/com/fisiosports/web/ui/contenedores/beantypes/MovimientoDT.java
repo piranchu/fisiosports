@@ -18,11 +18,11 @@ public class MovimientoDT {
 	private Button icon = new Button("");
 	private Movimiento movimiento;
 	private Button deleteButton = new Button("");
-	private ComponenteCaja componente;
+//	private ComponenteCaja componente;
 	
 	public MovimientoDT(Movimiento movimiento, final ComponenteCaja componente){
 		this.movimiento = movimiento;
-		this.componente = componente;
+//		this.componente = componente;
 		
 		icon.addStyleName(ValoTheme.BUTTON_BORDERLESS);
 		if (movimiento instanceof Ingreso){

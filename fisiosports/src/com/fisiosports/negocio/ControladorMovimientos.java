@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 
 import com.fisiosports.modelo.entidades.Paciente;
@@ -21,7 +22,10 @@ public class ControladorMovimientos implements IMovimientos{
 	@Override
 	public void crearMovimiento(Movimiento movimiento) {
 		em.persist(movimiento);
-		
+		movimiento.setCuentaFinanciera(em.merge(movimiento.getCuentaFinanciera()));
+		em.lock(movimiento.getCuentaFinanciera(), LockModeType.WRITE);
+		movimiento.ejecutar();
+		em.flush();
 	}
 
 	@Override
@@ -29,10 +33,11 @@ public class ControladorMovimientos implements IMovimientos{
 		System.out.println("[ControladorMovimientos.borrarMovimiento] borra movimiento "+id);
 		Movimiento movimiento = em.find(Movimiento.class, id);
 		if (movimiento != null){
-			System.out.println("[ControladorMovimientos.borrarMovimiento] se encontro movimiento, se borra");
+			movimiento.setCuentaFinanciera(em.merge(movimiento.getCuentaFinanciera()));
+			em.lock(movimiento.getCuentaFinanciera(), LockModeType.WRITE);
+			movimiento.anular();
+			em.flush();
 			em.remove(movimiento);
-		}else{
-			System.out.println("[ControladorMovimientos.borrarMovimiento] NO se encontro");
 		}
 		
 	}

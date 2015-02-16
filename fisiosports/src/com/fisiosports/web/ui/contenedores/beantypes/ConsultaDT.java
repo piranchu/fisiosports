@@ -1,7 +1,7 @@
 package com.fisiosports.web.ui.contenedores.beantypes;
 
 import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.negocio.IPacientes;
+import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -14,7 +14,7 @@ public class ConsultaDT {
 	private Consulta consulta;
 	private Button deleteButton = new Button("");
 	
-	public ConsultaDT(final Consulta consulta, final IPacientes iPacientes){
+	public ConsultaDT(final Consulta consulta, final ComponenteEvaluacion componente){
 		this.setConsulta(consulta);
 		deleteButton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
 		deleteButton.setIcon(FontAwesome.TRASH_O);
@@ -22,7 +22,8 @@ public class ConsultaDT {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				iPacientes.borrarConsultaTratamiento(consulta);
+				System.out.println("[ConsultaDT] Borrar consulta:" + consulta.getId());
+				componente.borrarConsultaTratamiento(ConsultaDT.this);
 			}			
 		});
 	}

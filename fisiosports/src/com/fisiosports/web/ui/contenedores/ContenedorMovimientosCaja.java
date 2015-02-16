@@ -16,15 +16,18 @@ public class ContenedorMovimientosCaja extends BeanItemContainer<MovimientoDT>{
 		this.addNestedContainerBean("movimiento");
 		this.addNestedContainerBean("movimiento.cuentaFinanciera");
 		this.addNestedContainerBean("movimiento.categoria");
+		this.addNestedContainerBean("movimiento.paciente");
 	}
 
 	public static Object[] getColumnasVisibles(){
 		return new Object[]{"icon","movimiento.cuentaFinanciera.nombre", "movimiento.categoria.nombre", "movimiento.importe", 
-				"movimiento.moneda","movimiento.fecha", "movimiento.cuentaFinanciera.saldo", "movimiento.observaciones", "deleteButton"};
+				"movimiento.moneda","movimiento.fecha", /*"movimiento.cuentaFinanciera.saldo", */"movimiento.observaciones", 
+				"movimiento.paciente.documento", "movimiento.paciente.nombre", "movimiento.paciente.apellido", "deleteButton"};
 	}
 
 	public static String[] getNonbresColumnas(){
-		return new String[]{"","cuenta", "categoria", "importe","moneda", "fecha", "saldo", "observaciones", ""};
+		return new String[]{"","cuenta", "categoria", "importe","moneda", "fecha", /*"saldo", */"observaciones", 
+				"documento", "nombre", "apellido", ""};
 	}
 	
 	

@@ -24,13 +24,13 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public void crearPaciente(Paciente paciente) {
-		System.out.println("[ControladorPacientes.crearPaciente] "+paciente.getDocumento());
+//		System.out.println("[ControladorPacientes.crearPaciente] "+paciente.getDocumento());
 		em.merge(paciente);
 	}
 
 	@Override
 	public void agregarEvaluacionPaciente(Evaluacion evaluacion, Paciente paciente){
-		System.out.println("[ControladorPacientes.agregarEvaluacion] evaluacion.getTratamiento().getId():"+evaluacion.getTratamiento().getId());
+//		System.out.println("[ControladorPacientes.agregarEvaluacion] evaluacion.getTratamiento().getId():"+evaluacion.getTratamiento().getId());
 		if (evaluacion.getTratamiento().getId() == null){
 			em.persist(evaluacion.getTratamiento());
 		}
@@ -44,9 +44,18 @@ public class ControladorPacientes implements IPacientes{
 		em.merge(paciente);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Paciente obtenerPaciente(Long documento){
-		Paciente paciente = em.find(Paciente.class, documento);
+		Paciente paciente = null;
+		paciente = em.find(Paciente.class, documento);
+//		List<Paciente> lista = em
+//				.createNamedQuery("Paciente.findByDocument")
+//				.setParameter("documento", documento)
+//				.getResultList();
+//		if (!lista.isEmpty()){
+//			paciente = lista.get(0);
+//		}
 		if (paciente != null){
 			for (Evaluacion evaluacion:paciente.getEvaluaciones()){
 				evaluacion.getTratamiento().getConsultas();
@@ -77,12 +86,12 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public List<Consulta> obtenerConsultas(Long idEvaluacion) {
-		System.out.println("[ControladorPaciuentes.obtenerConsutas] idEvaluacion");
+//		System.out.println("[ControladorPaciuentes.obtenerConsutas] idEvaluacion");
 		Evaluacion evaluacion = em.find(Evaluacion.class, idEvaluacion);
 		if (evaluacion == null){
 			return new LinkedList<Consulta>();
 		}		
-		System.out.println("[ControladorPaciuentes.obtenerConsutas] consultas:"+evaluacion.getTratamiento().getConsultas().size());
+//		System.out.println("[ControladorPaciuentes.obtenerConsutas] consultas:"+evaluacion.getTratamiento().getConsultas().size());
 		for (Consulta consulta:evaluacion.getTratamiento().getConsultas()){
 			if (consulta instanceof Gimnasio){
 				Gimnasio gimnasio = (Gimnasio) consulta;
@@ -114,31 +123,42 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public List<TipoGimnasio> obtenerTipos(Gimnasio gimnasio) {
-		System.out.println("[ControladorPacientes.obtenerTiposGimansio] gimnasio.id:"+gimnasio.getId());
 		gimnasio = em.find(Gimnasio.class, gimnasio.getId());
-		System.out.println("[ControladorPacientes.obtenerTiposGimansio] tipos:"+gimnasio.getTipos().size());
 		return gimnasio.getTipos();
 	}
 
 	@Override
 	public List<TipoTerapiaFisica> obtenerTipos(TerapiaFisica terapia) {
-		System.out.println("[ControladorPacientes.obtenerTiposGimansio] terapia.id:"+terapia.getId());
 		terapia = em.find(TerapiaFisica.class, terapia.getId());
-		System.out.println("[ControladorPacientes.obtenerTiposGimansio] tipos:"+terapia.getTipos().size());
 		return terapia.getTipos();
 	}
 
 	@Override
 	public void borrarPaciente(Paciente paciente) {
-		// TODO Auto-generated method stub
+		paciente = em.merge(paciente);
+		em.remove(paciente);
 		
 	}
 
 	@Override
 	public void borrarEvaluacion(Evaluacion evaluacion) {
 		evaluacion = em.merge(evaluacion);
-		em.remove(evaluacion.getTratamiento());
+//		System.out.println("[ControladorPcientes] borrando tratamiento");
+//		em.remove(evaluacion.getTratamiento());
+//		evaluacion.setTratamiento(null)
+//		em.merge(evaluacion);
+//		System.out.println("[ControladorPcientes] borrando evaluacion");
+//		em.remove(evaluacion);
+
+//		System.out.println("[ControladorPcientes] borrando evaluacion");
+		evaluacion.getPaciente().getEvaluaciones().remove(evaluacion);
+		em.merge(evaluacion.getPaciente());
 		em.remove(evaluacion);
+		em.flush();
+//		em.flush();
+//		System.out.println("[ControladorPcientes] borrando tratamiento");
+//		em.remove(evaluacion.getTratamiento());
+
 		
 	}
 

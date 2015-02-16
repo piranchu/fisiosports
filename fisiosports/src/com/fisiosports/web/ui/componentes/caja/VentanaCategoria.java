@@ -116,7 +116,13 @@ public class VentanaCategoria extends Window{
 	}
 	
 	public void borrarCategoria(Categoria categoria){
-		this.ui.getiMovimientos().borrarCategoria(categoria);
+		try{
+			this.ui.getiMovimientos().borrarCategoria(categoria);
+		}catch(Exception e){
+			Notification.show("No se pudo eliminar la categoría. "
+					+ "Pueden haber movimientos asociados a la misma", 
+					Type.ERROR_MESSAGE);
+		}
 		this.cargarTabla();
 	}
 	
