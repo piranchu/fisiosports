@@ -16,11 +16,15 @@ import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 public interface IPacientes {
 
 	public void crearPaciente(Paciente paciente);
-	public void agregarEvaluacionPaciente(Evaluacion evaluacion, Paciente paciente);
-	public void agregarConsultaTratamiento(Consulta consulta, Evaluacion evaluacion);
-	public List<Paciente> obtenerPacientes();
-	public List<Consulta> obtenerConsultas(Long idEvaluacion);
 	public Paciente obtenerPaciente(Long documento);
+	public List<Paciente> obtenerPacientes();
+	public void borrarPaciente(Paciente paciente);
+	
+	public void agregarEvaluacionPaciente(Evaluacion evaluacion, Paciente paciente);
+	public void borrarEvaluacion(Evaluacion evaluacion);
+	public void agregarConsultaTratamiento(Consulta consulta, Evaluacion evaluacion);
+	public void borrarConsultaTratamiento(Consulta consulta);
+	public List<Consulta> obtenerConsultas(Long idEvaluacion);
 	public Consulta obtenerConsulta(Long id);
 	public List<TipoGimnasio> obtenerTipos(Gimnasio gimnasio);
 	public List<TipoTerapiaFisica> obtenerTipos(TerapiaFisica terapia);

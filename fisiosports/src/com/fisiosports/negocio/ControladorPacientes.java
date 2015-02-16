@@ -128,5 +128,26 @@ public class ControladorPacientes implements IPacientes{
 		return terapia.getTipos();
 	}
 
+	@Override
+	public void borrarPaciente(Paciente paciente) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void borrarEvaluacion(Evaluacion evaluacion) {
+		evaluacion = em.merge(evaluacion);
+		em.remove(evaluacion.getTratamiento());
+		em.remove(evaluacion);
+		
+	}
+
+	@Override
+	public void borrarConsultaTratamiento(Consulta consulta) {
+		consulta = em.merge(consulta);
+		consulta.getTratamiento().getConsultas().remove(consulta);
+		em.remove(consulta);		
+	}
+
 	
 }

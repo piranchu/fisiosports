@@ -24,7 +24,7 @@ public class ContenedorMovimientosCaja extends BeanItemContainer<MovimientoDT>{
 	}
 
 	public static String[] getNonbresColumnas(){
-		return new String[]{"tipo","cuenta", "categoria", "importe","moneda", "fecha", "saldo", "observaciones", ""};
+		return new String[]{"","cuenta", "categoria", "importe","moneda", "fecha", "saldo", "observaciones", ""};
 	}
 	
 	

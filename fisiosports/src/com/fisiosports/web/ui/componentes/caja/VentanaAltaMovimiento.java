@@ -97,6 +97,8 @@ public class VentanaAltaMovimiento extends Window{
 		seleccionPaciente.setCaption("cliente");
 		formLayout.addComponent(seleccionPaciente);
 		
+		importe = new TextField("importe");
+		formLayout.addComponent(importe);
 		
 		moneda = new ComboBox("moneda");
 		moneda.setContainerDataSource(contenedorMoneda);
@@ -105,7 +107,6 @@ public class VentanaAltaMovimiento extends Window{
 		moneda.setValue(Moneda.UYU);
 		formLayout.addComponent(moneda);
 		
-		importe = new TextField("importe");
 //		importe.addValidator(new Validator(){
 //
 //			private static final long serialVersionUID = 1L;
@@ -124,7 +125,6 @@ public class VentanaAltaMovimiento extends Window{
 //			}
 //			
 //		});
-		formLayout.addComponent(importe);
 		fecha = new PopupDateField("fecha");
 		fecha.setValue(new Date());
 		formLayout.addComponent(fecha);

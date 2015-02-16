@@ -2,6 +2,8 @@ package com.fisiosports.web.ui.componentes.pacientes;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +18,8 @@ import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorConsulta;
 import com.fisiosports.web.ui.contenedores.ContenedorEvaluacion;
+import com.fisiosports.web.ui.contenedores.beantypes.ConsultaDT;
+import com.fisiosports.web.ui.contenedores.beantypes.EvaluacionDT;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -108,7 +112,11 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 	private void cargarConsultas() {
 		contenedorConsulta.removeAllItems();
 		if (evaluacion != null && evaluacion.getTratamiento() != null){
-			contenedorConsulta.addAll(ui.getiPacientes().obtenerConsultas(evaluacion.getId()));
+//			List<ConsultaDT> listaConsutaDT = new LinkedList<>();
+			for (Consulta consulta:ui.getiPacientes().obtenerConsultas(evaluacion.getId())){
+				contenedorConsulta.addBean(new ConsultaDT(consulta, ui.getiPacientes()));
+			}
+//			contenedorConsulta.addAll(ui.getiPacientes().obtenerConsultas(evaluacion.getId()));
 			
 		}
 		tableTratamiento.markAsDirty();
@@ -178,7 +186,12 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 			}
 		};
 		
-		this.contenedorEvaluacion = new ContenedorEvaluacion(Evaluacion.class, paciente.getEvaluaciones());
+		List<EvaluacionDT> listaEvaliacionDT = new LinkedList<EvaluacionDT>();
+		for (Evaluacion evaluacion:paciente.getEvaluaciones()){
+			listaEvaliacionDT.add(new EvaluacionDT(evaluacion, ui.getiPacientes()));
+		}
+		
+		this.contenedorEvaluacion = new ContenedorEvaluacion(EvaluacionDT.class, listaEvaliacionDT);
 		this.tableEvaluacion.setContainerDataSource(this.contenedorEvaluacion);
 		tableEvaluacion.setVisibleColumns(ContenedorEvaluacion.columnasVisibles());
 		tableEvaluacion.setColumnHeaders(ContenedorEvaluacion.cabeceraColumnas());
@@ -195,24 +208,30 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
-				Evaluacion evaluacion = (Evaluacion) event.getItemId();
-				if (evaluacion != null){
+				EvaluacionDT evaluacionDT = (EvaluacionDT) event.getItemId();
+				if (evaluacionDT != null){
+					ComponenteEvaluacion.this.evaluacion = evaluacionDT.getEvaluacion();
 					textAreaIndicaciones.setEnabled(true);
 					ComponenteEvaluacion.this.textAreaIndicaciones.setValue(evaluacion.getIndicaciones());
-					ComponenteEvaluacion.this.evaluacion = evaluacion;
 					cargarConsultas();
 					textAreaIndicaciones.setEnabled(false);
 				}
 			}
 			
 		});
+		tableEvaluacion.setWidth(50, Unit.PERCENTAGE);
 		return this.tableEvaluacion;
 	}
 	
 	private void consultarEvaluaciones(){	
 		contenedorEvaluacion.removeAllItems();
 		ui.getiPacientes().obtenerPaciente(paciente.getDocumento());
-		contenedorEvaluacion.addAll(paciente.getEvaluaciones());
+		
+		for (Evaluacion evaluacion:paciente.getEvaluaciones()){
+			contenedorEvaluacion.addBean(new EvaluacionDT(evaluacion, ui.getiPacientes()));
+		}
+		
+		
 		if (tableEvaluacion.size()<5){
 			tableEvaluacion.setPageLength(tableEvaluacion.size());
 		}else{
@@ -240,7 +259,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 			}
 		};
 
-		this.contenedorConsulta = new ContenedorConsulta(Consulta.class, null);
+		this.contenedorConsulta = new ContenedorConsulta(ConsultaDT.class, null);
 		this.tableTratamiento.setContainerDataSource(this.contenedorConsulta);
 		tableTratamiento.setVisibleColumns(ContenedorConsulta.getColumnasVisibles());
 		tableTratamiento.setColumnHeaders(ContenedorConsulta.getNonbresColumnas());
@@ -258,9 +277,9 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				
-				Consulta consulta = (Consulta) event.getItemId();
-				if (consulta != null){
-					ComponenteEvaluacion.this.cargarSesiones(consulta);
+				ConsultaDT consultaDT = (ConsultaDT) event.getItemId();
+				if (consultaDT != null){
+					ComponenteEvaluacion.this.cargarSesiones(consultaDT.getConsulta());
 				}
 			}
 			
@@ -328,6 +347,15 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 			tablaSesionRehabilitacion.getContainerDataSource().size());
 		}
 
+	}
+	
+	public void borrarEvaluacion(Evaluacion evaluacion){
+		this.ui.getiPacientes().borrarEvaluacion(evaluacion);
+	}
+	
+	public void borrarConsultaTratamiento(Consulta consulta){
+		this.ui.getiPacientes().borrarConsultaTratamiento(consulta);
+		
 	}
 	
 }
