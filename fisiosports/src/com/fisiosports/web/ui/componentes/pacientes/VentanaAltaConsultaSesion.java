@@ -1,19 +1,20 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.modelo.entidades.ConsultaEspecialista;
-import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.SesionRehabilitacion;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.ConsultaEspecialista;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Gimnasio;
+import com.fisiosports.modelo.entidades.pacientes.SesionRehabilitacion;
+import com.fisiosports.modelo.entidades.pacientes.TerapiaFisica;
+import com.fisiosports.modelo.tipos.TipoConsulta;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 import com.fisiosports.negocio.IPacientes;
-import com.fisiosports.negocio.TipoConsulta;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -66,8 +67,11 @@ public class VentanaAltaConsultaSesion extends Window {
 		textArea.setInputPrompt("observaciones");
 		layout.addComponent(textArea);
 		
+//		containerTipoConsulta = new BeanItemContainer<TipoConsulta>(TipoConsulta.class,
+//				TipoConsulta.getAll());
 		containerTipoConsulta = new BeanItemContainer<TipoConsulta>(TipoConsulta.class,
-				TipoConsulta.getAll());
+				Arrays.asList(TipoConsulta.values())); 
+				
 		comboBoxTipoConsulta = new ComboBox();
 		comboBoxTipoConsulta.setContainerDataSource(containerTipoConsulta);
 		comboBoxTipoConsulta.setItemCaptionPropertyId("descripcion");

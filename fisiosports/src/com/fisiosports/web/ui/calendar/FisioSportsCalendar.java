@@ -38,8 +38,9 @@ public class FisioSportsCalendar extends Calendar{
 		this.setSizeFull();
 		this.setFirstVisibleHourOfDay(8);
 		this.setFirstVisibleDayOfWeek(1);
-		this.setLastVisibleDayOfWeek(7);
+		this.setLastVisibleDayOfWeek(6);
 		this.setWidth(100.0f, Unit.PERCENTAGE);
+		this.setHeight(100.0f, Unit.PERCENTAGE);
 		this.setTimeFormat(TimeFormat.Format24H);
 		this.setEventProvider(new FisioSportsCalendarProvider(ui.getiAgenda()));
 

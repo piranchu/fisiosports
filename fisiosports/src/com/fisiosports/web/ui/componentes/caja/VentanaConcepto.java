@@ -2,7 +2,7 @@ package com.fisiosports.web.ui.componentes.caja;
 
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.caja.Categoria;
+import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.web.FisiosportsUI;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
@@ -19,7 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class VentanaCategoria extends Window{
+public class VentanaConcepto extends Window{
 
 	private static final long serialVersionUID = 1L;
 	private TextField textCategoria;
@@ -28,11 +28,11 @@ public class VentanaCategoria extends Window{
 	private Observer observer;
 	private FisiosportsUI ui;
 	private VerticalLayout layout = new VerticalLayout();
-	private BeanItemContainer<BeanItemCategoria> container = new BeanItemContainer<>(BeanItemCategoria.class);
+	private BeanItemContainer<BeanItemConcepto> container = new BeanItemContainer<>(BeanItemConcepto.class);
 	
-	public VentanaCategoria(Observer observer){
+	public VentanaConcepto(Observer observer){
 		
-		this.setCaption("Mantenimiento de categorías");
+		this.setCaption("Conceptos");
 		this.setModal(true);
 		
 		this.observer = observer;
@@ -77,8 +77,8 @@ public class VentanaCategoria extends Window{
 		tablaCategoria.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
 		tablaCategoria.getContainerDataSource().removeAllItems();
-		for (Categoria categoria:this.ui.getiMovimientos().consultarCategorias()){
-			tablaCategoria.getContainerDataSource().addItem(new BeanItemCategoria(categoria, this));
+		for (Concepto concepto:this.ui.getiCaja().consultarConceptos()){
+			tablaCategoria.getContainerDataSource().addItem(new BeanItemConcepto(concepto, this));
 		}
 		if (tablaCategoria.getContainerDataSource().size()>10){
 			tablaCategoria.setPageLength(10);
@@ -105,9 +105,9 @@ public class VentanaCategoria extends Window{
 			Notification.show("Debe indicar nombre de categoría", Type.ERROR_MESSAGE);
 			return;
 		}
-		Categoria categoria = new Categoria();
-		categoria.setNombre(this.textCategoria.getValue());
-		ui.getiMovimientos().crearCategoria(categoria);
+		Concepto concepto = new Concepto();
+		concepto.setNombre(this.textCategoria.getValue());
+		ui.getiCaja().crearConcepto(concepto);
 		this.cargarTabla();
 		textCategoria.setValue("");
 		if (observer != null){
@@ -115,9 +115,9 @@ public class VentanaCategoria extends Window{
 		}
 	}
 	
-	public void borrarCategoria(Categoria categoria){
+	public void borrarConcepto(Concepto concepto){
 		try{
-			this.ui.getiMovimientos().borrarCategoria(categoria);
+			this.ui.getiCaja().borrarConcepto(concepto);
 		}catch(Exception e){
 			Notification.show("No se pudo eliminar la categoría. "
 					+ "Pueden haber movimientos asociados a la misma", 

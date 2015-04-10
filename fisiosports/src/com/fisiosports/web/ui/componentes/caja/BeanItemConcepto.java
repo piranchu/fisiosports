@@ -1,19 +1,19 @@
 package com.fisiosports.web.ui.componentes.caja;
 
-import com.fisiosports.modelo.entidades.caja.Categoria;
+import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class BeanItemCategoria {
+public class BeanItemConcepto {
 
-	private Categoria categoria;
+	private Concepto concepto;
 	private Button botonEliminar;
 	
-	public BeanItemCategoria(Categoria categoria, final VentanaCategoria ventana){
-		this.categoria = categoria;
+	public BeanItemConcepto(Concepto concepto, final VentanaConcepto ventana){
+		this.concepto = concepto;
 		botonEliminar = new Button("", FontAwesome.TRASH_O);
 		botonEliminar.setStyleName(ValoTheme.BUTTON_BORDERLESS);
 		botonEliminar.setDescription("borrar");
@@ -21,7 +21,7 @@ public class BeanItemCategoria {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ventana.borrarCategoria(getCategoria());
+				ventana.borrarConcepto(getConcepto());
 			}
 		});
 	}
@@ -32,11 +32,11 @@ public class BeanItemCategoria {
 	public void setBotonEliminar(Button botonEliminar) {
 		this.botonEliminar = botonEliminar;
 	}
-	public Categoria getCategoria() {
-		return categoria;
+	public Concepto getConcepto() {
+		return concepto;
 	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setConcepto(Concepto concepto) {
+		this.concepto = concepto;
 	}
 
 	

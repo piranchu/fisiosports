@@ -1,17 +1,17 @@
 package com.fisiosports.web.ui.componentes.caja;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.caja.Categoria;
-import com.fisiosports.modelo.entidades.caja.CuentaFinanciera;
+import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.modelo.entidades.caja.Egreso;
 import com.fisiosports.modelo.entidades.caja.Ingreso;
-import com.fisiosports.modelo.entidades.caja.Moneda;
 import com.fisiosports.modelo.entidades.caja.Movimiento;
+import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteSeleccionPaciente;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -20,7 +20,6 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -32,48 +31,45 @@ public class VentanaAltaMovimiento extends Window{
 
 	private static final long serialVersionUID = 1L;
 	
-	private ComboBox tipoMovimiento;
-	private OptionGroup optionTipoMov;
+//	private ComboBox tipoMovimiento;
+//	private OptionGroup optionTipoMov;
 	
-	private BeanItemContainer contenedorTipoMov = new BeanItemContainer(Movimiento.TipoMovimiento.class);
-	private ComboBox cuenta;
-	private BeanItemContainer contenedorCuenta = new BeanItemContainer(CuentaFinanciera.class);
-	private ComboBox categoria;
-	private BeanItemContainer contenedorCategoria = new BeanItemContainer(Categoria.class);
+//	private BeanItemContainer<Movimiento.TipoMovimiento> contenedorTipoMov = new BeanItemContainer<TipoMovimiento>(Movimiento.TipoMovimiento.class);
+	private ComboBox comboProductoServicio;
+	private BeanItemContainer<ProductoServicio> contenedorProductoServicio = new BeanItemContainer<ProductoServicio>(ProductoServicio.class);
+	private ComboBox comboConcepto;
+	private BeanItemContainer<Concepto> contenedorConcepto = new BeanItemContainer<Concepto>(Concepto.class);
 	private ComponenteSeleccionPaciente seleccionPaciente;
-	private ComboBox moneda;
-	private BeanItemContainer contenedorMoneda = new BeanItemContainer(Moneda.class);
 	private TextField importe;
 	private PopupDateField fecha;
 	private TextArea observaciones;
 	
-	
-	
 	private FisiosportsUI ui;
 	private Observer observer;
+	private Movimiento.TipoMovimiento tipoMovimiento;
 	
-	public VentanaAltaMovimiento(Observer observer){
-
+	public VentanaAltaMovimiento(Observer observer, Movimiento.TipoMovimiento tipoMovimiento){
+		
 		this.observer = observer;
+		this.tipoMovimiento = tipoMovimiento;
 		this.ui = (FisiosportsUI) UI.getCurrent();
 		
-		this.setCaption("nuevo movimiento de caja");
+		this.setCaption("nuevo "+tipoMovimiento+" de caja");
 		this.setModal(true);
-		
 		
 		FormLayout formLayout = new FormLayout();
 		formLayout.setSizeUndefined();
 		formLayout.setSpacing(true);
 		formLayout.setMargin(true);
 		
-		optionTipoMov = new OptionGroup("tipo de movimiento");
-		optionTipoMov.setMultiSelect(false);
-		optionTipoMov.setNullSelectionAllowed(false);
-		optionTipoMov.addItems(
-				Movimiento.TipoMovimiento.INGRESO, 
-				Movimiento.TipoMovimiento.EGRESO);
-		optionTipoMov.setValue(Movimiento.TipoMovimiento.INGRESO);
-		formLayout.addComponent(optionTipoMov);
+//		optionTipoMov = new OptionGroup("tipo de movimiento");
+//		optionTipoMov.setMultiSelect(false);
+//		optionTipoMov.setNullSelectionAllowed(false);
+//		optionTipoMov.addItems(
+//				Movimiento.TipoMovimiento.INGRESO, 
+//				Movimiento.TipoMovimiento.EGRESO);
+//		optionTipoMov.setValue(Movimiento.TipoMovimiento.INGRESO);
+//		formLayout.addComponent(optionTipoMov);
 		
 //		tipoMovimiento = new ComboBox("tipo de movimiento");
 //		tipoMovimiento.setContainerDataSource(contenedorTipoMov);
@@ -81,19 +77,35 @@ public class VentanaAltaMovimiento extends Window{
 //		contenedorTipoMov.addAll(Arrays.asList(Movimiento.TipoMovimiento.values()));
 //		formLayout.addComponent(tipoMovimiento);
 		
-		cuenta = new ComboBox("cuenta financiera");
-		cuenta.setContainerDataSource(contenedorCuenta);
-		cuenta.setItemCaptionPropertyId("nombre");
-		contenedorCuenta.addAll(ui.getiMovimientos().consultarCuentasFinancieras());
-		cuenta.setNullSelectionAllowed(false);
-		cuenta.setInvalidAllowed(false);
-		formLayout.addComponent(cuenta);
+		comboConcepto = new ComboBox("concepto");
+		comboConcepto.setContainerDataSource(contenedorConcepto);
+		comboConcepto.setItemCaptionPropertyId("nombre");
+		contenedorConcepto.addAll(ui.getiCaja().consultarConceptos());
+		formLayout.addComponent(comboConcepto);
+
+		comboProductoServicio = new ComboBox("producto/servicio");
+		comboProductoServicio.setContainerDataSource(contenedorProductoServicio);
+		comboProductoServicio.setItemCaptionPropertyId("nombre");
+		contenedorProductoServicio.addAll(ui.getiCaja().consultarProductosServicios());
+		comboProductoServicio.setNullSelectionAllowed(false);
+		comboProductoServicio.setInvalidAllowed(false);
+		comboProductoServicio.addValueChangeListener(new ValueChangeListener(){
+
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null){
+					ProductoServicio ps = (ProductoServicio) event.getProperty().getValue();
+					Double precioSugerido = ps.getPrecio();
+					if (precioSugerido != null && precioSugerido != 0){
+						VentanaAltaMovimiento.this.importe.setValue(ps.getPrecio().toString());
+					}
+				}
+			}
+			
+		});
 		
-		categoria = new ComboBox("categoría");
-		categoria.setContainerDataSource(contenedorCategoria);
-		categoria.setItemCaptionPropertyId("nombre");
-		contenedorCategoria.addAll(ui.getiMovimientos().consultarCategorias());
-		formLayout.addComponent(categoria);
+		formLayout.addComponent(comboProductoServicio);
 		
 		seleccionPaciente = new ComponenteSeleccionPaciente(null);
 		seleccionPaciente.setCaption("cliente");
@@ -101,14 +113,6 @@ public class VentanaAltaMovimiento extends Window{
 		
 		importe = new TextField("importe");
 		formLayout.addComponent(importe);
-		
-		moneda = new ComboBox("moneda");
-		moneda.setContainerDataSource(contenedorMoneda);
-		moneda.setItemCaptionPropertyId("descripcion");
-		contenedorMoneda.addAll(Arrays.asList(Moneda.values()));
-		moneda.setValue(Moneda.UYU);
-		moneda.setNullSelectionAllowed(false);
-		formLayout.addComponent(moneda);
 		
 //		importe.addValidator(new Validator(){
 //
@@ -158,7 +162,7 @@ public class VentanaAltaMovimiento extends Window{
 	private void alta(){
 		Movimiento movimiento = null;
 		
-		switch ((Movimiento.TipoMovimiento)this.optionTipoMov.getValue()){
+		switch (tipoMovimiento){
 		case EGRESO: 
 			movimiento = new Egreso();
 			break;
@@ -168,10 +172,10 @@ public class VentanaAltaMovimiento extends Window{
 		default: movimiento = new Ingreso();
 		}
 		
-		if (cuenta.getValue() == null){
-			Notification.show("debe seleccionar cuenta", Type.WARNING_MESSAGE);
-			return;
-		}
+//		if (comboConcepto.getValue() == null){
+//			Notification.show("debe seleccionar concepto", Type.WARNING_MESSAGE);
+//			return;
+//		}
 		
 		if (importe.getValue() == null || importe.getValue().trim().isEmpty()){
 			Notification.show("debe ingresar importe", Type.WARNING_MESSAGE);
@@ -185,21 +189,17 @@ public class VentanaAltaMovimiento extends Window{
 			return;
 		}
 		
-		movimiento.setCategoria((Categoria)this.categoria.getValue());
-		movimiento.setCuentaFinanciera((CuentaFinanciera)this.cuenta.getValue());
-		movimiento.setMoneda((Moneda)this.moneda.getValue());
+		movimiento.setConcepto((Concepto)this.comboConcepto.getValue());
+		movimiento.setProductoServicio((ProductoServicio)this.comboProductoServicio.getValue());
 		movimiento.setFecha(this.fecha.getValue());
 		movimiento.setPaciente(this.seleccionPaciente.getPaciente());
 		movimiento.setObservaciones(observaciones.getValue());
 		
-		ui.getiMovimientos().crearMovimiento(movimiento);
+		ui.getiCaja().crearMovimiento(ui.getiCaja().obtenerCaja(), movimiento);
 		if (observer != null){
 			observer.update(null, movimiento);
 		}
 		close();
 		
-	}
-
-	
-	
+	}	
 }

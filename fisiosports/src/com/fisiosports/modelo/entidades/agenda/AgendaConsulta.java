@@ -1,4 +1,4 @@
-package com.fisiosports.modelo.entidades;
+package com.fisiosports.modelo.entidades.agenda;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 
 @NamedQueries({
     @NamedQuery(name="AgendaConsulta.findConsultasByDates",

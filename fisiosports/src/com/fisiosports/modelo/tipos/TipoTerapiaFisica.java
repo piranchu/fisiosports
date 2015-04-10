@@ -3,8 +3,6 @@ package com.fisiosports.modelo.tipos;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.fisiosports.negocio.TipoConsulta;
-
 public enum TipoTerapiaFisica {
 	
 	LASER,

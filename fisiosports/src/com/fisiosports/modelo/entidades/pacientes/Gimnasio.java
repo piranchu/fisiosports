@@ -1,4 +1,4 @@
-package com.fisiosports.modelo.entidades;
+package com.fisiosports.modelo.entidades.pacientes;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -8,9 +8,10 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 
+import com.fisiosports.modelo.tipos.TipoConsulta;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
-import com.fisiosports.negocio.TipoConsulta;
 
 /**
  * Entity implementation class for Entity: Gimnasio
@@ -23,7 +24,7 @@ public class Gimnasio extends SesionRehabilitacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Enumerated(EnumType.STRING)
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<TipoGimnasio> tipos = new LinkedList<TipoGimnasio>();
 
 	public Gimnasio() {

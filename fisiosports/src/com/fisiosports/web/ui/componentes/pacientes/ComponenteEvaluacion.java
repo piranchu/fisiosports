@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Gimnasio;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 import com.fisiosports.negocio.IPacientes;
@@ -26,6 +26,7 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
@@ -33,7 +34,6 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.TextArea;
@@ -42,7 +42,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class ComponenteEvaluacion extends Panel implements Observer {
+public class ComponenteEvaluacion extends CustomComponent implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
@@ -98,7 +98,7 @@ public class ComponenteEvaluacion extends Panel implements Observer {
 		layout.addComponent(hl2);
 		
 
-		this.setContent(layout);
+		this.setCompositionRoot(layout);
 
 	}
 

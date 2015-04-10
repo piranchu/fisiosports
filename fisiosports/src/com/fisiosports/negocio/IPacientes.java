@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Gimnasio;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 

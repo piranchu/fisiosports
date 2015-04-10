@@ -7,8 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.fisiosports.modelo.entidades.AgendaConsulta;
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.agenda.AgendaConsulta;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 
 @Stateless
 public class ControladorAgenda implements IAgenda{

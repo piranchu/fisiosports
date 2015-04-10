@@ -7,8 +7,8 @@ import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.AgendaConsulta;
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.agenda.AgendaConsulta;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.fisiosports.web.ui.componentes.pacientes.VentanaSeleccionPaciente;

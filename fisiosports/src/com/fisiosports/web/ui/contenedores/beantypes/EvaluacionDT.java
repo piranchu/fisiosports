@@ -1,6 +1,6 @@
 package com.fisiosports.web.ui.contenedores.beantypes;
 
-import com.fisiosports.modelo.entidades.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;

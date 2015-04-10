@@ -7,12 +7,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.Paciente;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
-import com.fisiosports.modelo.entidades.Tratamiento;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Gimnasio;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.TerapiaFisica;
+import com.fisiosports.modelo.entidades.pacientes.Tratamiento;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 
@@ -129,8 +129,14 @@ public class ControladorPacientes implements IPacientes{
 
 	@Override
 	public List<TipoTerapiaFisica> obtenerTipos(TerapiaFisica terapia) {
-		terapia = em.find(TerapiaFisica.class, terapia.getId());
-		return terapia.getTipos();
+		terapia = em.merge(terapia);
+//		System.out.println("[ControladorPacientes] obtenerTiposTerapiaFisica: "+terapia);
+		List<TipoTerapiaFisica> tipos = terapia.getTipos();
+//		System.out.println("[ControladorPacientes] lista:");
+		for (TipoTerapiaFisica tipo:tipos){
+//			System.out.println("[ControladorPacientes] \t "+tipo);
+		}
+		return tipos;
 	}
 
 	@Override

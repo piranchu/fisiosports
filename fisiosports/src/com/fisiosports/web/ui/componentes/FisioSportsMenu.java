@@ -14,17 +14,17 @@ import com.vaadin.ui.themes.ValoTheme;
 public class FisioSportsMenu extends HorizontalLayout{
 
 	private static final long serialVersionUID = 1L;
+	
+	private FisiosportsUI ui;
 
 	public FisioSportsMenu(FisiosportsUI ui){
 
-		this.setWidth(100.0f, Unit.PERCENTAGE);
+		this.ui = ui;
 		TabSheet tabSheet = new TabSheet();
 		tabSheet.addTab(new ComponenteAgenda(ui), "agenda", FontAwesome.CALENDAR_O);
 		tabSheet.addTab(new ComponentePacientes(ui), "clientes", FontAwesome.USER);
 		tabSheet.addTab(new ComponenteCaja(), "caja", FontAwesome.USD);
 		tabSheet.addStyleName(ValoTheme.PANEL_BORDERLESS);
-		this.addComponent(tabSheet);
-		
 		tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -35,6 +35,8 @@ public class FisioSportsMenu extends HorizontalLayout{
 				}
 			}
 		});
+		
+		this.addComponent(tabSheet);
 		
 	}
 	

@@ -6,21 +6,25 @@
 <!--     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
 <!--     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode> -->
 	
-		<class>com.fisiosports.modelo.entidades.Paciente</class>
-		<class>com.fisiosports.modelo.entidades.TerapiaFisica</class>
-		<class>com.fisiosports.modelo.entidades.Gimnasio</class>
-		<class>com.fisiosports.modelo.entidades.Tratamiento</class>
-		<class>com.fisiosports.modelo.entidades.AgendaConsulta</class>
-		<class>com.fisiosports.modelo.entidades.SesionRehabilitacion</class>
-		<class>com.fisiosports.modelo.entidades.ConsultaEspecialista</class>
-		<class>com.fisiosports.modelo.entidades.Consulta</class>
-		<class>com.fisiosports.modelo.entidades.Evaluacion</class>
-		<class>com.fisiosports.modelo.entidades.caja.Movimiento</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.Consulta</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.Paciente</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.TerapiaFisica</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.Gimnasio</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.Tratamiento</class>
+		<class>com.fisiosports.modelo.entidades.agenda.AgendaConsulta</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.SesionRehabilitacion</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.ConsultaEspecialista</class>
+		<class>com.fisiosports.modelo.entidades.pacientes.Evaluacion</class>
 		<class>com.fisiosports.modelo.entidades.Configuracion</class>
-		<class>com.fisiosports.modelo.entidades.caja.Categoria</class>
-		<class>com.fisiosports.modelo.entidades.caja.CuentaFinanciera</class>
+		<class>com.fisiosports.modelo.entidades.caja.Movimiento</class>
+		<class>com.fisiosports.modelo.entidades.caja.Concepto</class>
 		<class>com.fisiosports.modelo.entidades.caja.Egreso</class>
 		<class>com.fisiosports.modelo.entidades.caja.Ingreso</class>
+		<class>com.fisiosports.modelo.entidades.caja.CierreCaja</class>
+		<class>com.fisiosports.modelo.entidades.caja.Caja</class>
+		<class>com.fisiosports.modelo.entidades.caja.ProductoServicio</class>		
+		<class>com.fisiosports.modelo.entidades.seguridad.Usuario</class>		
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 		
 		    <property name="hibernate.connection.url" value="jdbc:h2:/home/pablo/databases/h2/fisiosports;" />

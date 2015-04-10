@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.fisiosports.modelo.entidades.AgendaConsulta;
+import com.fisiosports.modelo.entidades.agenda.AgendaConsulta;
 import com.fisiosports.negocio.IAgenda;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent.EventChangeNotifier;

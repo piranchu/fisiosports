@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.fisiosports.modelo.entidades.AgendaConsulta;
+import com.fisiosports.modelo.entidades.agenda.AgendaConsulta;
 
 @Local
 public interface IAgenda {

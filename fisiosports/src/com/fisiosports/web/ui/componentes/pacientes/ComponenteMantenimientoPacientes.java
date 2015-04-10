@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorPacientes;
 import com.fisiosports.web.ui.contenedores.beantypes.PacienteDT;
@@ -16,6 +16,7 @@ import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -87,7 +88,7 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnas());
 		tablaPacientes.setImmediate(true);
 		
-		VerticalLayout hl = new VerticalLayout();
+		HorizontalLayout hl = new HorizontalLayout();
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);

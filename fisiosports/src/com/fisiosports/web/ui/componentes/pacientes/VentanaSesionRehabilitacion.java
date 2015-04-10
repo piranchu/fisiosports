@@ -1,8 +1,8 @@
 package com.fisiosports.web.ui.componentes.pacientes;
 
-import com.fisiosports.modelo.entidades.Consulta;
-import com.fisiosports.modelo.entidades.Gimnasio;
-import com.fisiosports.modelo.entidades.TerapiaFisica;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.Gimnasio;
+import com.fisiosports.modelo.entidades.pacientes.TerapiaFisica;
 import com.fisiosports.modelo.tipos.TipoGimnasio;
 import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 import com.vaadin.data.util.BeanItemContainer;

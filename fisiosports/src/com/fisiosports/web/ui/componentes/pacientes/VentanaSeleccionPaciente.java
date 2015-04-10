@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.negocio.IPacientes;
 import com.fisiosports.web.ui.contenedores.ContenedorPacientes;
 import com.fisiosports.web.ui.contenedores.beantypes.PacienteDT;

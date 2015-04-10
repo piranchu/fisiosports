@@ -2,7 +2,7 @@ package com.fisiosports.web.ui.contenedores.beantypes;
 
 import java.util.Date;
 
-import com.fisiosports.modelo.entidades.Consulta;
+import com.fisiosports.modelo.entidades.pacientes.Consulta;
 
 public class SesionDT {
 

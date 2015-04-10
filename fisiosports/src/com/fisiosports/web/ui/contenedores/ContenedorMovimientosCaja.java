@@ -1,35 +1,76 @@
 package com.fisiosports.web.ui.contenedores;
 
-import java.util.Collection;
-
-import com.fisiosports.web.ui.contenedores.beantypes.MovimientoDT;
+import com.fisiosports.web.ui.contenedores.beantypes.BeanItemMovimiento;
 import com.vaadin.data.util.BeanItemContainer;
 
-public class ContenedorMovimientosCaja extends BeanItemContainer<MovimientoDT>{
+public class ContenedorMovimientosCaja extends BeanItemContainer<BeanItemMovimiento>{
 
 	private static final long serialVersionUID = 1L;
 
-	public ContenedorMovimientosCaja(Class<? super MovimientoDT> type,
-			Collection<? extends MovimientoDT> collection)
+	public ContenedorMovimientosCaja(Class<? super BeanItemMovimiento> type/*,
+			Collection<? extends BeanItemMovimiento> collection*/)
 			throws IllegalArgumentException {
-		super(type, collection);
+//		super(type, collection);
+		super(type);
 		this.addNestedContainerBean("movimiento");
-		this.addNestedContainerBean("movimiento.cuentaFinanciera");
-		this.addNestedContainerBean("movimiento.categoria");
+		this.addNestedContainerBean("movimiento.concepto");
+		this.addNestedContainerBean("movimiento.productoServicio");
 		this.addNestedContainerBean("movimiento.paciente");
 	}
 
 	public static Object[] getColumnasVisibles(){
-		return new Object[]{"icon","movimiento.cuentaFinanciera.nombre", "movimiento.categoria.nombre", "movimiento.importe", 
-				"movimiento.moneda","movimiento.fecha", /*"movimiento.cuentaFinanciera.saldo", */"movimiento.observaciones", 
-				"movimiento.paciente.documento", "movimiento.paciente.nombre", "movimiento.paciente.apellido", "deleteButton"};
+		return new Object[]{
+				"icon",
+				"movimiento.concepto.nombre", 
+				"movimiento.productoServicio.nombre", 
+				"movimiento.importe", 
+				"movimiento.fecha", 
+				"movimiento.observaciones", 
+				"movimiento.paciente.documento", 
+				"movimiento.paciente.nombre", 
+				"movimiento.paciente.apellido", 
+				"deleteButton"};
+	}
+
+	public static Object[] getColumnasVisiblesConsulta(){
+		return new Object[]{
+				"icon",
+				"movimiento.concepto.nombre", 
+				"movimiento.productoServicio.nombre", 
+				"movimiento.importe", 
+				"movimiento.fecha", 
+				"movimiento.observaciones", 
+				"movimiento.paciente.documento", 
+				"movimiento.paciente.nombre", 
+				"movimiento.paciente.apellido"};
 	}
 
 	public static String[] getNonbresColumnas(){
-		return new String[]{"","cuenta", "categoria", "importe","moneda", "fecha", /*"saldo", */"observaciones", 
-				"documento", "nombre", "apellido", ""};
+		return new String[]{
+				"",
+				"concepto", 
+				"producto/servicio", 
+				"importe",
+				"fecha", 
+				"observaciones", 
+				"documento", 
+				"nombre", 
+				"apellido", 
+				""};
 	}
 	
+	public static String[] getNonbresColumnasConsulta(){
+		return new String[]{
+				"",
+				"concepto", 
+				"producto/servicio", 
+				"importe",
+				"fecha", 
+				"observaciones", 
+				"documento", 
+				"nombre", 
+				"apellido"};
+	}
 	
 	
 }

@@ -3,8 +3,8 @@ package com.fisiosports.web.ui.componentes.pacientes;
 import java.util.Date;
 import java.util.Observer;
 
-import com.fisiosports.modelo.entidades.Evaluacion;
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.web.FisiosportsUI;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;

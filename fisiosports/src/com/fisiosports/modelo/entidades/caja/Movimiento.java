@@ -3,22 +3,22 @@ package com.fisiosports.modelo.entidades.caja;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 
 @NamedQueries({ 
 	@NamedQuery(
@@ -37,28 +37,27 @@ public abstract class Movimiento{
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	@ManyToOne
+	private Caja caja;
 	private Double importe;
-	@Enumerated(EnumType.STRING)
-	private Moneda moneda = Moneda.UYU;
-	@OneToOne 
-	private CuentaFinanciera cuentaFinanciera;
+	@OneToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+	private Concepto concepto;
 	@OneToOne
-	private Categoria categoria;
+	private ProductoServicio productoServicio;
 	@OneToOne
 	private Paciente paciente;
 	private String observaciones;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date fecha = Calendar.getInstance().getTime();
-	
-	
+
 	public abstract void ejecutar();
 	public abstract void anular();
 	
-	public Categoria getCategoria() {
-		return categoria;
+	public Concepto getConcepto() {
+		return concepto;
 	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setConcepto(Concepto concepto) {
+		this.concepto = concepto;
 	}
 
 	
@@ -80,18 +79,6 @@ public abstract class Movimiento{
 	public void setImporte(Double importe) {
 		this.importe = importe;
 	}
-	public Moneda getMoneda() {
-		return moneda;
-	}
-	public void setMoneda(Moneda moneda) {
-		this.moneda = moneda;
-	}
-	public CuentaFinanciera getCuentaFinanciera() {
-		return cuentaFinanciera;
-	}
-	public void setCuentaFinanciera(CuentaFinanciera cuentaFinanciera) {
-		this.cuentaFinanciera = cuentaFinanciera;
-	}
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -103,6 +90,18 @@ public abstract class Movimiento{
 	}
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
-	} 
+	}
+	public Caja getCaja() {
+		return caja;
+	}
+	public void setCaja(Caja caja) {
+		this.caja = caja;
+	}
+	public ProductoServicio getProductoServicio() {
+		return productoServicio;
+	}
+	public void setProductoServicio(ProductoServicio productoServicio) {
+		this.productoServicio = productoServicio;
+	}
 	
 }

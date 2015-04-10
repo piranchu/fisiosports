@@ -1,4 +1,4 @@
-package com.fisiosports.modelo.entidades;
+package com.fisiosports.modelo.entidades.pacientes;
 
 import java.io.Serializable;
 import java.util.LinkedList;

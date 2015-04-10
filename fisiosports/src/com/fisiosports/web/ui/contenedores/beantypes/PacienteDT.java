@@ -2,7 +2,7 @@ package com.fisiosports.web.ui.contenedores.beantypes;
 
 import java.io.Serializable;
 
-import com.fisiosports.modelo.entidades.Paciente;
+import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteMantenimientoPacientes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -15,7 +15,8 @@ public class PacienteDT implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Paciente paciente;
-	private Button evalButton = new Button("", FontAwesome.USER_MD);
+//	private Button evalButton = new Button("", FontAwesome.USER_MD);
+	private Button evalButton = new Button("", FontAwesome.MEDKIT);
 	private Button modifyButton = new Button("", FontAwesome.EDIT);
 	private Button deleteButton = new Button("", FontAwesome.TRASH_O);
 

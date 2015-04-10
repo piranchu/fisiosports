@@ -1,20 +1,20 @@
 package com.fisiosports.web.ui.componentes.caja;
 
-import com.fisiosports.modelo.entidades.caja.CuentaFinanciera;
+import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class BeanItemCuentaFinanciera {
+public class BeanItemProductoServicio {
 
-	private CuentaFinanciera cuentaFinanciera;
-	private VentanaCuentaFinanciera ventana;
+	private ProductoServicio productoServicio;
+	private VentanaProductoServicio ventana;
 	private Button botonEliminar;
 	
-	public BeanItemCuentaFinanciera(CuentaFinanciera cuentaFinanciera, VentanaCuentaFinanciera ventana){
-		this.cuentaFinanciera = cuentaFinanciera;
+	public BeanItemProductoServicio(ProductoServicio productoServicio, VentanaProductoServicio ventana){
+		this.productoServicio = productoServicio;
 		this.ventana = ventana;
 		
 		botonEliminar = new Button("", FontAwesome.TRASH_O);
@@ -24,7 +24,7 @@ public class BeanItemCuentaFinanciera {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				BeanItemCuentaFinanciera.this.ventana.borrar(getCuentaFinanciera());
+				BeanItemProductoServicio.this.ventana.borrar(getProductoServicio());
 			}
 		});
 		
@@ -36,11 +36,11 @@ public class BeanItemCuentaFinanciera {
 	public void setBotonEliminar(Button botonEliminar) {
 		this.botonEliminar = botonEliminar;
 	}
-	public CuentaFinanciera getCuentaFinanciera() {
-		return cuentaFinanciera;
+	public ProductoServicio getProductoServicio() {
+		return productoServicio;
 	}
-	public void setCuentaFinanciera(CuentaFinanciera cuentaFinanciera) {
-		this.cuentaFinanciera = cuentaFinanciera;
+	public void setCuentaFinanciera(ProductoServicio productoServicio) {
+		this.productoServicio = productoServicio;
 	}
 	
 }
