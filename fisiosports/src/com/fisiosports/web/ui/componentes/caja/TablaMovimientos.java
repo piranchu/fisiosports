@@ -10,9 +10,9 @@ import com.vaadin.ui.Table;
 public class TablaMovimientos extends Table{
 
 	private static final long serialVersionUID = 1L;
-	private List<Movimiento> movimientos;
+	private List<? extends Movimiento> movimientos;
 	
-	public TablaMovimientos(List<Movimiento> movimientos){
+	public TablaMovimientos(List<? extends Movimiento> movimientos){
 		
 		this.movimientos = movimientos;
 		if (this.movimientos == null || this.movimientos.isEmpty()){

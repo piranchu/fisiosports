@@ -8,6 +8,6 @@ import com.fisiosports.modelo.entidades.seguridad.Usuario;
 public interface ISeguridad {
 
 	public Usuario login(String id, String pass);
-	
+	public void modificarUsuario(Usuario usuario);
 	
 }

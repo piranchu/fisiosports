@@ -82,7 +82,7 @@ public class Caja {
 	public CierreCaja cerrar(){
 		
 		CierreCaja cierreCaja = new CierreCaja();
-		cierreCaja.setCaja(this);
+//		cierreCaja.setCaja(this);
 		cierreCaja.setSaldoInicial(this.getSaldoInicial());
 		cierreCaja.setSaldoFinal(this.getSaldo());
 		cierreCaja.getMovimientos().addAll(this.getMovimientos());

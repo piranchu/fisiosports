@@ -5,6 +5,7 @@ import java.util.Observer;
 import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorProductoServicio;
+import com.fisiosports.web.ui.contenedores.beantypes.BeanItemProductoServicio;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

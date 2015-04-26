@@ -25,6 +25,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -69,7 +70,7 @@ public class ComponenteEvaluacion extends CustomComponent implements Observer {
 		
 		this.componenteActual = this;
 		
-		layout.setMargin(true);
+		layout.setMargin(new MarginInfo(false, true, false, true));
 		layout.setSpacing(true);
 
 		layout.addComponent(this.createMenuBar());

@@ -1,6 +1,7 @@
-package com.fisiosports.web.ui.componentes.caja;
+package com.fisiosports.web.ui.contenedores.beantypes;
 
 import com.fisiosports.modelo.entidades.caja.Concepto;
+import com.fisiosports.web.ui.componentes.caja.VentanaConcepto;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

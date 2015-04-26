@@ -39,7 +39,7 @@ public class VentanaPaciente extends Window {
 		this.observer = observer;
 		this.paciente = paciente;
 		this.setModal(true);
-		this.setCaption("Alta de paciente");
+		this.setCaption("Datos del paciente");
 		
 		VerticalLayout vl = new VerticalLayout();
 		vl.setMargin(true);

@@ -1,6 +1,6 @@
 package com.fisiosports.web.ui.contenedores;
 
-import com.fisiosports.web.ui.componentes.caja.BeanItemProductoServicio;
+import com.fisiosports.web.ui.contenedores.beantypes.BeanItemProductoServicio;
 import com.vaadin.data.util.BeanItemContainer;
 
 public class ContenedorProductoServicio extends BeanItemContainer<BeanItemProductoServicio>{

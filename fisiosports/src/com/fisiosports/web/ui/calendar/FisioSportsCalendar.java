@@ -36,6 +36,7 @@ public class FisioSportsCalendar extends Calendar{
 //		this.setWidth("600px");
 //		this.setHeight("400px");
 		this.setSizeFull();
+		this.setWidth(100, Unit.PERCENTAGE);
 		this.setFirstVisibleHourOfDay(8);
 		this.setFirstVisibleDayOfWeek(1);
 		this.setLastVisibleDayOfWeek(6);
@@ -46,9 +47,9 @@ public class FisioSportsCalendar extends Calendar{
 
 		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
 		cal.setTime(new Date());
-		cal.set(cal.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		cal.set(java.util.Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 		this.setStartDate(cal.getTime());
-		cal.add(cal.DAY_OF_WEEK, 6);
+		cal.add(java.util.Calendar.DAY_OF_WEEK, 6);
 		this.setEndDate(cal.getTime());
 
 		this.setHandler(new BasicEventMoveHandler() {
@@ -65,6 +66,9 @@ public class FisioSportsCalendar extends Calendar{
 		});
 
 		this.setDropHandler(new DropHandler() {
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void drop(DragAndDropEvent event) {
 				CalendarTargetDetails details = (CalendarTargetDetails) event
@@ -80,6 +84,9 @@ public class FisioSportsCalendar extends Calendar{
 		});
 
 		this.setHandler(new EventClickHandler() {
+	
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void eventClick(EventClick event) {
 				FisioSportsCalendarEvent fisioSportsEvent = (FisioSportsCalendarEvent) event.getCalendarEvent();

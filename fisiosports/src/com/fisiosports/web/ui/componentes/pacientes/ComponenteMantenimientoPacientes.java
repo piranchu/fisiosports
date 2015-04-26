@@ -16,6 +16,7 @@ import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
@@ -72,7 +73,7 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 		this.componentePacientes = componentePacientes;
 		
 		this.setSpacing(true);
-		this.setMargin(true);
+		this.setMargin(new MarginInfo(false, true, false, true));
 		
 		this.addComponent(this.createMenuBar());
 		

@@ -4,6 +4,7 @@ import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.componentes.agenda.ComponenteAgenda;
 import com.fisiosports.web.ui.componentes.caja.ComponenteCaja;
 import com.fisiosports.web.ui.componentes.pacientes.ComponentePacientes;
+import com.fisiosports.web.ui.componentes.seguridad.ComponenteCambioPassword;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
@@ -15,15 +16,21 @@ public class FisioSportsMenu extends HorizontalLayout{
 
 	private static final long serialVersionUID = 1L;
 	
-	private FisiosportsUI ui;
-
+//	private FisiosportsUI ui;
+//
 	public FisioSportsMenu(FisiosportsUI ui){
-
-		this.ui = ui;
+//		this.ui = ui;
+		this.setSizeFull();
+		
 		TabSheet tabSheet = new TabSheet();
+		tabSheet.setSizeFull();
+		
 		tabSheet.addTab(new ComponenteAgenda(ui), "agenda", FontAwesome.CALENDAR_O);
 		tabSheet.addTab(new ComponentePacientes(ui), "clientes", FontAwesome.USER);
 		tabSheet.addTab(new ComponenteCaja(), "caja", FontAwesome.USD);
+		tabSheet.addTab(new ComponenteCambioPassword(), "cambio contraseña", FontAwesome.KEY);
+		
+		
 		tabSheet.addStyleName(ValoTheme.PANEL_BORDERLESS);
 		tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener(){
 			private static final long serialVersionUID = 1L;

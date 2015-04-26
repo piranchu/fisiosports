@@ -55,53 +55,7 @@ public class VentanaCerrarCaja extends Window{
 		setContent(layout);
 				
 	}
-	
-	
-//	private Table obtenerTablaCuentas(){
-//		Table tabla = new Table(){
-//			private static final long serialVersionUID = 1L;
-//			@Override
-//			protected String formatPropertyValue(Object rowId, Object colId,
-//					Property<?> property) {
-//				Object v = property.getValue();
-//				if (v instanceof Double) {
-//					Double value = (Double) v;
-//					return df.format(value);
-//				}
-//				return super.formatPropertyValue(rowId, colId, property);
-//			}
-//		};
-//		List<CuentaFinanciera> cuentas = ui.getiCaja().consultarCuentasFinancieras();
-//		BeanItemContainer<CuentaFinanciera> container = new BeanItemContainer<>(CuentaFinanciera.class, cuentas);
-//		tabla.setContainerDataSource(container);
-//		tabla.setVisibleColumns(new Object[]{
-//				"nombre", "descripcion", 
-//				"moneda", "saldo"
-//		});
-//		tabla.setColumnHeaders(new String[]{
-//				"nombre", "descripcion", "moneda", "total"
-//		});
-//		tabla.setColumnAlignment("saldo", Align.RIGHT);
-//		
-//		Double saldoCaja = 0.0;
-//		for (CuentaFinanciera cuenta:cuentas){
-//			saldoCaja += cuenta.getSaldo();
-//			System.out.println("[VentanaCerrarCaja] \t saldo:"+saldoCaja);
-//		}
-//		
-//		if (tabla.getContainerDataSource().size()>10){
-//			tabla.setPageLength(10);
-//		}else{
-//			tabla.setPageLength(tabla.size());
-//		}
-//
-//		tabla.setColumnFooter("saldo", df.format(saldoCaja));
-//		tabla.setFooterVisible(true);
-//		
-//		return tabla;
-//		
-//	}
-	
+		
 	private Button obtenerBotonConfirmar(){
 		
 		Button button = new Button("", FontAwesome.LOCK);
@@ -121,7 +75,6 @@ public class VentanaCerrarCaja extends Window{
 				}finally{
 					close();
 				}
-				close();
 			}			
 		});
 		return button;

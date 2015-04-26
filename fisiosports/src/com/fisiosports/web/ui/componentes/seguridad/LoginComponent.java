@@ -42,7 +42,7 @@ public class LoginComponent extends CustomComponent{
 
     	VerticalLayout layout = new VerticalLayout();
     	layout.setSizeFull();
-    	layout.setHeight(100, Unit.PERCENTAGE);
+//    	layout.setHeight(100, Unit.PERCENTAGE);
     	Panel loginPanel = createLoginPanel();
     	layout.addComponent(loginPanel);
     	layout.setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);

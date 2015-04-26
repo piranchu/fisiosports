@@ -1,4 +1,4 @@
-package com.fisiosports.web.ui.componentes;
+package com.fisiosports.web.ui.componentes.seguridad;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;

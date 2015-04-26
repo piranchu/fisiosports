@@ -17,7 +17,7 @@ public interface ICaja {
 	
 	public void crearMovimiento(Caja caja, Movimiento movimiento);
 	public void borrarMovimiento(Long id);
-	public List<Movimiento> obtenerMovimientos(Class<? extends Movimiento> tipoMovimiento, 
+	public List<? extends Movimiento> obtenerMovimientos(Class<? extends Movimiento> tipoMovimiento, 
 			Concepto concepto, ProductoServicio productoServicio, 
 			Paciente paciente, Date fechaInicial, Date fechaFinal);
 	public Movimiento obtenerMovimiento(Long id);
@@ -37,6 +37,7 @@ public interface ICaja {
 	public Caja obtenerCaja();
 	public Caja abrirCaja(Caja caja, Double importe) throws Exception;
 	public CierreCaja cerrarCaja(Caja caja) throws Exception;
+	public CierreCaja cargarMovimientos(CierreCaja cierre);
 	public List<CierreCaja> obtenerCierresCaja();
 	public List<Movimiento> obtenerMovimientosActuales();
 	

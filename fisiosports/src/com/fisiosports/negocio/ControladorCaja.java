@@ -1,17 +1,25 @@
 package com.fisiosports.negocio;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.fisiosports.modelo.entidades.caja.Caja;
 import com.fisiosports.modelo.entidades.caja.Caja.Estado;
 import com.fisiosports.modelo.entidades.caja.CierreCaja;
 import com.fisiosports.modelo.entidades.caja.Concepto;
+import com.fisiosports.modelo.entidades.caja.Egreso;
+import com.fisiosports.modelo.entidades.caja.Ingreso;
 import com.fisiosports.modelo.entidades.caja.Movimiento;
 import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.modelo.entidades.pacientes.Paciente;
@@ -50,13 +58,97 @@ public class ControladorCaja implements ICaja{
 		
 	}
 
-	@SuppressWarnings("unchecked")
+
+	private List<Ingreso> obtenerMovimientosIngreso(Concepto concepto,
+			ProductoServicio productoServicio, Paciente paciente, Date fechaInicial, Date fechaFinal){
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Ingreso> cq = cb.createQuery(Ingreso.class);
+		Root<Ingreso> root = cq.from(Ingreso.class);
+		
+		List<Predicate> predicates = new LinkedList<Predicate>();
+		if (concepto!=null){
+			predicates.add(cb.equal(root.get("concepto"), concepto));
+		}
+		if (productoServicio!=null){
+			predicates.add(cb.equal(root.get("productoServicio"), productoServicio));
+		}
+		if (paciente!=null){
+			predicates.add(cb.equal(root.get("paciente"), paciente));
+		}
+		if (fechaInicial!=null){
+			predicates.add(cb.greaterThanOrEqualTo(root.<Date>get("fecha"), fechaInicial));
+		}
+		if (fechaFinal!=null){
+			predicates.add(cb.lessThanOrEqualTo(root.<Date>get("fecha"), fechaFinal));
+		}
+
+		cq.select(root);//.where((Predicate[]) predicates.toArray());
+		TypedQuery<Ingreso> q = em.createQuery(cq);
+		
+		List<Ingreso> allMovs = q.getResultList();
+		
+		return allMovs;
+	}
+	
+	private List<Egreso> obtenerMovimientosEgreso(Concepto concepto,
+			ProductoServicio productoServicio, Paciente paciente, Date fechaInicial, Date fechaFinal){
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Egreso> cq = cb.createQuery(Egreso.class);
+		Root<Egreso> root = cq.from(Egreso.class);
+		
+		List<Predicate> predicates = new LinkedList<Predicate>();
+		if (concepto!=null){
+			predicates.add(cb.equal(root.get("concepto"), concepto));
+		}
+		if (productoServicio!=null){
+			predicates.add(cb.equal(root.get("productoServicio"), productoServicio));
+		}
+		if (paciente!=null){
+			predicates.add(cb.equal(root.get("paciente"), paciente));
+		}
+		if (fechaInicial!=null){
+			predicates.add(cb.greaterThanOrEqualTo(root.<Date>get("fecha"), fechaInicial));
+		}
+		if (fechaFinal!=null){
+			predicates.add(cb.lessThanOrEqualTo(root.<Date>get("fecha"), fechaFinal));
+		}
+
+		cq.select(root);//.where((Predicate[]) predicates.toArray());
+		TypedQuery<Egreso> q = em.createQuery(cq);
+		
+		List<Egreso> allMovs = q.getResultList();
+		
+		return allMovs;
+	}
+	
+	
 	@Override
-	public List<Movimiento> obtenerMovimientos(
+	public List<? extends Movimiento> obtenerMovimientos(
 			Class<? extends Movimiento> tipoMovimiento, Concepto concepto,
 			ProductoServicio productoServicio, Paciente paciente, Date fechaInicial, Date fechaFinal) {
 		
-		return em.createNamedQuery("Movimiento.all").getResultList();
+		List<Movimiento> movimientos;
+		
+		if (tipoMovimiento == Egreso.class){
+			return this.obtenerMovimientosEgreso(
+					concepto, productoServicio, paciente, fechaInicial, fechaFinal);
+		}else if (tipoMovimiento  ==  Ingreso.class){
+			return this.obtenerMovimientosIngreso(
+					concepto, productoServicio, paciente, fechaInicial, fechaFinal);
+		}else{
+			List<Ingreso> ingresos = this.obtenerMovimientosIngreso(
+					concepto, productoServicio, paciente, fechaInicial, fechaFinal);
+			
+			List<Egreso> egresos = this.obtenerMovimientosEgreso(
+					concepto, productoServicio, paciente, fechaInicial, fechaFinal);
+			movimientos = new LinkedList<Movimiento>();
+			movimientos.addAll(ingresos);
+			movimientos.addAll(egresos);
+		}
+		
+		return movimientos;
 	}
 	
 	@Override
@@ -135,7 +227,17 @@ public class ControladorCaja implements ICaja{
 	@Override
 	public List<CierreCaja> obtenerCierresCaja() {
 		
-		return em.createNamedQuery("CuentaFinanciera.all").getResultList();
+		return em.createNamedQuery("CierreCaja.all").getResultList();
+	}
+	
+	@Override
+	public CierreCaja cargarMovimientos(CierreCaja cierre){
+		cierre = em.merge(cierre);
+		for(Movimiento movimiento:cierre.getMovimientos()){
+			Movimiento mov = movimiento;
+			System.out.println("[ControladorCaja.cargarMovimientosCaja] movimiento:"+mov);
+		}
+		return cierre;
 	}
 
 

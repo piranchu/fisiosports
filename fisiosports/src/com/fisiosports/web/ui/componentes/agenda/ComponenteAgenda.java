@@ -26,6 +26,7 @@ public class ComponenteAgenda extends VerticalLayout{
 		this.setSpacing(true);
 		this.setMargin(true);
 		this.setSizeFull();
+		this.setWidth(100, Unit.PERCENTAGE);
 
 		this.addComponent(this.createMenuBar());
 		calendar = new FisioSportsCalendar(ui);

@@ -14,6 +14,7 @@ import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorMovimientosCaja;
 import com.fisiosports.web.ui.contenedores.ContenedorProductoServicio;
 import com.fisiosports.web.ui.contenedores.beantypes.BeanItemMovimiento;
+import com.fisiosports.web.ui.contenedores.beantypes.BeanItemProductoServicio;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -44,8 +45,8 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	private Caja caja;
 	private Component mainComponent;
 	private Component componentMovimientosActuales;
-	private Component componentConsultaMovimientos;
-	private Component componentConsultaCierres;
+//	private Component componentConsultaMovimientos;
+//	private Component componentConsultaCierres;
 	
 	private Table table = new Table();
 	private ContenedorMovimientosCaja contenedor;
@@ -76,8 +77,8 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		
 
 		this.componentMovimientosActuales = obtenerComponenteMovimientosActuales();
-		this.componentConsultaMovimientos = new ComponenteConsultaMovimientos(this);
-		this.componentConsultaCierres = new ComponenteConsultaCierres();
+//		this.componentConsultaMovimientos = new ComponenteConsultaMovimientos(this);
+//		this.componentConsultaCierres = new ComponenteConsultaCierres(this);
 		
 		
 //		this.addComponent(menu);
@@ -112,7 +113,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 
 		menuConsultas= menu.addItem("", FontAwesome.SEARCH, null);
 		menuConsultas.setDescription("consultas");
-		menuConsultas.addItem("cierres y movimientos", this.commandVerCierres);
+		menuConsultas.addItem("cierres", this.commandVerCierres);
 		menuConsultas.addItem("movimientos", this.commandVerMovimientos);
 
 		menuConfiguracion = menu.addItem("", FontAwesome.GEAR, null);
@@ -144,14 +145,14 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	
 	private void setComponentConsultaMovimientos(){
 		this.removeComponent(mainComponent);
-		this.mainComponent = componentConsultaMovimientos;
+		this.mainComponent = new ComponenteConsultaMovimientos(this);
 		this.addComponent(mainComponent);
 		this.markAsDirtyRecursive();
 	}
 
 	public void setComponentConsultaCierres(){
 		this.removeComponent(mainComponent);
-		this.mainComponent = componentConsultaCierres;
+		this.mainComponent = new ComponenteConsultaCierres(this);
 		this.addComponent(mainComponent);
 		this.markAsDirtyRecursive();
 	}
@@ -272,7 +273,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 				aperturaCaja((Caja) arg);
 			}else if (arg instanceof CierreCaja){
 				System.out.println("[ComponenteCaja.update] cierre caja");
-				cierreCaja((CierreCaja)arg);
+				cierreCaja((CierreCaja) arg);
 			}else if(arg instanceof Movimiento){
 				System.out.println("[ComponenteCaja.update] nuevo movimiento");
 				nuevoMovimiento((Movimiento) arg);
@@ -290,8 +291,8 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	}
 
 	private void cierreCaja(CierreCaja cierre) {
-		Notification.show("Cierre de caja");
-		this.caja = cierre.getCaja();
+//		Notification.show("Cierre de caja");
+		caja = ui.getiCaja().obtenerCaja();
 		// Se modifica el menú de cierre/apertura de caja
 		menuAbrirCerrarCaja.setIcon(FontAwesome.UNLOCK);
 		menuAbrirCerrarCaja.setDescription("abrir caja");
@@ -410,7 +411,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		public void menuSelected(MenuItem selectedItem) {
 //			Window window = new VentanaConcepto(ComponenteCaja.this);
 //			getUI().addWindow(window);
-			Notification.show("próximamente: ver todos los cierres de caja");
+			setComponentConsultaCierres();
 		}
 		
 	};

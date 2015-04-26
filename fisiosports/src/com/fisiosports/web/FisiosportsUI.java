@@ -64,9 +64,6 @@ public class FisiosportsUI extends UI {
 	}
 	
 	private VerticalLayout content;
-//	private VerticalLayout layout = new VerticalLayout();
-//	private Component componentePrincipal = new Panel();
-	
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -87,7 +84,6 @@ public class FisiosportsUI extends UI {
 		
 		content = new VerticalLayout();
 		content.setSizeFull();
-		content.setWidth(100.0f, Unit.PERCENTAGE);
 
 		LoginComponent login = new LoginComponent();
 		content.addComponent(login);
@@ -121,7 +117,8 @@ public class FisiosportsUI extends UI {
 		
 		Button botonSalir = new Button("Salir");
 		botonSalir.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-		botonSalir.addStyleName(ValoTheme.BUTTON_HUGE);
+		botonSalir.addStyleName(ValoTheme.BUTTON_LARGE);
+//		botonSalir.addStyleName(ValoTheme.BUTTON_HUGE);
 //		botonSalir.addStyleName(ValoTheme.LABEL_H1);
 		
 		botonSalir.setIcon(FontAwesome.SIGN_OUT);

@@ -4,7 +4,8 @@ import java.util.Observer;
 
 import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.web.FisiosportsUI;
-import com.vaadin.data.util.BeanItemContainer;
+import com.fisiosports.web.ui.contenedores.ContenedorConcepto;
+import com.fisiosports.web.ui.contenedores.beantypes.BeanItemConcepto;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -22,13 +23,13 @@ import com.vaadin.ui.themes.ValoTheme;
 public class VentanaConcepto extends Window{
 
 	private static final long serialVersionUID = 1L;
-	private TextField textCategoria;
+	private TextField textConcepto;
 	private Button newButton;
-	private Table tablaCategoria;
+	private Table table;
 	private Observer observer;
 	private FisiosportsUI ui;
 	private VerticalLayout layout = new VerticalLayout();
-	private BeanItemContainer<BeanItemConcepto> container = new BeanItemContainer<>(BeanItemConcepto.class);
+	private ContenedorConcepto container = new ContenedorConcepto(BeanItemConcepto.class);
 	
 	public VentanaConcepto(Observer observer){
 		
@@ -38,9 +39,9 @@ public class VentanaConcepto extends Window{
 		this.observer = observer;
 		this.ui = (FisiosportsUI) UI.getCurrent();
 		
-		textCategoria = new TextField();
-		textCategoria.setInputPrompt("nueva categoría");
-		textCategoria.setWidth(25, Unit.EM);
+		textConcepto = new TextField();
+		textConcepto.setInputPrompt("nuevo concepto para ingresos/egresos de caja");
+		textConcepto.setWidth(25, Unit.EM);
 
 		newButton = new Button("", FontAwesome.PLUS_CIRCLE);
 		newButton.setDescription("agregar");
@@ -53,11 +54,9 @@ public class VentanaConcepto extends Window{
 			}
 		});
 		
-		container.addNestedContainerBean("categoria");
-
 		layout.setMargin(true);
 		layout.setSpacing(true);
-		layout.addComponent(textCategoria);
+		layout.addComponent(textConcepto);
 		layout.addComponent(newButton);
 		layout.addComponent(cargarTabla());
 		
@@ -66,50 +65,49 @@ public class VentanaConcepto extends Window{
 	}
 	
 	private Table cargarTabla(){
-		if (tablaCategoria != null){
-			layout.removeComponent(tablaCategoria);
+		if (table != null){
+			layout.removeComponent(table);
 		}
-		tablaCategoria = new Table();
-		tablaCategoria.setContainerDataSource(container);
-		tablaCategoria.setVisibleColumns(new Object[]{
-				"categoria.nombre", "botonEliminar"
-		});
-		tablaCategoria.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		table = new Table();
+		table.setWidth(25, Unit.EM);
+		table.setContainerDataSource(container);
+		table.setVisibleColumns(ContenedorConcepto.getVisibleColumns());
+		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
-		tablaCategoria.getContainerDataSource().removeAllItems();
+		table.getContainerDataSource().removeAllItems();
 		for (Concepto concepto:this.ui.getiCaja().consultarConceptos()){
-			tablaCategoria.getContainerDataSource().addItem(new BeanItemConcepto(concepto, this));
+			table.getContainerDataSource().addItem(new BeanItemConcepto(concepto, this));
 		}
-		if (tablaCategoria.getContainerDataSource().size()>10){
-			tablaCategoria.setPageLength(10);
+		if (table.getContainerDataSource().size()>10){
+			table.setPageLength(10);
 		}else{
-			tablaCategoria.setPageLength(tablaCategoria.size());
+			table.setPageLength(table.size());
 		}
 		
-		if (tablaCategoria.getContainerDataSource().size() == 0){
-			tablaCategoria.setWidth(100, Unit.PERCENTAGE);
+		if (table.getContainerDataSource().size() == 0){
+			table.setWidth(100, Unit.PERCENTAGE);
 		}else{
-			tablaCategoria.markAsDirty();
-			tablaCategoria.refreshRowCache();
-			tablaCategoria.setSizeUndefined();
+			table.markAsDirty();
+			table.refreshRowCache();
+			table.setSizeUndefined();
 		}
-		layout.addComponent(tablaCategoria);
+		layout.addComponent(table);
 		this.markAsDirtyRecursive();
 		
-		return tablaCategoria;
+		return table;
 	}
 	
 	private void agregar() {
 		
-		if (this.textCategoria.getValue() == null || this.textCategoria.getValue().trim().isEmpty()){
+		if (this.textConcepto.getValue() == null || this.textConcepto.getValue().trim().isEmpty()){
 			Notification.show("Debe indicar nombre de categoría", Type.ERROR_MESSAGE);
 			return;
 		}
 		Concepto concepto = new Concepto();
-		concepto.setNombre(this.textCategoria.getValue());
+		concepto.setNombre(this.textConcepto.getValue());
 		ui.getiCaja().crearConcepto(concepto);
 		this.cargarTabla();
-		textCategoria.setValue("");
+		textConcepto.setValue("");
 		if (observer != null){
 			observer.update(null, null);
 		}
