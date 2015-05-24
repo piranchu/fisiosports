@@ -90,6 +90,9 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	public Component obtenerComponenteMovimientosActuales(){
 		VerticalLayout layout = new VerticalLayout();
 		
+		HorizontalLayout hl = new HorizontalLayout();
+		hl.setSizeFull();
+		
 		menu = new MenuBar();
 		menu.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
 		
@@ -121,6 +124,10 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		menuConfiguracion.addItem("conceptos", this.commandConceptos);
 		menuConfiguracion.addItem("productos y servicios", this.commandProductosServicios);
 		
+		hl.addComponent(menu);
+		
+		layout.addComponent(hl);
+		
 		List<? extends Movimiento> movimientos = ((FisiosportsUI) UI.getCurrent()).getiCaja().obtenerMovimientosActuales();
 		contenedor = new ContenedorMovimientosCaja(BeanItemMovimiento.class);
 		contenedor.addAll(BeanItemMovimiento.buildList(movimientos, this));		
@@ -130,7 +137,6 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		table.setColumnHeaders(ContenedorMovimientosCaja.getNonbresColumnas());
 		resizeTable();
 		
-		layout.addComponent(menu);
 		layout.addComponent(table);
 		
 		return layout;

@@ -127,7 +127,10 @@ public class VentanaConsulta extends Window implements Observer{
 		if (paciente == null) return;
 		this.paciente = paciente;
 		this.nombrePaciente.setReadOnly(false);
-		this.nombrePaciente.setValue(paciente.getNombre() + " " + paciente.getApellido() + " ("+paciente.getDocumento()+")");
+		this.nombrePaciente.setValue(
+						paciente.getNombre() + " " + 
+						paciente.getApellido() + " ("+
+						paciente.getTelefono()+")");
 		this.nombrePaciente.setReadOnly(true);
 		this.botonInfoPaciente.setVisible(true);
 		this.markAsDirty();

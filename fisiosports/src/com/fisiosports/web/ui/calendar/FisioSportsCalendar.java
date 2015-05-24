@@ -33,15 +33,11 @@ public class FisioSportsCalendar extends Calendar{
 	public FisioSportsCalendar(final FisiosportsUI ui) {
 
 		this.calendar = this;
-//		this.setWidth("600px");
-//		this.setHeight("400px");
 		this.setSizeFull();
-		this.setWidth(100, Unit.PERCENTAGE);
 		this.setFirstVisibleHourOfDay(8);
+		this.setLastVisibleHourOfDay(23);
 		this.setFirstVisibleDayOfWeek(1);
-		this.setLastVisibleDayOfWeek(6);
-		this.setWidth(100.0f, Unit.PERCENTAGE);
-		this.setHeight(100.0f, Unit.PERCENTAGE);
+		this.setLastVisibleDayOfWeek(5);
 		this.setTimeFormat(TimeFormat.Format24H);
 		this.setEventProvider(new FisioSportsCalendarProvider(ui.getiAgenda()));
 
@@ -135,8 +131,8 @@ public class FisioSportsCalendar extends Calendar{
 			    BasicEvent calendarEvent = new BasicEvent();
 			    calendarEvent.setStart(event.getStart());
 			    calendarEvent.setEnd(event.getEnd());
-			    System.out.println("[inicio:"+event.getStart()+"]");
-			    System.out.println("[fin:"+event.getEnd()+"]");
+//			    System.out.println("[inicio:"+event.getStart()+"]");
+//			    System.out.println("[fin:"+event.getEnd()+"]");
 				Window window = new VentanaConsulta(ui, calendar, event.getStart());
 				ui.addWindow(window);
 			}

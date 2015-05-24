@@ -54,7 +54,7 @@ public class VentanaPaciente extends Window {
 	}
 	
 	private void cargarDatosPaciente(){
-		documento.setValue(paciente.getDocumento().toString());
+		documento.setValue(paciente.getDocumento());
 		documento.setEnabled(false);
 		nombre.setValue(paciente.getNombre());
 		apellido.setValue(paciente.getApellido());
@@ -108,13 +108,12 @@ public class VentanaPaciente extends Window {
 		if (paciente == null){
 			return;
 		}
-		
-		try{
-			paciente.setDocumento(new Long(documento.getValue()));
-		}catch(Exception e){
-			Notification.show("Documento incorrecto", Notification.Type.ERROR_MESSAGE);
-			return;
-		}
+//		try{
+		paciente.setDocumento(documento.getValue());
+//		}catch(Exception e){
+//			Notification.show("Documento incorrecto", Notification.Type.ERROR_MESSAGE);
+//			return;
+//		}
 		paciente.setNombre(nombre.getValue());
 		paciente.setApellido(apellido.getValue());
 		paciente.setTelefono(telefono.getValue());
@@ -136,28 +135,29 @@ public class VentanaPaciente extends Window {
 			return;
 		}
 		
-		Long doc = null;
-		try{
-			doc = new Long(documento.getValue());
-		}catch(Exception e){
-			Notification.show("Documento debe ser numérico (no incluya puntos ni guiones)", Notification.Type.WARNING_MESSAGE);
-			return;
-		}
+//		Long doc = null;
+//		try{
+//			doc = new Long(documento.getValue());
+//		}catch(Exception e){
+//			Notification.show("Documento debe ser numérico (no incluya puntos ni guiones)", Notification.Type.WARNING_MESSAGE);
+//			return;
+//		}
 		
 		if (nombre.getValue()==null || nombre.getValue().trim().isEmpty() || apellido.getValue()==null || apellido.getValue().trim().isEmpty()){
 			Notification.show("Debe indicar nombre y apellido", Notification.Type.WARNING_MESSAGE);
 			return;
 		}
 		
-		paciente = this.iPacientes.obtenerPaciente(new Long(documento.getValue()));
-		if (paciente != null){
-			Notification.show("Ya existe un paciente con el mismo documento", Notification.Type.WARNING_MESSAGE);
-			return;
-		}else{
-			paciente = new Paciente();
-		}
+//		paciente = this.iPacientes.obtenerPaciente(new Long(documento.getValue()));
+//		if (paciente != null){
+//			Notification.show("Ya existe un paciente con el mismo documento", Notification.Type.WARNING_MESSAGE);
+//			return;
+//		}else{
+//			paciente = new Paciente();
+//		}
+		paciente = new Paciente();
 		
-		paciente.setDocumento(doc);
+		paciente.setDocumento(this.documento.getValue());
 		
 		paciente.setNombre(nombre.getValue());
 		paciente.setApellido(apellido.getValue());

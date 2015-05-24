@@ -2,12 +2,15 @@ package com.fisiosports.web.ui.contenedores.beantypes;
 
 import java.io.Serializable;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.fisiosports.modelo.entidades.pacientes.Paciente;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteMantenimientoPacientes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class PacienteDT implements Serializable{
@@ -49,7 +52,22 @@ public class PacienteDT implements Serializable{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				componenteMantenimiento.deletePaciente(getPaciente());
+				ConfirmDialog.show(UI.getCurrent(), "Confirma eliminación total del cliente?",
+				        new ConfirmDialog.Listener() {
+
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+				                if (dialog.isConfirmed()) {
+				    				componenteMantenimiento.deletePaciente(getPaciente());
+				                } else {
+				                    // User did not confirm
+									// CANCEL STUFF
+				                }
+				            }
+				        });
+
 			}
 		});
 		deleteButton.setDescription("Eliminar");

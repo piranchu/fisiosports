@@ -50,7 +50,10 @@
 		<dependency org="com.h2database" name="h2" rev="1.4.185"/>
 		<!-- <dependency org="org.xerial" name="sqlite-jdbc" rev="3.8.7"/> -->
 		<!-- <dependency org="org.eclipse.persistence" name="org.eclipse.persistence.jpa" rev="2.5.2"/> -->
-		
+		<dependency 
+   			org="org.vaadin.addon" 
+   			name="confirmdialog" 
+		   	rev="2.1.2" />
 		
 	</dependencies>
 </ivy-module>

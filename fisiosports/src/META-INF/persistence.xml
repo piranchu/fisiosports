@@ -28,7 +28,7 @@
 		<properties>
 		
 <!-- 		    <property name="hibernate.connection.url" value="jdbc:h2:/home/pablo/databases/h2/fisiosports;" /> -->
-		    <property name="hibernate.connection.url" value="jdbc:h2:${jboss.home.dir}/db_fisio/fisiosports;" />
+		    <property name="hibernate.connection.url" value="jdbc:h2:${jboss.home.dir}/standalone/data/fisiosportsDB;" />
 <!-- 		    <property name="hibernate.connection.url" value="jdbc:h2:/tmp/db_fisio/fisiosports;" /> -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
             <property name="hibernate.connection.driver_class" value="org.h2.Driver" />

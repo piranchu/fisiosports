@@ -21,18 +21,22 @@
 }
  
 .v-calendar .v-calendar-event-yellow {
-	background-color: yellow;	
-	opacity: 0.5 !important;
+	background-color: #FFFF66;	
 	color: black;
 }
-
-
 .v-calendar .v-calendar-event-cyan {
 	background-color: cyan;	
 	color: black;
 }
+
+.v-calendar .v-calendar-event-green {
+	background-color: #80FFCC;	
+	color: black;
+}
+
+
 .v-calendar .v-calendar-event-blue {
-	background-color: blue;	
+	background-color: #1975FF;	
 	color: black;
 }
 .v-calendar .v-calendar-event-purple {
@@ -40,21 +44,22 @@
 	color: black;
 }
 .v-calendar .v-calendar-event-grey {
-	background-color: grey;	
+	background-color: #d2d2cf;	
 	color: black;
 }
 .v-calendar .v-calendar-event-orange {
-	background-color: orange;	
+	background-color: #FFCC99;	
 	color: black;
 }
-.v-calendar .v-calendar-event-fucsia {
-	background-color: #FF00CC;	
+.v-calendar .v-calendar-event-pink {
+	background-color: #FFB5DA;	
 	color: black;
 }
 
 .v-calendar .v-calendar-event-content {
-	color: black;
-	font-weight: 900 !important;
+	font-weight: 1900 !important;
+	opacity: 0.5;
+	border-style: solid;
 }
 
 .redicon .v-icon {

@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -83,12 +82,9 @@ public class ControladorCaja implements ICaja{
 			predicates.add(cb.lessThanOrEqualTo(root.<Date>get("fecha"), fechaFinal));
 		}
 
-		cq.select(root);//.where((Predicate[]) predicates.toArray());
-		TypedQuery<Ingreso> q = em.createQuery(cq);
+		cq.select(root).where(predicates.toArray(new Predicate[]{}));
 		
-		List<Ingreso> allMovs = q.getResultList();
-		
-		return allMovs;
+		return em.createQuery(cq).getResultList();
 	}
 	
 	private List<Egreso> obtenerMovimientosEgreso(Concepto concepto,
@@ -96,31 +92,29 @@ public class ControladorCaja implements ICaja{
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Egreso> cq = cb.createQuery(Egreso.class);
-		Root<Egreso> root = cq.from(Egreso.class);
+		Root<Egreso> rootEgreso = cq.from(Egreso.class);
 		
 		List<Predicate> predicates = new LinkedList<Predicate>();
+		
 		if (concepto!=null){
-			predicates.add(cb.equal(root.get("concepto"), concepto));
+			predicates.add(cb.equal(rootEgreso.get("concepto"), concepto));
 		}
 		if (productoServicio!=null){
-			predicates.add(cb.equal(root.get("productoServicio"), productoServicio));
+			predicates.add(cb.equal(rootEgreso.get("productoServicio"), productoServicio));
 		}
 		if (paciente!=null){
-			predicates.add(cb.equal(root.get("paciente"), paciente));
+			predicates.add(cb.equal(rootEgreso.get("paciente"), paciente));
 		}
 		if (fechaInicial!=null){
-			predicates.add(cb.greaterThanOrEqualTo(root.<Date>get("fecha"), fechaInicial));
+			predicates.add(cb.greaterThanOrEqualTo(rootEgreso.<Date>get("fecha"), fechaInicial));
 		}
 		if (fechaFinal!=null){
-			predicates.add(cb.lessThanOrEqualTo(root.<Date>get("fecha"), fechaFinal));
+			predicates.add(cb.lessThanOrEqualTo(rootEgreso.<Date>get("fecha"), fechaFinal));
 		}
 
-		cq.select(root);//.where((Predicate[]) predicates.toArray());
-		TypedQuery<Egreso> q = em.createQuery(cq);
+		cq.select(rootEgreso).where(predicates.toArray(new Predicate[]{}));
 		
-		List<Egreso> allMovs = q.getResultList();
-		
-		return allMovs;
+		return em.createQuery(cq).getResultList();
 	}
 	
 	

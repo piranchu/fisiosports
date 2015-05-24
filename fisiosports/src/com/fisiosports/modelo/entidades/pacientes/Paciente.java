@@ -8,12 +8,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fisiosports.modelo.entidades.agenda.AgendaConsulta;
 
 /**
  * Entity implementation class for Entity: Paciente
@@ -31,10 +35,10 @@ public class Paciente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	@Id @GeneratedValue(strategy= GenerationType.AUTO)
-//	private Long id;
-	@Id
-	private Long documento;
+	@Id @GeneratedValue(strategy= GenerationType.AUTO)
+	private Long id;
+
+	private String documento;
 	private String nombre = "";
 	private String apellido = "";
 	private String telefono = "";
@@ -43,8 +47,11 @@ public class Paciente implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	private String ocupacion = "";
-	@OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy="paciente")
+	@OneToMany (mappedBy="paciente", orphanRemoval=true, fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
 	private List<Evaluacion> evaluaciones = new LinkedList<Evaluacion>();
+	
+	@OneToMany (mappedBy="paciente", orphanRemoval=true, fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	private List<AgendaConsulta> consultas;
 
 	public List<Evaluacion> getEvaluaciones() {
 		return evaluaciones;
@@ -70,11 +77,11 @@ public class Paciente implements Serializable {
 		this.apellido = apellido;
 	}
 
-	public Long getDocumento() {
+	public String getDocumento() {
 		return documento;
 	}
 
-	public void setDocumento(Long documento) {
+	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
 
@@ -118,13 +125,20 @@ public class Paciente implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<AgendaConsulta> getConsultas() {
+		return consultas;
+	}
+
+	public void setConsultas(List<AgendaConsulta> consultas) {
+		this.consultas = consultas;
+	}
 
 }

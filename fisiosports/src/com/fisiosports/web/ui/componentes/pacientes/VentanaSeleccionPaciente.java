@@ -80,8 +80,8 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 
 			@Override
             public void itemClick(ItemClickEvent event) {
-            	Long documento = (Long)event.getItem().getItemProperty("paciente.documento").getValue();
-            	Paciente paciente = iPacientes.obtenerPaciente(documento);
+            	Long id = (Long)event.getItem().getItemProperty("paciente.id").getValue();
+            	Paciente paciente = iPacientes.obtenerPaciente(id);
             	observer.update(null, paciente);
             	close();
             }

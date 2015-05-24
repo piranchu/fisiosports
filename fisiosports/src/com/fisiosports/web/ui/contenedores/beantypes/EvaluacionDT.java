@@ -1,11 +1,14 @@
 package com.fisiosports.web.ui.contenedores.beantypes;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
 import com.fisiosports.web.ui.componentes.pacientes.ComponenteEvaluacion;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class EvaluacionDT {
@@ -21,7 +24,22 @@ public class EvaluacionDT {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				componente.borrarEvaluacion(EvaluacionDT.this);
+				
+				ConfirmDialog.show(UI.getCurrent(), "Confirma eliminación de la evaluación?",
+				        new ConfirmDialog.Listener() {
+
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+				                if (dialog.isConfirmed()) {
+				    				componente.borrarEvaluacion(EvaluacionDT.this);
+				                } else {
+				                    // User did not confirm
+									// CANCEL STUFF
+				                }
+				            }
+				        });
 			}			
 		});
 	}

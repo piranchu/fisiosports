@@ -22,6 +22,7 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -222,9 +223,14 @@ public class ComponenteMantenimientoPacientes extends VerticalLayout implements 
 	}
 	
 	public void deletePaciente(Paciente paciente){
-		this.ui.getiPacientes().borrarPaciente(paciente);
-		this.update(null, null);
-		Notification.show("Paciente eliminado");
+		try{
+			this.ui.getiPacientes().borrarPaciente(paciente);
+			this.update(null, null);
+			Notification.show("Paciente eliminado");
+		}catch (Exception e){
+			Notification.show("No se pudo eliminar el paciente. Comuníquelo al analista.", Type.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 	
 	public void evaluacionPaciente(Paciente paciente){

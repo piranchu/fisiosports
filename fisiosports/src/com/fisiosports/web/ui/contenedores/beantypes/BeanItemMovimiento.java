@@ -3,6 +3,8 @@ package com.fisiosports.web.ui.contenedores.beantypes;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.fisiosports.modelo.entidades.caja.Egreso;
 import com.fisiosports.modelo.entidades.caja.Ingreso;
 import com.fisiosports.modelo.entidades.caja.Movimiento;
@@ -11,6 +13,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class BeanItemMovimiento {
@@ -39,7 +42,22 @@ public class BeanItemMovimiento {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				componente.borrarMovimiento(BeanItemMovimiento.this);
+				ConfirmDialog.show(UI.getCurrent(), "Confirma eliminación del movimiento?",
+				        new ConfirmDialog.Listener() {
+
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+				                if (dialog.isConfirmed()) {
+				    				componente.borrarMovimiento(BeanItemMovimiento.this);
+				                } else {
+				                    // User did not confirm
+									// CANCEL STUFF
+				                }
+				            }
+				        });
+
 			}
 			
 		});

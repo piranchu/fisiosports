@@ -140,7 +140,7 @@ public class ControladorPacientes implements IPacientes{
 	}
 
 	@Override
-	public void borrarPaciente(Paciente paciente) {
+	public void borrarPaciente(Paciente paciente) throws Exception{
 		paciente = em.merge(paciente);
 		em.remove(paciente);
 		
@@ -149,23 +149,9 @@ public class ControladorPacientes implements IPacientes{
 	@Override
 	public void borrarEvaluacion(Evaluacion evaluacion) {
 		evaluacion = em.merge(evaluacion);
-//		System.out.println("[ControladorPcientes] borrando tratamiento");
-//		em.remove(evaluacion.getTratamiento());
-//		evaluacion.setTratamiento(null)
-//		em.merge(evaluacion);
-//		System.out.println("[ControladorPcientes] borrando evaluacion");
-//		em.remove(evaluacion);
-
-//		System.out.println("[ControladorPcientes] borrando evaluacion");
-		evaluacion.getPaciente().getEvaluaciones().remove(evaluacion);
-		em.merge(evaluacion.getPaciente());
+		Paciente paciente = em.merge(evaluacion.getPaciente());
+		paciente.getEvaluaciones().remove(evaluacion);
 		em.remove(evaluacion);
-		em.flush();
-//		em.flush();
-//		System.out.println("[ControladorPcientes] borrando tratamiento");
-//		em.remove(evaluacion.getTratamiento());
-
-		
 	}
 
 	@Override

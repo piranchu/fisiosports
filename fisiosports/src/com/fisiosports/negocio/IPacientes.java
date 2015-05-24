@@ -16,9 +16,9 @@ import com.fisiosports.modelo.tipos.TipoTerapiaFisica;
 public interface IPacientes {
 
 	public void crearPaciente(Paciente paciente);
-	public Paciente obtenerPaciente(Long documento);
+	public Paciente obtenerPaciente(Long id);
 	public List<Paciente> obtenerPacientes();
-	public void borrarPaciente(Paciente paciente);
+	public void borrarPaciente(Paciente paciente) throws Exception;
 	
 	public void agregarEvaluacionPaciente(Evaluacion evaluacion, Paciente paciente);
 	public void borrarEvaluacion(Evaluacion evaluacion);

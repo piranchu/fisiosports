@@ -70,7 +70,7 @@ public class ComponenteEvaluacion extends CustomComponent implements Observer {
 		
 		this.componenteActual = this;
 		
-		layout.setMargin(new MarginInfo(false, true, false, true));
+		layout.setMargin(new MarginInfo(false, true, true, true));
 		layout.setSpacing(true);
 
 		layout.addComponent(this.createMenuBar());
@@ -226,7 +226,7 @@ public class ComponenteEvaluacion extends CustomComponent implements Observer {
 	
 	private void consultarEvaluaciones(){	
 		contenedorEvaluacion.removeAllItems();
-		ui.getiPacientes().obtenerPaciente(paciente.getDocumento());
+		ui.getiPacientes().obtenerPaciente(paciente.getId());
 		
 		for (Evaluacion evaluacion:paciente.getEvaluaciones()){
 			contenedorEvaluacion.addBean(new EvaluacionDT(evaluacion, this));

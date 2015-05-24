@@ -21,7 +21,7 @@ public class ControladorAgenda implements IAgenda{
 	
 	@Override
 	public void agregarConsulta(AgendaConsulta agendaConsulta) {
-		agendaConsulta.setPaciente(em.getReference(Paciente.class, agendaConsulta.getPaciente().getDocumento()));
+		agendaConsulta.setPaciente(em.getReference(Paciente.class, agendaConsulta.getPaciente().getId()));
 		em.persist(agendaConsulta);
 		
 	}

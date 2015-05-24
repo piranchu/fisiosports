@@ -25,15 +25,14 @@ public class ComponenteAgenda extends VerticalLayout{
 		this.ui = ui;
 		this.setSpacing(true);
 		this.setMargin(true);
-		this.setSizeFull();
-		this.setWidth(100, Unit.PERCENTAGE);
 
 		this.addComponent(this.createMenuBar());
-		calendar = new FisioSportsCalendar(ui);
-		//this.addComponent(getOpcionesVistaCalendario(calendar));
 		
-		//calendar = new FisioSportsCalendar(ui);
+		calendar = new FisioSportsCalendar(ui);
+
 		this.addComponent(calendar);
+		this.setExpandRatio(calendar, 1);
+		this.setSizeFull();
 		
 	}
 	

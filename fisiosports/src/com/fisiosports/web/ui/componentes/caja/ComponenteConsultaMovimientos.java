@@ -84,7 +84,7 @@ public class ComponenteConsultaMovimientos extends CustomComponent implements Ob
 		Button button = new Button();
 		button.setDescription("buscar movimientos");
 		button.setIcon(FontAwesome.SEARCH);
-//		button.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		button.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		button.addClickListener(new ClickListener(){
 			private static final long serialVersionUID = 1L;
 			@Override
