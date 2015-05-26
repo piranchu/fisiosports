@@ -329,7 +329,7 @@ public class VentanaConsulta extends Window implements Observer{
 				return;
 			}
 			calendar.markAsDirty();
-			Notification.show("Se borró la agendaConsulta");
+			Notification.show("Se eliminó la consulta");
 			close();
 		}
 	};

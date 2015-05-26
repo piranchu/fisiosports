@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="fisiosportsPU" transaction-type="JTA">
-<!-- 	 <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
-<!-- 	<jta-data-source>java:jboss/datasources/fisiosportsDS</jta-data-source> -->
-<!--     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
-<!--     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode> -->
-	
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="fisiosportsPU"
+		transaction-type="JTA">
+		<!-- <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
+		<!-- <jta-data-source>java:jboss/datasources/fisiosportsDS</jta-data-source> -->
+		<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+		<!-- <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode> -->
+
 		<class>com.fisiosports.modelo.entidades.pacientes.Consulta</class>
 		<class>com.fisiosports.modelo.entidades.pacientes.Paciente</class>
 		<class>com.fisiosports.modelo.entidades.pacientes.TerapiaFisica</class>
@@ -22,43 +25,26 @@
 		<class>com.fisiosports.modelo.entidades.caja.Ingreso</class>
 		<class>com.fisiosports.modelo.entidades.caja.CierreCaja</class>
 		<class>com.fisiosports.modelo.entidades.caja.Caja</class>
-		<class>com.fisiosports.modelo.entidades.caja.ProductoServicio</class>		
-		<class>com.fisiosports.modelo.entidades.seguridad.Usuario</class>		
+		<class>com.fisiosports.modelo.entidades.caja.ProductoServicio</class>
+		<class>com.fisiosports.modelo.entidades.seguridad.Usuario</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
-		
-<!-- 		    <property name="hibernate.connection.url" value="jdbc:h2:/home/pablo/databases/h2/fisiosports;" /> -->
-		    <property name="hibernate.connection.url" value="jdbc:h2:${jboss.home.dir}/standalone/data/fisiosportsDB;" />
-<!-- 		    <property name="hibernate.connection.url" value="jdbc:h2:/tmp/db_fisio/fisiosports;" /> -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-            <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-            <property name="hibernate.connection.password" value="" />
-            <property name="hibernate.connection.username" value="" />
-          	<property name="hibernate.hbm2ddl.auto" value="update"/>
-          	
-<!--             <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" /> -->
-<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect" /> -->
-<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" /> -->
-<!-- 			<property name="hibernate.connection.url" value="jdbc:hsqldb:file/data/hsqldb/fisiosports" /> -->
-<!--             <property name="hibernate.connection.username" value="sa" /> -->
-<!--             <property name="hibernate.connection.password" value="" /> -->
-<!-- 			<property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
 
-<!--       <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:file/data/fisiosports.sqlite.db"/>  -->
-<!--       <property name="javax.persistence.jdbc.user" value="admin"/> -->
-<!--       <property name="javax.persistence.jdbc.password" value="admin"/> -->
-<!--       <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/> -->
-<!--       <property name="eclipselink.ddl-generation" value="create-tables"/> -->
-<!--       <property name="eclipselink.logging.level" value="OFF" />  -->
-            
-		
-<!-- 			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/> -->
-<!-- 			<property name="openjpa.ConnectionUserName" value=""/> -->
-<!-- 			<property name="openjpa.ConnectionPassword" value=""/> -->
-<!-- 			<property name="openjpa.ConnectionURL" value="jdbc:derby:/home/pablo/fisiosports/Derby/MyDB;delete=true;create=true;upgrade=true"/>    -->
-<!-- 			<property name="openjpa.ConnectionURL" value="jdbc:derby:c:/fisiosports/Derby/MyDB;create=true;upgrade=true"/>   -->
-<!-- 			<property name="openjpa.ConnectionURL" value="jdbc:h2:/home/pablo/fisiosports/H2/MyDB;"/>   -->
-			
+			<!-- <property name="hibernate.connection.url" value="jdbc:h2:/home/pablo/databases/h2/fisiosports;" 
+				/> -->
+			<property name="hibernate.connection.url"
+				value="jdbc:h2:${jboss.home.dir}/standalone/data/fisiosportsDB;" />
+			<!-- <property name="hibernate.connection.url" value="jdbc:h2:/tmp/db_fisio/fisiosports;" 
+				/> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
+			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.connection.username" value="" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
 		</properties>
 	</persistence-unit>
 </persistence>

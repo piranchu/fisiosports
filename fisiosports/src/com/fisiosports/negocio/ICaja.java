@@ -17,6 +17,7 @@ public interface ICaja {
 	
 	public void crearMovimiento(Caja caja, Movimiento movimiento);
 	public void borrarMovimiento(Long id);
+	public void borrarMovimiento(Movimiento movimiento);
 	public List<? extends Movimiento> obtenerMovimientos(Class<? extends Movimiento> tipoMovimiento, 
 			Concepto concepto, ProductoServicio productoServicio, 
 			Paciente paciente, Date fechaInicial, Date fechaFinal);

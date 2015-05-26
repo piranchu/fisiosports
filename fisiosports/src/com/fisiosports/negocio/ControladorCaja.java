@@ -48,6 +48,23 @@ public class ControladorCaja implements ICaja{
 		Movimiento movimiento = em.find(Movimiento.class, id);
 		if (movimiento != null){
 			movimiento.setCaja(em.merge(movimiento.getCaja()));
+			movimiento.getCaja().getMovimientos().remove(movimiento);
+			em.lock(movimiento.getCaja(), LockModeType.WRITE);
+			movimiento.anular();
+			em.remove(movimiento);
+			em.flush();
+
+		}
+		
+	}
+	@Override
+	public void borrarMovimiento(Movimiento movimiento) {
+		System.out.println("[ControladorMovimientos.borrarMovimiento] movimiento "+movimiento);
+		movimiento = em.merge(movimiento);
+		if (movimiento != null){
+			movimiento.setCaja(em.merge(movimiento.getCaja()));
+			movimiento.getCaja().getMovimientos().remove(movimiento);
+			em.merge(movimiento.getCaja());
 			em.lock(movimiento.getCaja(), LockModeType.WRITE);
 			movimiento.anular();
 			em.remove(movimiento);

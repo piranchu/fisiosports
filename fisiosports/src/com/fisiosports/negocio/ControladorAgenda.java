@@ -42,7 +42,7 @@ public class ControladorAgenda implements IAgenda{
 
 	@Override
 	public void borrarConsulta(AgendaConsulta agendaConsulta) {
-		em.remove(em.merge(agendaConsulta));
+		em.remove(em.getReference(AgendaConsulta.class, agendaConsulta.getId()));
 	}
 
 }

@@ -341,7 +341,8 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		this.contenedor.removeItem(beanItemMovimiento);
 		caja = ui.getiCaja().obtenerCaja();
 
-		this.ui.getiCaja().borrarMovimiento(beanItemMovimiento.getMovimiento().getId());
+		//this.ui.getiCaja().borrarMovimiento(beanItemMovimiento.getMovimiento().getId());
+		this.ui.getiCaja().borrarMovimiento(beanItemMovimiento.getMovimiento());
 	}
 
 	private final Command addMovimientoIngreso = new Command(){

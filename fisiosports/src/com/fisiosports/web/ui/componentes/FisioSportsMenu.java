@@ -28,7 +28,7 @@ public class FisioSportsMenu extends VerticalLayout{
 		ComponenteAgenda agenda = new ComponenteAgenda(ui);  
 		tabSheet.addTab(agenda , "agenda", FontAwesome.CALENDAR_O);
 		
-		tabSheet.addTab(new ComponentePacientes(ui), "clientes", FontAwesome.USER);
+		tabSheet.addTab(new ComponentePacientes(ui), "pacientes", FontAwesome.USER);
 		tabSheet.addTab(new ComponenteCaja(), "caja", FontAwesome.USD);
 		tabSheet.addTab(new ComponenteCambioPassword(), "cambio contraseña", FontAwesome.KEY);
 		
