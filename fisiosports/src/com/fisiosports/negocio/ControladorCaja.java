@@ -44,7 +44,7 @@ public class ControladorCaja implements ICaja{
 
 	@Override
 	public void borrarMovimiento(Long id) {
-		System.out.println("[ControladorMovimientos.borrarMovimiento] borra movimiento "+id);
+//		System.out.println("[ControladorMovimientos.borrarMovimiento] borra movimiento "+id);
 		Movimiento movimiento = em.find(Movimiento.class, id);
 		if (movimiento != null){
 			movimiento.setCaja(em.merge(movimiento.getCaja()));
@@ -59,7 +59,7 @@ public class ControladorCaja implements ICaja{
 	}
 	@Override
 	public void borrarMovimiento(Movimiento movimiento) {
-		System.out.println("[ControladorMovimientos.borrarMovimiento] movimiento "+movimiento);
+//		System.out.println("[ControladorMovimientos.borrarMovimiento] movimiento "+movimiento);
 		movimiento = em.merge(movimiento);
 		if (movimiento != null){
 			movimiento.setCaja(em.merge(movimiento.getCaja()));
@@ -223,10 +223,10 @@ public class ControladorCaja implements ICaja{
 			throw new Exception("La caja ya está cerrada.");
 		}
 		caja = em.merge(caja);
-		System.out.println("[ControladorCaja.cerrarCaja] cierre.caja:"+caja.getMovimientos().size());
+//		System.out.println("[ControladorCaja.cerrarCaja] cierre.caja:"+caja.getMovimientos().size());
 		em.lock(caja, LockModeType.WRITE);
 		CierreCaja cierre = caja.cerrar();
-		System.out.println("[ControladorCaja.cerrarCaja] cierre.movimientos:"+cierre.getMovimientos().size());
+//		System.out.println("[ControladorCaja.cerrarCaja] cierre.movimientos:"+cierre.getMovimientos().size());
 		em.persist(cierre);
 		em.merge(caja);
 		em.flush();
@@ -246,7 +246,7 @@ public class ControladorCaja implements ICaja{
 		cierre = em.merge(cierre);
 		for(Movimiento movimiento:cierre.getMovimientos()){
 			Movimiento mov = movimiento;
-			System.out.println("[ControladorCaja.cargarMovimientosCaja] movimiento:"+mov);
+//			System.out.println("[ControladorCaja.cargarMovimientosCaja] movimiento:"+mov);
 		}
 		return cierre;
 	}
@@ -263,14 +263,14 @@ public class ControladorCaja implements ICaja{
 	}
 
 	@Override
-	public Caja abrirCaja(Caja caja, Double saldoInicial) throws Exception {
+	public Caja abrirCaja(Caja caja) throws Exception {
 		
 		if (caja.getEstado().equals(Estado.ABIERTA)){
 			throw new Exception("La caja ya está aberta.");
 		}
 		caja = em.merge(caja);
 		em.lock(caja, LockModeType.WRITE);
-		caja.abrir(saldoInicial);
+		caja.abrir();
 		em.flush();
 
 		return caja;

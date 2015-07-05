@@ -18,6 +18,11 @@ public interface IPacientes {
 	public void crearPaciente(Paciente paciente);
 	public Paciente obtenerPaciente(Long id);
 	public List<Paciente> obtenerPacientes();
+	public List<Paciente> buscarPacientes(
+			String documento, 
+			String nombre, 
+			String apellido,
+			String telefono);
 	public void borrarPaciente(Paciente paciente) throws Exception;
 	
 	public void agregarEvaluacionPaciente(Evaluacion evaluacion, Paciente paciente);

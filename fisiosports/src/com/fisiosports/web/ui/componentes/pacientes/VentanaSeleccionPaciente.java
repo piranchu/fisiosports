@@ -28,10 +28,12 @@ import com.vaadin.ui.themes.ValoTheme;
 public class VentanaSeleccionPaciente extends Window implements Observer{
 	
 	private static final long serialVersionUID = 1L;
-	private ComponenteSeleccionPaciente componenteSeleccion;
+//	private ComponenteSeleccionPaciente componenteSeleccion;
 	private TextField documento = new TextField();
 	private TextField nombre = new TextField();
 	private TextField apellido = new TextField();
+	private TextField telefono = new TextField();
+	private Button botonBuscar;
 	
 	private Filter filterDocumento = new SimpleStringFilter("paciente.documento", "", true, false);
 	private Filter filterNombre = new SimpleStringFilter("paciente.nombre", "", true, false);
@@ -74,6 +76,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		tablaPacientes.setVisibleColumns(ContenedorPacientes.columnasVisiblesReducidas());
 		tablaPacientes.setColumnHeaders(ContenedorPacientes.nombresColumnasReducidas());
 		tablaPacientes.setSelectable(true);
+		tablaPacientes.setVisible(false);
 		tablaPacientes.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 
 			private static final long serialVersionUID = 1L;
@@ -90,7 +93,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 		contenedor.addContainerFilter(filterNombre);
 		contenedor.addContainerFilter(filterApellido);
 		VerticalLayout hl = new VerticalLayout();
-		hl.setMargin(new MarginInfo(false, false, true, false));
+		hl.setMargin(new MarginInfo(false, false, false, false));
 		
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
@@ -108,6 +111,7 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 			}
 		});
 		hl.addComponent(documento);
+		
 		nombre.setInputPrompt("nombre");
 		nombre.setImmediate(true);
 		nombre.setWidth("15em");
@@ -140,29 +144,68 @@ public class VentanaSeleccionPaciente extends Window implements Observer{
 
 		});
 		hl.addComponent(apellido);
+		telefono.setWidth("15em");
+		telefono.setInputPrompt("telefono");
+		hl.addComponent(telefono);
 		this.layout.addComponent(hl);
 		
+
+		botonBuscar = new Button("", FontAwesome.SEARCH_PLUS);
+		botonBuscar.setDescription("buscar");
+		botonBuscar.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		botonBuscar.addClickListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+				consultarPacientes(
+						documento.getValue(),
+						nombre.getValue(),
+						apellido.getValue(),
+						telefono.getValue()
+						);
+				
+			}
+		});
+		layout.addComponent(botonBuscar);
+		
 		tablaPacientes.setImmediate(true);
-		consultarPacientes();
+//		consultarPacientes(
+//				VentanaSeleccionPaciente.this.nombre.getValue(),
+//				VentanaSeleccionPaciente.this.apellido.getValue(),
+//				VentanaSeleccionPaciente.this.telefono.getValue(),
+//				VentanaSeleccionPaciente.this.documento.getValue()
+//				);
 		this.layout.addComponent(tablaPacientes);
 
 		this.setContent(layout);
 		
 	}
 	
-	public void consultarPacientes(){
+	public void consultarPacientes(
+			String documento, 
+			String nombre, 
+			String apellido,
+			String telefono) {
+		
 		contenedor.removeAllItems();
 		List<PacienteDT> listaPacientesDT = new LinkedList<>();
-		for (Paciente paciente:this.iPacientes.obtenerPacientes()){
+		
+		for (Paciente paciente:this.iPacientes.buscarPacientes(documento, nombre, apellido, telefono)){
 			listaPacientesDT.add(new PacienteDT(paciente, null));
 		}
 
 		contenedor.addAll(listaPacientesDT);
 		
-		if (tablaPacientes.size() == 0)
+		if (contenedor.size() == 0){
 			tablaPacientes.setVisible(false);
-		if (tablaPacientes.size() > 15){
-			tablaPacientes.setPageLength(15);
+		}else{
+			tablaPacientes.setVisible(true);
+		}
+		if (contenedor.size() > 10){
+			tablaPacientes.setPageLength(10);
 		}else{
 			tablaPacientes.setPageLength(tablaPacientes.size());
 		}

@@ -36,7 +36,7 @@ public interface ICaja {
 	
 	// Devuelve excepcion si la caja está cerrada. Genera movimiento de apertura por el valor indicado
 	public Caja obtenerCaja();
-	public Caja abrirCaja(Caja caja, Double importe) throws Exception;
+	public Caja abrirCaja(Caja caja) throws Exception;
 	public CierreCaja cerrarCaja(Caja caja) throws Exception;
 	public CierreCaja cargarMovimientos(CierreCaja cierre);
 	public List<CierreCaja> obtenerCierresCaja();

@@ -46,7 +46,7 @@ public class FisioSportsCalendarEvent implements EditableCalendarEvent, EventCha
 	@Override
 	public String getCaption() {
 		// TODO Auto-generated method stub
-		return this.agendaConsulta.getCaption();
+		return this.agendaConsulta.getPaciente().getNombre() + " " + this.agendaConsulta.getPaciente().getApellido();
 	}
 
 	@Override

@@ -49,6 +49,7 @@ public class VentanaConsulta extends Window implements Observer{
 	private CheckBox deportologo;
 	private CheckBox nutricionista;
 	private CheckBox traumatologo;
+	private CheckBox psicologo;
 	private Calendar calendar;
 	private TextArea observaciones;
 	
@@ -133,7 +134,8 @@ public class VentanaConsulta extends Window implements Observer{
 						paciente.getTelefono()+")");
 		this.nombrePaciente.setReadOnly(true);
 		this.botonInfoPaciente.setVisible(true);
-		this.markAsDirty();
+		this.nombrePaciente.markAsDirty();
+		this.markAsDirtyRecursive();
 	}
 
 	private void initComponents(){
@@ -151,6 +153,7 @@ public class VentanaConsulta extends Window implements Observer{
 		HorizontalLayout layoutNombrePaciente = new HorizontalLayout();
 		
 		this.nombrePaciente = new TextField();
+		this.nombrePaciente.setWidth(30, Unit.EX);
 		this.nombrePaciente.setReadOnly(true);
 		layoutNombrePaciente.addComponent(nombrePaciente);
 		
@@ -184,6 +187,9 @@ public class VentanaConsulta extends Window implements Observer{
 		this.traumatologo = new CheckBox();
 		this.traumatologo.setCaption("traumatólogo");
 		vl2.addComponent(traumatologo);
+		this.psicologo = new CheckBox();
+		this.psicologo.setCaption("psicólogo");
+		vl2.addComponent(psicologo);
 		
 		hl.addComponent(vl1);
 		hl.addComponent(vl2);
@@ -211,6 +217,7 @@ public class VentanaConsulta extends Window implements Observer{
 		this.start.setValue(agendaConsulta.getStart());
 		this.deportologo.setValue(agendaConsulta.getDeportologo());
 		this.traumatologo.setValue(agendaConsulta.getTraumatologo());
+		this.psicologo.setValue(agendaConsulta.getPsicologo());
 		this.nutricionista.setValue(agendaConsulta.getNutricionista());
 		this.observaciones.setValue(agendaConsulta.getObservaciones());
 		
@@ -233,6 +240,7 @@ public class VentanaConsulta extends Window implements Observer{
 		agendaConsulta.setTerapiaFisica(terapiaFisica.getValue());
 		agendaConsulta.setDeportologo(deportologo.getValue());
 		agendaConsulta.setTraumatologo(traumatologo.getValue());
+		agendaConsulta.setPsicologo(psicologo.getValue());
 		agendaConsulta.setNutricionista(nutricionista.getValue());
 		agendaConsulta.setObservaciones(observaciones.getValue());
 	}
@@ -285,15 +293,14 @@ public class VentanaConsulta extends Window implements Observer{
 				Notification.show("Se agendó la consulta", Notification.Type.HUMANIZED_MESSAGE);
 				//paciente.getConsultasAgendadas().add(agendaConsulta);
 				ui.getiAgenda().agregarConsulta(agendaConsulta);
+				calendar.markAsDirty();
+				close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Notification.show("Error al intentar agendar la consulta:", e.getMessage(),
 						Notification.Type.ERROR_MESSAGE);
 				return;
 			}
-			calendar.markAsDirty();
-			Notification.show("Se agendó la agendaConsulta");
-			close();
 		}
 	};
 
@@ -306,7 +313,7 @@ public class VentanaConsulta extends Window implements Observer{
 				ui.getiAgenda().modificarConsulta(agendaConsulta);
 			} catch (Exception e) {
 				e.printStackTrace();
-				Notification.show("Error al intentar modificar los datos de la agendaConsulta", e.getMessage(),
+				Notification.show("Error al intentar modificar los datos de la consulta", e.getMessage(),
 						Notification.Type.ERROR_MESSAGE);
 				return;
 			}
@@ -356,6 +363,7 @@ public class VentanaConsulta extends Window implements Observer{
 			otraConsulta.setTerapiaFisica(terapiaFisica.getValue());
 			otraConsulta.setDeportologo(deportologo.getValue());
 			otraConsulta.setTraumatologo(traumatologo.getValue());
+			otraConsulta.setPsicologo(psicologo.getValue());
 			otraConsulta.setNutricionista(nutricionista.getValue());
 			otraConsulta.setObservaciones(observaciones.getValue());
 			VentanaConsulta.this.ui.getiAgenda().agregarConsulta(otraConsulta);

@@ -15,7 +15,7 @@ public class ControladorSeguridad implements ISeguridad{
 	@Override
 	public Usuario login(String id, String pass) {
 
-		System.out.println("[ControladorSeguridad.login] login usuario:"+id);
+//		System.out.println("[ControladorSeguridad.login] login usuario:"+id);
 		
 		Usuario usuario = em.find(Usuario.class, id);
 		if (usuario == null){

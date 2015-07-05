@@ -89,17 +89,17 @@ public class Caja {
 		this.getCierres().add(cierreCaja);
 
 		this.movimientos = new LinkedList<Movimiento>();
-		this.saldo = 0.0;
-		this.saldoInicial = 0.0;
-		this.estado = Estado.CERRADA;
+		this.saldoInicial = this.saldo;
+		
+//		this.estado = Estado.CERRADA;
 		
 		return cierreCaja;
 	}
 	
-	public void abrir(Double saldoInicial){
+	public void abrir(){
 		this.setEstado(Estado.ABIERTA);
-		this.saldoInicial = saldoInicial;
-		this.saldo = saldoInicial;
+//		this.saldoInicial = saldoInicial;
+//		this.saldo = saldoInicial;
 	}
 	
 }

@@ -6,6 +6,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.fisiosports.modelo.entidades.pacientes.Consulta;
 import com.fisiosports.modelo.entidades.pacientes.Evaluacion;
@@ -159,6 +163,46 @@ public class ControladorPacientes implements IPacientes{
 		consulta = em.merge(consulta);
 		consulta.getTratamiento().getConsultas().remove(consulta);
 		em.remove(consulta);		
+	}
+
+	@Override
+	public List<Paciente> buscarPacientes(
+			String documento, 
+			String nombre, 
+			String apellido,
+			String telefono) {
+		
+//		System.out.println("[ControladorPacientes.buscarPacientes] documento:"+documento);
+//		System.out.println("[ControladorPacientes.buscarPacientes] nombre:"+nombre);
+//		System.out.println("[ControladorPacientes.buscarPacientes] apellido:"+apellido);
+//		System.out.println("[ControladorPacientes.buscarPacientes] telefono:"+telefono);
+//
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Paciente> cq = cb.createQuery(Paciente.class);
+		Root<Paciente> root = cq.from(Paciente.class);
+		
+		List<Predicate> predicates = new LinkedList<Predicate>();
+
+		if (documento!=null && !documento.isEmpty()){
+//			System.out.println("[ControladorPacientes.buscarPacientes] add documento like: "+documento+"%");
+			predicates.add(cb.like(root.<String>get("documento"), documento+"%"));
+		}
+		if (nombre!=null && !nombre.isEmpty()){
+//			System.out.println("[ControladorPacientes.buscarPacientes] add nombre like: "+nombre+"%");
+			predicates.add(cb.like(root.<String>get("nombre"), nombre+"%"));
+		}
+		if (apellido!=null && !apellido.isEmpty()){
+//			System.out.println("[ControladorPacientes.buscarPacientes] add apellido like: "+apellido+"%");
+			predicates.add(cb.like(root.<String>get("apellido"), apellido+"%"));
+		}
+		if (telefono!=null && !telefono.isEmpty()){
+//			System.out.println("[ControladorPacientes.buscarPacientes] add telefono like: "+telefono+"%");
+			predicates.add(cb.like(root.<String>get("telefono"), telefono+"%"));
+		}
+		
+		cq.select(root).where(predicates.toArray(new Predicate[]{}));
+		
+		return em.createQuery(cq).getResultList();
 	}
 
 	

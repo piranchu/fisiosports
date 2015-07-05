@@ -1,5 +1,7 @@
 package com.fisiosports.web.ui.componentes.caja;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -16,12 +18,14 @@ import com.fisiosports.web.ui.contenedores.ContenedorProductoServicio;
 import com.fisiosports.web.ui.contenedores.beantypes.BeanItemMovimiento;
 import com.fisiosports.web.ui.contenedores.beantypes.BeanItemProductoServicio;
 import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -41,6 +45,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	
 	private static final long serialVersionUID = 1L;
 
+	private static NumberFormat numberFormat = new DecimalFormat("#,###.00");
 	private FisiosportsUI ui;
 	private Caja caja;
 	private Component mainComponent;
@@ -48,7 +53,20 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 //	private Component componentConsultaMovimientos;
 //	private Component componentConsultaCierres;
 	
-	private Table table = new Table();
+	private Table table = new Table(){
+
+        @Override
+        protected String formatPropertyValue(Object rowId, Object colId,
+                Property property) {
+            Object v = property.getValue();
+            if (v instanceof Double) {
+//                Double doubleValue = (Double) v;
+                return numberFormat.format(v);
+            }
+            return super.formatPropertyValue(rowId, colId, property);
+        }
+
+    };
 	private ContenedorMovimientosCaja contenedor;
 	private MenuBar menu;
 	private MenuItem menuAbrirCerrarCaja;
@@ -65,6 +83,8 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 //	private Filter filterFecha = new com.vaadin.data.util.filter.Between("movimiento.fecha", new Date(new Long(0)), new Date());
 
 	private Label labelEstadoCaja = new Label();
+	
+	private HorizontalLayout layoutSaldoCaja = new HorizontalLayout();
 
 	public ComponenteCaja(){
 	
@@ -92,6 +112,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		
 		HorizontalLayout hl = new HorizontalLayout();
 		hl.setSizeFull();
+		
 		
 		menu = new MenuBar();
 		menu.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
@@ -126,7 +147,12 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		
 		hl.addComponent(menu);
 		
+		layoutSaldoCaja.setSizeFull();
+		setLabelSaldoCaja();
+		hl.addComponent(layoutSaldoCaja);
+		
 		layout.addComponent(hl);
+		
 		
 		List<? extends Movimiento> movimientos = ((FisiosportsUI) UI.getCurrent()).getiCaja().obtenerMovimientosActuales();
 		contenedor = new ContenedorMovimientosCaja(BeanItemMovimiento.class);
@@ -208,20 +234,6 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		});
 		hl.addComponent(comboProductoServicio);
 		
-//		TextField categoria = new TextField();
-//		categoria.setInputPrompt("categoria");
-//		categoria.setImmediate(true);
-//		categoria.addTextChangeListener(new TextChangeListener(){
-//			private static final long serialVersionUID = 1L;
-//			@Override
-//			public void textChange(TextChangeEvent event) {
-//				contenedor.removeContainerFilter(filterCategoria);
-//				filterCategoria = new SimpleStringFilter("movimiento.categoria.nombre", event.getText(), true, true);
-//				contenedor.addContainerFilter(filterCategoria);
-//			}
-//		});
-//		hl.addComponent(categoria);
-		
 		TextField documento = new TextField();
 		documento.setInputPrompt("documento");
 		documento.setImmediate(true);
@@ -235,53 +247,22 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 			}
 		});
 		hl.addComponent(documento);
-
-//		PopupDateField fecha = new PopupDateField();
-//		fecha.setInputPrompt("fecha");
-//		fecha.addValueChangeListener(new ValueChangeListener(){
-//			private static final long serialVersionUID = 1L;
-//			@Override
-//			public void valueChange(ValueChangeEvent event) {
-//				if (contenedor.getContainerFilters().contains(filterFecha)){
-//					contenedor.removeContainerFilter(filterFecha);
-//				}
-//
-//				Date date = (Date)event.getProperty().getValue();
-//				if (date != null){
-//					
-//					System.out.println("[ComponenteCaja] date:"+date);
-//					Calendar calendar = Calendar.getInstance();
-//					calendar.setTime(date);
-//					calendar.set(Calendar.HOUR_OF_DAY, 23);
-//					calendar.set(Calendar.SECOND, 59);
-//					Date endDate = calendar.getTime();
-//					
-////					Date dateFin = (Date)event.getProperty().getValue();
-////					dateFin.setHours(23);
-////					dateFin.setMinutes(59);
-//
-//					filterFecha = new Between("movimiento.fecha", date, endDate);
-//					contenedor.addContainerFilter(filterFecha);
-//				}
-//			}
-//		});
-//		hl.addComponent(fecha);
 		
 		return hl;
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("[ComponenteCaja.update] arg="+arg);
+//		System.out.println("[ComponenteCaja.update] arg="+arg);
 		if (arg != null){
 			if (arg instanceof Caja){
-				System.out.println("[ComponenteCaja.update] apertura caja");
+//				System.out.println("[ComponenteCaja.update] apertura caja");
 				aperturaCaja((Caja) arg);
 			}else if (arg instanceof CierreCaja){
-				System.out.println("[ComponenteCaja.update] cierre caja");
+//				System.out.println("[ComponenteCaja.update] cierre caja");
 				cierreCaja((CierreCaja) arg);
 			}else if(arg instanceof Movimiento){
-				System.out.println("[ComponenteCaja.update] nuevo movimiento");
+//				System.out.println("[ComponenteCaja.update] nuevo movimiento");
 				nuevoMovimiento((Movimiento) arg);
 			}
 		}
@@ -291,6 +272,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 	private void nuevoMovimiento(Movimiento movimiento) {
 		this.contenedor.addBean(new BeanItemMovimiento(movimiento, this));
 		caja = ui.getiCaja().obtenerCaja();
+		setLabelSaldoCaja();
 		resizeTable();
 		table.refreshRowCache();
 		table.markAsDirty();
@@ -300,15 +282,15 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 //		Notification.show("Cierre de caja");
 		caja = ui.getiCaja().obtenerCaja();
 		// Se modifica el menú de cierre/apertura de caja
-		menuAbrirCerrarCaja.setIcon(FontAwesome.UNLOCK);
-		menuAbrirCerrarCaja.setDescription("abrir caja");
-		menuNuevoMovimientoEgreso.setEnabled(false);
-		menuNuevoMovimientoIngreso.setEnabled(false);
+//		menuAbrirCerrarCaja.setIcon(FontAwesome.UNLOCK);
+//		menuAbrirCerrarCaja.setDescription("abrir caja");
+//		menuNuevoMovimientoEgreso.setEnabled(false);
+//		menuNuevoMovimientoIngreso.setEnabled(false);
 		// Se eliminan todos los items de la tabla de movimientos
 		this.contenedor.removeAllItems();
 		// Se modifica label con estado
-		this.labelEstadoCaja.setCaption(caja.getEstado().toString());
-		labelEstadoCaja.markAsDirty();
+//		this.labelEstadoCaja.setCaption(caja.getEstado().toString());
+//		labelEstadoCaja.markAsDirty();
 		markAsDirty();
 
 	}
@@ -403,8 +385,19 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 				Window window = new VentanaCerrarCaja(caja, ComponenteCaja.this);
 				getUI().addWindow(window);
 			}else{
-				Window window = new VentanaAbrirCaja(caja, ComponenteCaja.this);
-				getUI().addWindow(window);
+				
+				try {
+					caja = ui.getiCaja().abrirCaja(caja);
+					update(null, caja);
+					Notification.show("Caja abierta");
+				}catch (Exception e) {
+					e.printStackTrace();
+					Notification.show("No se pudo abrir la caja:"+e.getMessage(),
+							Notification.Type.ERROR_MESSAGE);
+				}				
+				
+//				Window window = new VentanaAbrirCaja(caja, ComponenteCaja.this);
+//				getUI().addWindow(window);
 			}
 		}
 		
@@ -431,12 +424,18 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		public void menuSelected(MenuItem selectedItem) {
 ////			Window window = new VentanaConcepto(ComponenteCaja.this);
 ////			getUI().addWindow(window);
-//			Notification.show("próximamente: ver todos los movimientos de caja");
+//			Notification.show("próximamuble saente: ver todos los movimientos de caja");
 			setComponentConsultaMovimientos();
 		}
 		
 	};
 
+	private void setLabelSaldoCaja(){
+		layoutSaldoCaja.removeAllComponents();
+		Label label = new Label("Saldo de caja: "+numberFormat.format(this.caja.getSaldo()));
+		layoutSaldoCaja.addComponent(label);
+		layoutSaldoCaja.setComponentAlignment(label, Alignment.MIDDLE_RIGHT);
+	}
 	
 	
 }

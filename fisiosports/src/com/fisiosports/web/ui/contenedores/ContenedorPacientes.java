@@ -12,7 +12,7 @@ public class ContenedorPacientes extends BeanItemContainer<PacienteDT>{
 	}
 	
 	static public Object[] columnasVisiblesReducidas(){
-		return new Object[]{"paciente.documento","paciente.nombre", "paciente.apellido"};
+		return new Object[]{"paciente.documento","paciente.nombre", "paciente.apellido", "paciente.telefono"};
 	}
 
 	static public String[] nombresColumnas(){
@@ -22,7 +22,7 @@ public class ContenedorPacientes extends BeanItemContainer<PacienteDT>{
 	}
 	
 	static public String[] nombresColumnasReducidas(){
-		return new String[]{"documento","nombre", "apellido"};
+		return new String[]{"documento","nombre", "apellido", "telefono"};
 	}
 
 	public ContenedorPacientes(Class<? super PacienteDT> type)

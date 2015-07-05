@@ -45,6 +45,7 @@ public class AgendaConsulta implements Serializable{
     private Boolean nutricionista;
     private Boolean deportologo;
     private Boolean traumatologo;
+    private Boolean psicologo;
     private String observaciones;
 	
 	private static final long serialVersionUID = 1L;
@@ -183,10 +184,20 @@ public class AgendaConsulta implements Serializable{
 			this.styleName = "orange";
 		}else if(deportologo){
 			this.styleName = "grey";
+		}else if(psicologo){
+			this.styleName = "skyblue";
 		}else{
 			this.styleName = "green";
 		}
 		
+	}
+
+	public Boolean getPsicologo() {
+		return psicologo;
+	}
+
+	public void setPsicologo(Boolean psicologo) {
+		this.psicologo = psicologo;
 	}		
 	
 }

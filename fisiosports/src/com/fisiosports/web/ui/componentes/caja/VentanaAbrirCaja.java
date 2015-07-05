@@ -9,7 +9,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -21,7 +20,7 @@ public class VentanaAbrirCaja extends Window{
 
 	private FisiosportsUI ui;
 	private Observer observer;
-	private TextField saldoInicial; 
+//	private TextField saldoInicial; 
 	private Caja caja;
 	
 	
@@ -36,10 +35,10 @@ public class VentanaAbrirCaja extends Window{
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		
-		saldoInicial = new TextField();
-		saldoInicial.setInputPrompt("saldo inicial");
-		
-		layout.addComponent(saldoInicial);
+//		saldoInicial = new TextField();
+//		saldoInicial.setInputPrompt("saldo inicial");
+//		
+//		layout.addComponent(saldoInicial);
 		layout.addComponent(this.obtenerBotonConfirmar());
 		
 		setContent(layout);
@@ -58,16 +57,15 @@ public class VentanaAbrirCaja extends Window{
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Double saldo = 0.0;
-				if (saldoInicial.getValue() != null){
-					try{
-						saldo = Double.parseDouble(saldoInicial.getValue());
-					}catch (Exception e){
-						e.printStackTrace();
-					}
-				}
+//				if (saldoInicial.getValue() != null){
+//					try{
+//						saldo = Double.parseDouble(saldoInicial.getValue());
+//					}catch (Exception e){
+//						e.printStackTrace();
+//					}
+//				}
 				try {
-					caja = ui.getiCaja().abrirCaja(caja, saldo);
+					caja = ui.getiCaja().abrirCaja(caja);
 					observer.update(null, caja);
 				}catch (Exception e) {
 					e.printStackTrace();
