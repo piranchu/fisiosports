@@ -1,10 +1,15 @@
 package com.fisiosports.modelo.entidades.caja;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +32,19 @@ public class Concepto  implements Serializable{
 	@Id @GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String nombre;
-	@OneToMany
-	private List<ProductoServicio> productosServicios = new LinkedList<ProductoServicio>();
+	@OneToMany(mappedBy="concepto")
+	private List<ProductoServicio> productosServicios = new LinkedList<>();
 	
+	@ElementCollection  
+	@Enumerated(EnumType.STRING)
+	private Set<Movimiento.TipoMovimiento> tiposMovimiento = new HashSet<>();
+
+	public Set<Movimiento.TipoMovimiento> getTiposMovimiento() {
+		return tiposMovimiento;
+	}
+	public void setTiposMovimiento(Set<Movimiento.TipoMovimiento> tiposMovimiento) {
+		this.tiposMovimiento = tiposMovimiento;
+	}
 	public String getNombre() {
 		return nombre;
 	}

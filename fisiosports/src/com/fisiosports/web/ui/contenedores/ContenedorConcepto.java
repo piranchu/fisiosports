@@ -14,13 +14,13 @@ public class ContenedorConcepto extends BeanItemContainer<BeanItemConcepto>{
 	
 	public static Object[] getVisibleColumns(){
 		return new Object[]{
-				"concepto.nombre", "botonEliminar"
+				"concepto.nombre", "ingreso", "egreso", "botonEliminar"
 		};
 	}
 	
 	public static String[] getColumnHeaders(){
 		return new String[]{
-				"nombre", " "
+				"nombre", "ingreso", "egreso", " "
 		};
 	}
 

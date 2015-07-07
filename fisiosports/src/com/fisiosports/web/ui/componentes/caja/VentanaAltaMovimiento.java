@@ -80,30 +80,23 @@ public class VentanaAltaMovimiento extends Window{
 		comboConcepto = new ComboBox("concepto");
 		comboConcepto.setContainerDataSource(contenedorConcepto);
 		comboConcepto.setItemCaptionPropertyId("nombre");
-		contenedorConcepto.addAll(ui.getiCaja().consultarConceptos());
+		comboConcepto.addValueChangeListener(new ValueChangeListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				cargarProductosServicios((Concepto)comboConcepto.getValue());
+				
+			}
+		});
+		contenedorConcepto.addAll(ui.getiCaja().consultarConceptos(tipoMovimiento));
 		formLayout.addComponent(comboConcepto);
 
 		comboProductoServicio = new ComboBox("producto/servicio");
 		comboProductoServicio.setContainerDataSource(contenedorProductoServicio);
 		comboProductoServicio.setItemCaptionPropertyId("nombre");
-		contenedorProductoServicio.addAll(ui.getiCaja().consultarProductosServicios());
-		comboProductoServicio.setNullSelectionAllowed(false);
-		comboProductoServicio.setInvalidAllowed(false);
-		comboProductoServicio.addValueChangeListener(new ValueChangeListener(){
-
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				if (event.getProperty().getValue() != null){
-					ProductoServicio ps = (ProductoServicio) event.getProperty().getValue();
-					Double precioSugerido = ps.getPrecio();
-					if (precioSugerido != null && precioSugerido != 0){
-						VentanaAltaMovimiento.this.importe.setValue(ps.getPrecio().toString());
-					}
-				}
-			}
-			
-		});
+		cargarProductosServicios(null);
 		
 		formLayout.addComponent(comboProductoServicio);
 		
@@ -142,6 +135,29 @@ public class VentanaAltaMovimiento extends Window{
 		formLayout.addComponent(this.crearBotonAlta());
 		
 		this.setContent(formLayout);
+	}
+	
+	private void cargarProductosServicios(Concepto concepto){
+		
+		contenedorProductoServicio.removeAllItems();
+		contenedorProductoServicio.addAll(ui.getiCaja().consultarProductosServicios(concepto));
+		comboProductoServicio.setNullSelectionAllowed(false);
+		comboProductoServicio.setInvalidAllowed(false);
+		comboProductoServicio.addValueChangeListener(new ValueChangeListener(){
+
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null){
+					ProductoServicio ps = (ProductoServicio) event.getProperty().getValue();
+					Double precioSugerido = ps.getPrecio();
+					if (precioSugerido != null && precioSugerido != 0){
+						VentanaAltaMovimiento.this.importe.setValue(ps.getPrecio().toString());
+					}
+				}
+			}
+			
+		});
 	}
 	
 	private Button crearBotonAlta(){

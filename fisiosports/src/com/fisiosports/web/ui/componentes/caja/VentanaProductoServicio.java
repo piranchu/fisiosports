@@ -1,15 +1,19 @@
 package com.fisiosports.web.ui.componentes.caja;
 
+import java.util.List;
 import java.util.Observer;
 
+import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.web.FisiosportsUI;
 import com.fisiosports.web.ui.contenedores.ContenedorProductoServicio;
 import com.fisiosports.web.ui.contenedores.beantypes.BeanItemProductoServicio;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Table;
@@ -22,6 +26,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class VentanaProductoServicio extends Window{
 
 	private static final long serialVersionUID = 1L;
+	private ComboBox comboConceptos;
 	private TextField textNombre;
 	private TextField textPrecio;
 	private Button newButton;
@@ -38,6 +43,10 @@ public class VentanaProductoServicio extends Window{
 		
 		this.observer = observer;
 		this.ui = (FisiosportsUI) UI.getCurrent();
+		
+		comboConceptos = new ComboBox();
+		comboConceptos.setInputPrompt("concepto");
+		cargarConceptos();
 		
 		textNombre = new TextField();
 		textNombre.setInputPrompt("nombre");
@@ -60,6 +69,7 @@ public class VentanaProductoServicio extends Window{
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		
+		layout.addComponent(comboConceptos);
 		layout.addComponent(textNombre);
 		layout.addComponent(textPrecio);
 		layout.addComponent(newButton);
@@ -67,6 +77,15 @@ public class VentanaProductoServicio extends Window{
 		
 		this.setContent(layout);
 
+	}
+	
+	private void cargarConceptos(){
+		List<Concepto> conceptos = ui.getiCaja().consultarConceptos(null);
+		BeanItemContainer<Concepto> container = new BeanItemContainer<Concepto>(Concepto.class);
+		container.addAll(conceptos);
+		comboConceptos.setContainerDataSource(container);
+		comboConceptos.setItemCaptionPropertyId("nombre");
+		
 	}
 	
 	private Table cargarTabla(){
@@ -81,7 +100,7 @@ public class VentanaProductoServicio extends Window{
 //		tabla.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		
 		tabla.getContainerDataSource().removeAllItems();
-		for (ProductoServicio ps:this.ui.getiCaja().consultarProductosServicios()){
+		for (ProductoServicio ps:this.ui.getiCaja().consultarProductosServicios(null)){
 			tabla.getContainerDataSource().addItem(new BeanItemProductoServicio(ps, this));
 		}
 		if (tabla.getContainerDataSource().size()>10){
@@ -121,10 +140,14 @@ public class VentanaProductoServicio extends Window{
 			return;
 		}
 		ps.setPrecio(precio);
+		if (comboConceptos.getValue() != null){
+			ps.setConcepto((Concepto)comboConceptos.getValue());
+		}
 		ui.getiCaja().crearProductoServicio(ps);
 		this.cargarTabla();
 		textNombre.setValue("");
 		textPrecio.setValue("");
+		comboConceptos.select(null);
 		if (observer != null){
 			observer.update(null, null);
 		}

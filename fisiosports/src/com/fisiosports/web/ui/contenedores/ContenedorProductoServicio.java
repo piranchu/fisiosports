@@ -9,17 +9,18 @@ public class ContenedorProductoServicio extends BeanItemContainer<BeanItemProduc
 			throws IllegalArgumentException {
 		super(type);
 		addNestedContainerBean("productoServicio");
+		addNestedContainerBean("productoServicio.concepto");
 	}
 	
 	public static Object[] getVisibleColumns(){
 		return new Object[]{
-				"productoServicio.nombre", "productoServicio.precio", "botonEliminar"
+				"productoServicio.nombre", "productoServicio.precio", "productoServicio.concepto.nombre", "botonEliminar"
 		};
 	}
 	
 	public static String[] getColumnHeaders(){
 		return new String[]{
-				"nombre", "precio sugerido", " "
+				"nombre", "precio sugerido", "concepto", " "
 		};
 	}
 

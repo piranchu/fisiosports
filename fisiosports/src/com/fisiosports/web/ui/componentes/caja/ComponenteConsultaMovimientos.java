@@ -135,13 +135,13 @@ public class ComponenteConsultaMovimientos extends CustomComponent implements Ob
 		comboConcepto.setInputPrompt("concepto");
 		comboConcepto.setContainerDataSource(contenedorConcepto);
 		comboConcepto.setItemCaptionPropertyId("nombre");
-		contenedorConcepto.addAll(ui.getiCaja().consultarConceptos());
+		contenedorConcepto.addAll(ui.getiCaja().consultarConceptos(null));
 		
 		comboProductoServicio = new ComboBox();
 		comboProductoServicio.setInputPrompt("producto/servicio");
 		comboProductoServicio.setContainerDataSource(contenedorProductoServicio);
 		comboProductoServicio.setItemCaptionPropertyId("nombre");
-		contenedorProductoServicio.addAll(ui.getiCaja().consultarProductosServicios());
+		contenedorProductoServicio.addAll(ui.getiCaja().consultarProductosServicios((Concepto)comboConcepto.getValue()));
 
 		seleccionPaciente = new ComponenteSeleccionPaciente(this);
 		fechaInicial = new PopupDateField();

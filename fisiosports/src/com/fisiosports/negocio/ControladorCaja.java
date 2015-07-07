@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -20,6 +21,7 @@ import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.modelo.entidades.caja.Egreso;
 import com.fisiosports.modelo.entidades.caja.Ingreso;
 import com.fisiosports.modelo.entidades.caja.Movimiento;
+import com.fisiosports.modelo.entidades.caja.Movimiento.TipoMovimiento;
 import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.modelo.entidades.pacientes.Paciente;
 
@@ -188,9 +190,22 @@ public class ControladorCaja implements ICaja{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Concepto> consultarConceptos() {
-//		em.flush();
-		return em.createNamedQuery("Concepto.all").getResultList();
+	public List<Concepto> consultarConceptos(TipoMovimiento tipoMovimiento) {
+		
+		List<Concepto> todosConceptos = em.createNamedQuery("Concepto.all").getResultList();
+		List<Concepto> conceptos = new LinkedList<Concepto>();
+		
+		for (Concepto concepto:todosConceptos){
+			for (TipoMovimiento tipoMov: concepto.getTiposMovimiento()){
+				if (tipoMov == tipoMovimiento){
+					conceptos.add(concepto);
+				}
+			}
+		}
+		if (tipoMovimiento == null){
+			return todosConceptos;
+		}
+		return conceptos;
 	}
 
 	@Override
@@ -213,8 +228,17 @@ public class ControladorCaja implements ICaja{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ProductoServicio> consultarProductosServicios() {
-		return em.createNamedQuery("ProductoServicio.all").getResultList();
+	public List<ProductoServicio> consultarProductosServicios(Concepto concepto) {
+	
+		Query query;
+		if (concepto != null){
+			query = em.createNamedQuery("ProductoServicio.findByConcepto")
+					.setParameter("idConcepto", concepto.getId());
+		}else{
+			query = em.createNamedQuery("ProductoServicio.all");
+		}
+		
+		return query.getResultList();
 	}
 
 	@Override

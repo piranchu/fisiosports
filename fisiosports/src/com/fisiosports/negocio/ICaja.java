@@ -9,6 +9,7 @@ import com.fisiosports.modelo.entidades.caja.Caja;
 import com.fisiosports.modelo.entidades.caja.CierreCaja;
 import com.fisiosports.modelo.entidades.caja.Concepto;
 import com.fisiosports.modelo.entidades.caja.Movimiento;
+import com.fisiosports.modelo.entidades.caja.Movimiento.TipoMovimiento;
 import com.fisiosports.modelo.entidades.caja.ProductoServicio;
 import com.fisiosports.modelo.entidades.pacientes.Paciente;
 
@@ -27,12 +28,12 @@ public interface ICaja {
 	public void crearProductoServicio(ProductoServicio productoServicio);
 	public void borrarProductoServicio(ProductoServicio productoServicio);
 	public ProductoServicio obtenerProductoServicio(Long idCategoria);
-	public List<ProductoServicio> consultarProductosServicios();
+	public List<ProductoServicio> consultarProductosServicios(Concepto concepto);
 	
 	public void crearConcepto(Concepto concepto);
 	public void borrarConcepto(Concepto concepto);
 	public Concepto obtenerConcepto(Long idCuenta);
-	public List<Concepto> consultarConceptos();
+	public List<Concepto> consultarConceptos(TipoMovimiento tipoMovimiento);
 	
 	// Devuelve excepcion si la caja está cerrada. Genera movimiento de apertura por el valor indicado
 	public Caja obtenerCaja();

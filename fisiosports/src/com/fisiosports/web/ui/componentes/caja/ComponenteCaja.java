@@ -206,7 +206,7 @@ public class ComponenteCaja extends VerticalLayout implements Observer{
 		comboProductoServicio.setContainerDataSource(contenedorProductoServicio);
 		comboProductoServicio.setItemCaptionPropertyId("nombre");
 		List<BeanItemProductoServicio> beanItemsProductosServicios = new LinkedList<BeanItemProductoServicio>();
-		for (ProductoServicio ps:ui.getiCaja().consultarProductosServicios()){
+		for (ProductoServicio ps:ui.getiCaja().consultarProductosServicios(null)){
 			beanItemsProductosServicios.add(new BeanItemProductoServicio(ps, null));
 		}
 		
